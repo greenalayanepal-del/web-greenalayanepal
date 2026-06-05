@@ -29,8 +29,8 @@ export default function Home() {
       <section className="rounded-2xl bg-emerald-900 px-8 py-10 text-white">
         <h1 className="text-3xl font-bold sm:text-4xl">Greenalaya Nepal</h1>
         <p className="mt-3 max-w-2xl text-lg text-emerald-50">
-          Environmental research, conservation, and sustainable development for
-          communities and ecosystems in Nepal.
+          Research and innovation for nature — building a resilient Nepal through
+          data-driven conservation, technology, and community collaboration.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
