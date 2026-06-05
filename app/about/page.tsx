@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { PageShell } from "@/components/page-shell";
+import { thematicAreas } from "@/lib/site";
 
 export default function AboutPage() {
   return (
@@ -48,6 +50,31 @@ export default function AboutPage() {
             <li>Nature — protecting and restoring ecosystems and biodiversity</li>
             <li>Collaboration — partnerships for systemic change</li>
           </ul>
+        </div>
+
+        <div>
+          <h2 className="text-lg font-semibold text-emerald-900">
+            Thematic areas of focus
+          </h2>
+          <p className="mt-2">
+            Seven key thematic areas drive our work across Nepal, from emerging
+            research questions to policy and community stewardship.
+          </p>
+          <ol className="mt-4 list-decimal space-y-2 pl-5">
+            {thematicAreas.map((area) => (
+              <li key={area.title}>
+                <span className="font-medium text-emerald-900">{area.title}</span>
+                {" — "}
+                {area.description}
+              </li>
+            ))}
+          </ol>
+          <Link
+            href="/projects"
+            className="mt-4 inline-block text-sm font-medium text-emerald-800 hover:underline"
+          >
+            Explore our work →
+          </Link>
         </div>
       </div>
     </PageShell>

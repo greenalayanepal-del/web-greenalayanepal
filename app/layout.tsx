@@ -15,9 +15,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Greenalaya Nepal",
+  title: {
+    default: "Greenalaya Nepal",
+    template: "%s | Greenalaya Nepal",
+  },
   description:
-    "Environmental research, conservation, and sustainable development in Nepal.",
+    "Research & Innovation for Nature — data-driven conservation, green enterprise, and community collaboration in Nepal.",
 };
 
 export default function RootLayout({

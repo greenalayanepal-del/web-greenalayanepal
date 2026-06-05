@@ -48,31 +48,14 @@ create policy "Public read news"
   on public.news for select
   using (true);
 
--- Optional sample rows (safe to re-run: uses ON CONFLICT)
-insert into public.research (title, slug, abstract, published_date)
+-- Phase 2 content migration: see phase2-migrate.sql for real org data.
+-- Featured publication (from legacy GitHub Pages site):
+insert into public.research (title, slug, abstract, pdf_url, published_date)
 values (
-  'Nepal Wetlands Assessment',
-  'nepal-wetlands-assessment',
-  'A baseline assessment of wetland ecosystems and conservation priorities in Nepal.',
-  '2026-01-15'
-)
-on conflict (slug) do nothing;
-
-insert into public.team_members (name, slug, position, bio)
-values (
-  'Ram Joshi',
-  'ram-joshi',
-  'Research Lead',
-  'Leads field research on biodiversity monitoring and community-based conservation.'
-)
-on conflict (slug) do nothing;
-
-insert into public.news (title, slug, excerpt, content, published_at)
-values (
-  'World Environment Day 2026',
-  'world-environment-day-2026',
-  'Greenalaya Nepal joined local communities for wetland restoration activities.',
-  'On World Environment Day 2026, our team worked with community partners to restore wetland habitats and raise awareness about climate resilience.',
-  '2026-06-05'
+  'Butterfly Images of Kathmandu Valley',
+  'butterfly-images-kathmandu-valley',
+  'A comprehensive photographic collection documenting diverse butterfly species across the Kathmandu Valley. This visual guide showcases 174 species captured across different seasons and habitats.',
+  'https://github.com/greenalayanepal-del/greenalayanepal/raw/main/butterfly_images_of_kathmandu_valley.pdf',
+  '2026-04-01'
 )
 on conflict (slug) do nothing;

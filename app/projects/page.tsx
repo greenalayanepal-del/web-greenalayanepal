@@ -34,8 +34,8 @@ export default async function ProjectsPage() {
 
   return (
     <PageShell
-      title="Projects"
-      description="Conservation and research initiatives from Greenalaya Nepal."
+      title="Our Work"
+      description="Thematic focus areas guiding Greenalaya Nepal's conservation, research, and innovation programs."
     >
       {error ? (
         <DataError message={error} />
