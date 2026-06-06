@@ -1,17 +1,8 @@
 "use server";
 
+import type { ContactFormState } from "@/lib/actions/contact-types";
 import { notifyStaffOfContactSubmission } from "@/lib/notify-contact";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
-
-export type ContactFormState = {
-  ok: boolean;
-  message: string;
-};
-
-const initialState: ContactFormState = {
-  ok: false,
-  message: "",
-};
 
 function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -87,5 +78,3 @@ export async function submitContactForm(
     message: "Thank you for reaching out. We will respond as soon as we can.",
   };
 }
-
-export { initialState as contactFormInitialState };

@@ -1,15 +1,21 @@
 import Link from "next/link";
 import { DataError } from "@/components/data-status";
-import { PageShell } from "@/components/page-shell";
+import { FeaturedResource } from "@/components/featured-resource";
+import { NewsletterCta } from "@/components/newsletter-cta";
+import { PageHero } from "@/components/page-hero";
 import { pageMetadata } from "@/lib/seo";
-import { butterflyPublication, resolvePublicationPdfUrl } from "@/lib/site";
+import {
+  butterflyPublication,
+  resolvePublicationPdfUrl,
+  siteConfig,
+} from "@/lib/site";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import type { Research } from "@/lib/types/research";
 
 export const metadata = pageMetadata({
   title: "Resources",
   description:
-    "Free publications and reference materials from Greenalaya Nepal, including the Kathmandu Valley butterfly guide.",
+    "Access research reports, toolkits, datasets, and multimedia resources to support evidence-based conservation and environmental action across Nepal.",
   path: "/resources",
 });
 
@@ -48,68 +54,49 @@ export default async function ResourcesPage() {
 
   const title = item?.title ?? butterflyPublication.title;
   const slug = item?.slug ?? butterflyPublication.slug;
-  const abstract = item?.abstract ?? butterflyPublication.abstract;
+  const description = item?.abstract ?? butterflyPublication.description;
   const pdfUrl =
     resolvePublicationPdfUrl(item?.pdf_url) ?? butterflyPublication.pdfUrl;
   const published = formatDate(item?.published_date ?? null);
 
   return (
-    <PageShell
-      title="Resources"
-      description="Knowledge hub — research reports, toolkits, and reference materials for evidence-based conservation in Nepal."
-    >
-      <div className="mt-8">
-        {error && <DataError message={error} />}
+    <>
+      <PageHero
+        title="Knowledge Hub & Resources"
+        description="Access research reports, toolkits, datasets, and multimedia resources to support evidence-based conservation and environmental action across Nepal."
+        backgroundImage={siteConfig.images.resourcesHeader}
+        breadcrumb={[
+          { label: "Home", href: "/" },
+          { label: "Resources" },
+        ]}
+      />
 
-        <article className="rounded-xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-6 sm:p-8">
-          <p className="text-xs font-bold uppercase tracking-wide text-emerald-700">
-            Featured publication
-          </p>
-          <h2 className="mt-2 text-2xl font-semibold text-emerald-900">
-            {title}
-          </h2>
-          <p className="mt-3 text-neutral-700 leading-relaxed">{abstract}</p>
-          <dl className="mt-4 flex flex-wrap gap-6 text-sm text-neutral-600">
-            <div>
-              <dt className="font-semibold text-neutral-800">Published</dt>
-              <dd>{published}</dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-neutral-800">Format</dt>
-              <dd>PDF</dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-neutral-800">Species</dt>
-              <dd>174 documented</dd>
-            </div>
-          </dl>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href={pdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg bg-emerald-800 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-900"
-            >
-              Download PDF
-            </a>
-            <Link
-              href={`/research/${slug}`}
-              className="rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-800 hover:border-emerald-300"
-            >
-              View in Research
+      <main className="px-5 py-20 lg:py-24">
+        <div className="mx-auto max-w-6xl">
+          {error && <DataError message={error} />}
+
+          <FeaturedResource
+            title={title}
+            description={description}
+            published={published}
+            pdfUrl={pdfUrl}
+            coverImage={butterflyPublication.coverImage}
+            pageCount={butterflyPublication.pageCount}
+            researchSlug={slug}
+          />
+
+          <NewsletterCta />
+
+          <p className="mt-12 text-center text-sm text-neutral-600">
+            More publications and datasets will be added as they become available.
+            For collaboration or resource submissions, please{" "}
+            <Link href="/contact" className="font-semibold text-[#2e7d32] hover:underline">
+              contact us
             </Link>
-          </div>
-        </article>
-
-        <p className="mt-8 text-sm text-neutral-600">
-          More publications and datasets will be added as they become available.
-          For collaboration or resource submissions, please{" "}
-          <Link href="/contact" className="text-emerald-800 hover:underline">
-            contact us
-          </Link>
-          .
-        </p>
-      </div>
-    </PageShell>
+            .
+          </p>
+        </div>
+      </main>
+    </>
   );
 }
