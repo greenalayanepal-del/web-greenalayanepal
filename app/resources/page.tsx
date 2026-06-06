@@ -1,9 +1,17 @@
 import Link from "next/link";
 import { DataError } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
+import { pageMetadata } from "@/lib/seo";
 import { butterflyPublication, resolvePublicationPdfUrl } from "@/lib/site";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import type { Research } from "@/lib/types/research";
+
+export const metadata = pageMetadata({
+  title: "Resources",
+  description:
+    "Free publications and reference materials from Greenalaya Nepal, including the Kathmandu Valley butterfly guide.",
+  path: "/resources",
+});
 
 async function getFeaturedResearch(): Promise<{
   item: Research | null;

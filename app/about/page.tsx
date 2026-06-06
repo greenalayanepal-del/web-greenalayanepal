@@ -1,6 +1,14 @@
 import Link from "next/link";
 import { PageShell } from "@/components/page-shell";
+import { pageMetadata } from "@/lib/seo";
 import { thematicAreas } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: "About",
+  description:
+    "Greenalaya Nepal connects environmental research, technology, and community action for conservation across Nepal.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (

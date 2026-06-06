@@ -1,5 +1,6 @@
 "use server";
 
+import { notifyStaffOfContactSubmission } from "@/lib/notify-contact";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 
 export type ContactFormState = {
@@ -73,6 +74,13 @@ export async function submitContactForm(
       message: "Something went wrong. Please try again or email us directly.",
     };
   }
+
+  void notifyStaffOfContactSubmission({
+    name,
+    email,
+    subject: subject || null,
+    message,
+  });
 
   return {
     ok: true,

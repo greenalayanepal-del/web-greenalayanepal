@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
+import { getSeedTeamMember } from "@/lib/content/seed";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 
 type PageProps = {
@@ -9,19 +10,22 @@ type PageProps = {
 
 export default async function TeamMemberPage({ params }: PageProps) {
   const { slug } = await params;
+  let member = getSeedTeamMember(slug);
 
-  if (!isSupabaseConfigured()) {
-    notFound();
+  if (isSupabaseConfigured()) {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("team_members")
+      .select("id, name, slug, position, bio, photo_url")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    if (!error && data) {
+      member = data;
+    }
   }
 
-  const supabase = await createClient();
-  const { data: member, error } = await supabase
-    .from("team_members")
-    .select("id, name, slug, position, bio, photo_url")
-    .eq("slug", slug)
-    .maybeSingle();
-
-  if (error || !member) {
+  if (!member) {
     notFound();
   }
 

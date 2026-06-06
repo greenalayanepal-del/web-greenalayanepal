@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { thematicAreas } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
+import { siteConfig, thematicAreas } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: siteConfig.tagline,
+  description: siteConfig.description,
+  path: "/",
+});
 
 const exploreSections = [
   {

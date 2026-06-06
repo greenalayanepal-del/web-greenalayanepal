@@ -1,8 +1,17 @@
 import Link from "next/link";
-import { DataError, EmptyState } from "@/components/data-status";
+import { DataError } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
+import { seedTeamMembers } from "@/lib/content/seed";
+import { pageMetadata } from "@/lib/seo";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import type { TeamMember } from "@/lib/types/team";
+
+export const metadata = pageMetadata({
+  title: "Team",
+  description:
+    "Researchers and leaders working on conservation, research, and sustainable development at Greenalaya Nepal.",
+  path: "/team",
+});
 
 async function getTeam(): Promise<{
   members: TeamMember[];
@@ -31,6 +40,8 @@ async function getTeam(): Promise<{
 
 export default async function TeamPage() {
   const { members, error } = await getTeam();
+  const displayMembers =
+    !error && members.length === 0 ? seedTeamMembers : members;
 
   return (
     <PageShell
@@ -39,11 +50,9 @@ export default async function TeamPage() {
     >
       {error ? (
         <DataError message={error} />
-      ) : members.length === 0 ? (
-        <EmptyState message="No team members yet. Run supabase/schema.sql in the Supabase SQL Editor." />
       ) : (
         <ul className="mt-8 grid gap-6 sm:grid-cols-2">
-          {members.map((member) => (
+          {displayMembers.map((member) => (
             <li
               key={member.id}
               className="rounded-lg border border-neutral-200 bg-white p-5"

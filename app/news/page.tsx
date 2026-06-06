@@ -1,8 +1,17 @@
 import Link from "next/link";
-import { DataError, EmptyState } from "@/components/data-status";
+import { DataError } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
+import { seedNewsPosts } from "@/lib/content/seed";
+import { pageMetadata } from "@/lib/seo";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import type { NewsPost } from "@/lib/types/news";
+
+export const metadata = pageMetadata({
+  title: "News",
+  description:
+    "Updates, publications, and announcements from Greenalaya Nepal.",
+  path: "/news",
+});
 
 async function getNews(): Promise<{
   posts: NewsPost[];
@@ -42,6 +51,7 @@ function formatDate(value: string | null) {
 
 export default async function NewsPage() {
   const { posts, error } = await getNews();
+  const displayPosts = !error && posts.length === 0 ? seedNewsPosts : posts;
 
   return (
     <PageShell
@@ -50,11 +60,9 @@ export default async function NewsPage() {
     >
       {error ? (
         <DataError message={error} />
-      ) : posts.length === 0 ? (
-        <EmptyState message="No news posts yet. Run supabase/schema.sql in the Supabase SQL Editor." />
       ) : (
         <ul className="mt-8 space-y-6">
-          {posts.map((post) => (
+          {displayPosts.map((post) => (
             <li
               key={post.id}
               className="rounded-lg border border-neutral-200 bg-white p-5"

@@ -1,3 +1,15 @@
+export const siteConfig = {
+  name: "Greenalaya Nepal",
+  url: "https://greenalayanepal.org.np",
+  tagline: "Research & Innovation for Nature",
+  description:
+    "Data-driven conservation, green enterprise, and community collaboration for resilient ecosystems in Nepal.",
+  ogImage: "https://greenalayanepal.org.np/logo.png",
+  social: {
+    linkedin: "https://www.linkedin.com/company/greenalaya-nepal",
+  },
+} as const;
+
 export const siteContact = {
   email: "greenalayanepal@gmail.com",
   location: "Pokhara, Nepal",

@@ -1,8 +1,16 @@
 import Link from "next/link";
 import { DataError, EmptyState } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
+import { pageMetadata } from "@/lib/seo";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import type { Research } from "@/lib/types/research";
+
+export const metadata = pageMetadata({
+  title: "Research",
+  description:
+    "Publications and studies from Greenalaya Nepal, including urban biodiversity documentation.",
+  path: "/research",
+});
 
 async function getResearch(): Promise<{
   items: Research[];

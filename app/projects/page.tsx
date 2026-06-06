@@ -1,8 +1,16 @@
 import Link from "next/link";
 import { DataError, EmptyState } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
+import { pageMetadata } from "@/lib/seo";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import type { Project } from "@/lib/types/project";
+
+export const metadata = pageMetadata({
+  title: "Our Work",
+  description:
+    "Conservation, climate action, environmental technology, and community programs led by Greenalaya Nepal.",
+  path: "/projects",
+});
 
 async function getProjects(): Promise<{
   projects: Project[];

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { siteContact, thematicAreas } from "@/lib/site";
+import { siteConfig, siteContact, thematicAreas } from "@/lib/site";
 
 export function SiteFooter() {
   return (
@@ -60,6 +60,16 @@ export function SiteFooter() {
                 className="hover:text-white"
               >
                 {siteContact.phone}
+              </a>
+            </li>
+            <li>
+              <a
+                href={siteConfig.social.linkedin}
+                className="hover:text-white"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                LinkedIn
               </a>
             </li>
           </ul>
