@@ -35,12 +35,27 @@ export const thematicAreas = [
   },
 ] as const;
 
+const legacyButterflyGithubPdf =
+  "https://github.com/greenalayanepal-del/greenalayanepal/raw/main/butterfly_images_of_kathmandu_valley.pdf";
+
 export const butterflyPublication = {
   title: "Butterfly Images of Kathmandu Valley",
   slug: "butterfly-images-kathmandu-valley",
   pdfUrl:
-    "https://github.com/greenalayanepal-del/greenalayanepal/raw/main/butterfly_images_of_kathmandu_valley.pdf",
+    "https://greenalayanepal.org.np/publications/butterfly_images_of_kathmandu_valley.pdf",
   abstract:
     "A comprehensive photographic collection documenting 174 butterfly species across the Kathmandu Valley, captured across different seasons and habitats.",
   publishedDate: "April 2026",
 } as const;
+
+/** Maps legacy GitHub-hosted PDF links to the deployed site asset. */
+export function resolvePublicationPdfUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  if (
+    url === legacyButterflyGithubPdf ||
+    url.includes("butterfly_images_of_kathmandu_valley.pdf")
+  ) {
+    return butterflyPublication.pdfUrl;
+  }
+  return url;
+}

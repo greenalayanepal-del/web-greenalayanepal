@@ -55,7 +55,7 @@ values (
   'Butterfly Images of Kathmandu Valley',
   'butterfly-images-kathmandu-valley',
   'A comprehensive photographic collection documenting diverse butterfly species across the Kathmandu Valley. This visual guide showcases 174 species captured across different seasons and habitats.',
-  'https://github.com/greenalayanepal-del/greenalayanepal/raw/main/butterfly_images_of_kathmandu_valley.pdf',
+  'https://greenalayanepal.org.np/publications/butterfly_images_of_kathmandu_valley.pdf',
   '2026-04-01'
 )
 on conflict (slug) do nothing;

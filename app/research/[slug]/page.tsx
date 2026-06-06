@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
+import { resolvePublicationPdfUrl } from "@/lib/site";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 
 type PageProps = {
@@ -34,6 +35,8 @@ export default async function ResearchDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  const pdfUrl = resolvePublicationPdfUrl(item.pdf_url);
+
   return (
     <PageShell
       title={item.title}
@@ -57,9 +60,9 @@ export default async function ResearchDetailPage({ params }: PageProps) {
         <p className="mt-6 text-neutral-500">No abstract available.</p>
       )}
 
-      {item.pdf_url ? (
+      {pdfUrl ? (
         <a
-          href={item.pdf_url}
+          href={pdfUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-6 inline-block rounded-lg bg-emerald-700 px-4 py-2 text-white hover:bg-emerald-800"
