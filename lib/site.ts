@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const faviconVersion = "2";
+const faviconVersion = "3";
 
 /** Static favicon set in /public — kept small for sub-100ms loads on every route. */
 export const siteIcons: NonNullable<Metadata["icons"]> = {
@@ -12,8 +12,6 @@ export const siteIcons: NonNullable<Metadata["icons"]> = {
   apple: [{ url: `/apple-touch-icon.png?v=${faviconVersion}`, sizes: "180x180", type: "image/png" }],
   shortcut: `/favicon.ico?v=${faviconVersion}`,
 };
-
-export const faviconAssetVersion = faviconVersion;
 
 export const siteConfig = {
   name: "Greenalaya Nepal",

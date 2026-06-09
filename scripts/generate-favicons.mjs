@@ -60,6 +60,7 @@ await writePng(128, "logo.png");
 
 const ico = pngBuffersToIco([png16, png32, png48]);
 writeFileSync(path.join(publicDir, "favicon.ico"), ico);
+writeFileSync(path.join(appDir, "favicon.ico"), ico);
 
 await sharp(input).resize(32, 32, { fit: "contain", background: bg }).png().toFile(path.join(appDir, "icon.png"));
 await sharp(input)

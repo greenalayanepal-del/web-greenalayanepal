@@ -4,7 +4,7 @@ import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { organizationJsonLd } from "@/lib/json-ld";
-import { faviconAssetVersion, siteConfig, siteIcons } from "@/lib/site";
+import { siteConfig, siteIcons } from "@/lib/site";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -61,26 +61,6 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${openSans.variable} h-full scroll-smooth antialiased`}
     >
-      <head>
-        <link rel="icon" href={`/favicon.ico?v=${faviconAssetVersion}`} sizes="any" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href={`/favicon-32x32.png?v=${faviconAssetVersion}`}
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href={`/favicon-16x16.png?v=${faviconAssetVersion}`}
-        />
-        <link
-          rel="apple-touch-icon"
-          href={`/apple-touch-icon.png?v=${faviconAssetVersion}`}
-          sizes="180x180"
-        />
-      </head>
       <body className="flex min-h-full flex-col bg-white font-body text-neutral-900">
         <JsonLd data={organizationJsonLd()} />
         <SiteHeader />
