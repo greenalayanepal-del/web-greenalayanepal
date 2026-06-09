@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
 import { PageShell } from "@/components/page-shell";
 import { pageMetadata } from "@/lib/seo";
-import { siteConfig, siteContact } from "@/lib/site";
+import { siteContact, socialProfiles } from "@/lib/site";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
 
 export const metadata = pageMetadata({
@@ -81,16 +81,20 @@ export default function ContactPage() {
                 <dd className="mt-1">{siteContact.location}</dd>
               </div>
               <div>
-                <dt className="text-sm font-semibold text-emerald-900">LinkedIn</dt>
-                <dd className="mt-1">
-                  <a
-                    href={siteConfig.social.linkedin}
-                    className="font-medium text-emerald-800 hover:underline"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    Greenalaya Nepal
-                  </a>
+                <dt className="text-sm font-semibold text-emerald-900">Social</dt>
+                <dd className="mt-2 space-y-2">
+                  {socialProfiles.map(({ label, href }) => (
+                    <div key={label}>
+                      <a
+                        href={href}
+                        className="font-medium text-emerald-800 hover:underline"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {label}
+                      </a>
+                    </div>
+                  ))}
                 </dd>
               </div>
             </dl>

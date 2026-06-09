@@ -47,7 +47,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div>
+        <div id="strategic-pillars" className="scroll-mt-24">
           <h2 className="text-lg font-semibold text-emerald-900">
             Strategic pillars
           </h2>
@@ -60,7 +60,7 @@ export default function AboutPage() {
           </ul>
         </div>
 
-        <div>
+        <div id="thematic-areas" className="scroll-mt-24">
           <h2 className="text-lg font-semibold text-emerald-900">
             Thematic areas of focus
           </h2>

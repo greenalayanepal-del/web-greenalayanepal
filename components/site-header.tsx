@@ -1,15 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-
-const navItems = [
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/research", label: "Research" },
-  { href: "/resources", label: "Resources" },
-  { href: "/team", label: "Team" },
-  { href: "/news", label: "News" },
-  { href: "/contact", label: "Contact" },
-];
+import { mainNavItems, siteConfig } from "@/lib/site";
 
 export function SiteHeader() {
   return (
@@ -18,7 +9,7 @@ export function SiteHeader() {
         <Link href="/" className="flex items-center gap-3 transition hover:opacity-90">
           <Image
             src="/logo.png"
-            alt="Greenalaya Nepal"
+            alt={siteConfig.name}
             width={55}
             height={55}
             className="h-12 w-auto object-contain lg:h-14"
@@ -26,11 +17,11 @@ export function SiteHeader() {
             unoptimized
           />
           <span className="font-display text-xl font-bold tracking-tight text-[#2e7d32] lg:text-2xl">
-            Greenalaya Nepal
+            {siteConfig.name}
           </span>
         </Link>
         <nav className="hidden items-center gap-8 text-sm font-semibold text-neutral-800 md:flex">
-          {navItems.map((item) => (
+          {mainNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -53,7 +44,7 @@ export function SiteHeader() {
           </summary>
           <nav className="absolute right-0 top-full mt-2 min-w-56 rounded-xl border border-black/5 bg-white p-4 shadow-lg">
             <ul className="space-y-2 text-sm font-semibold text-neutral-800">
-              {navItems.map((item) => (
+              {mainNavItems.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className="block rounded-lg px-3 py-2 hover:bg-emerald-50 hover:text-[#2e7d32]">
                     {item.label}
