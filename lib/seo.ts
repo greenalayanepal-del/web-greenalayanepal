@@ -15,6 +15,9 @@ export function pageMetadata({
   noIndex = false,
 }: PageMetaInput): Metadata {
   const url = `${siteConfig.url}${path}`;
+  const ogImage = siteConfig.ogImage.startsWith("http")
+    ? siteConfig.ogImage
+    : `${siteConfig.url}${siteConfig.ogImage}`;
 
   return {
     title,
@@ -27,13 +30,13 @@ export function pageMetadata({
       siteName: siteConfig.name,
       title: `${title} | ${siteConfig.name}`,
       description,
-      images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: siteConfig.name }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: siteConfig.name }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${siteConfig.name}`,
       description,
-      images: [siteConfig.ogImage],
+      images: [ogImage],
     },
     robots: noIndex ? { index: false, follow: false } : { index: true, follow: true },
   };

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Montserrat, Open_Sans } from "next/font/google";
+import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { organizationJsonLd } from "@/lib/json-ld";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -63,6 +65,7 @@ export default function RootLayout({
       className={`${montserrat.variable} ${openSans.variable} h-full scroll-smooth antialiased`}
     >
       <body className="flex min-h-full flex-col bg-white font-body text-neutral-900">
+        <JsonLd data={organizationJsonLd()} />
         <SiteHeader />
         <div className="flex-1">{children}</div>
         <SiteFooter />

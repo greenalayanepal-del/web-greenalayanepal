@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "postinstall": "playwright install chromium",
+    "db:apply-phase4": "node --env-file=.env.local scripts/apply-phase4.mjs",
+    "db:check-phase5": "node --env-file=.env.local scripts/apply-phase5.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.3",
@@ -16,6 +21,7 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.52.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

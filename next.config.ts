@@ -1,15 +1,14 @@
 import type { NextConfig } from "next";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "image.qwenlm.ai",
-        pathname: "/public_source/**",
-      },
-    ],
+  turbopack: {
+    root: projectRoot,
   },
+  allowedDevOrigins: ["127.0.0.1", "localhost"],
 };
 
 export default nextConfig;

@@ -2,11 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 const navItems = [
-  { href: "/#about", label: "About" },
-  { href: "/#pillars", label: "Pillars" },
-  { href: "/#thematic", label: "Our Work" },
+  { href: "/about", label: "About" },
+  { href: "/projects", label: "Projects" },
   { href: "/research", label: "Research" },
   { href: "/resources", label: "Resources" },
+  { href: "/team", label: "Team" },
+  { href: "/news", label: "News" },
   { href: "/contact", label: "Contact" },
 ];
 

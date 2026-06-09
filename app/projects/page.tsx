@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { DataError, EmptyState } from "@/components/data-status";
+import { DataError } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
+import { seedProjects } from "@/lib/content/seed";
 import { pageMetadata } from "@/lib/seo";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import type { Project } from "@/lib/types/project";
@@ -39,6 +40,8 @@ async function getProjects(): Promise<{
 
 export default async function ProjectsPage() {
   const { projects, error } = await getProjects();
+  const displayProjects =
+    !error && projects.length === 0 ? seedProjects : projects;
 
   return (
     <PageShell
@@ -47,11 +50,9 @@ export default async function ProjectsPage() {
     >
       {error ? (
         <DataError message={error} />
-      ) : projects.length === 0 ? (
-        <EmptyState message="No projects yet. Add rows in Supabase → Table Editor → projects." />
       ) : (
         <ul className="mt-8 space-y-6">
-          {projects.map((project) => (
+          {displayProjects.map((project) => (
             <li
               key={project.id}
               className="rounded-lg border border-neutral-200 bg-white p-5"

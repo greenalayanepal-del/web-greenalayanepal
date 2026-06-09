@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
+import { getSeedProject } from "@/lib/content/seed";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 
 type PageProps = {
@@ -9,19 +10,22 @@ type PageProps = {
 
 export default async function ProjectDetailPage({ params }: PageProps) {
   const { slug } = await params;
+  let project = getSeedProject(slug);
 
-  if (!isSupabaseConfigured()) {
-    notFound();
+  if (isSupabaseConfigured()) {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("projects")
+      .select("id, title, slug, description, image_url")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    if (!error && data) {
+      project = data;
+    }
   }
 
-  const supabase = await createClient();
-  const { data: project, error } = await supabase
-    .from("projects")
-    .select("id, title, slug, description, image_url")
-    .eq("slug", slug)
-    .maybeSingle();
-
-  if (error || !project) {
+  if (!project) {
     notFound();
   }
 

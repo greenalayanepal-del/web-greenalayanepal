@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/json-ld";
 import { PageShell } from "@/components/page-shell";
 import { getSeedNewsPost } from "@/lib/content/seed";
+import { articleJsonLd } from "@/lib/json-ld";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 
 type PageProps = {
@@ -41,15 +43,24 @@ export default async function NewsDetailPage({ params }: PageProps) {
   }
 
   return (
-    <PageShell
-      title={post.title}
-      description={
-        post.excerpt ??
-        (post.published_at
-          ? (formatDate(post.published_at) ?? "News update")
-          : "News update")
-      }
-    >
+    <>
+      <JsonLd
+        data={articleJsonLd({
+          title: post.title,
+          description: post.excerpt ?? "News update from Greenalaya Nepal",
+          path: `/news/${post.slug}`,
+          datePublished: post.published_at,
+        })}
+      />
+      <PageShell
+        title={post.title}
+        description={
+          post.excerpt ??
+          (post.published_at
+            ? (formatDate(post.published_at) ?? "News update")
+            : "News update")
+        }
+      >
       <p className="mt-6">
         <Link href="/news" className="text-sm text-emerald-700 hover:underline">
           ← All news
@@ -73,6 +84,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
       ) : (
         <p className="mt-6 text-neutral-500">Content coming soon.</p>
       )}
-    </PageShell>
+      </PageShell>
+    </>
   );
 }

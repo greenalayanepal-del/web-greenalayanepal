@@ -22,7 +22,12 @@ export function SiteFooter() {
             </li>
             <li>
               <Link href="/projects" className="hover:text-white">
-                Our Work
+                Projects
+              </Link>
+            </li>
+            <li>
+              <Link href="/research" className="hover:text-white">
+                Research
               </Link>
             </li>
             <li>
@@ -31,8 +36,13 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link href="/research" className="hover:text-white">
-                Research
+              <Link href="/team" className="hover:text-white">
+                Team
+              </Link>
+            </li>
+            <li>
+              <Link href="/news" className="hover:text-white">
+                News
               </Link>
             </li>
             <li>

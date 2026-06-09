@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { DataError, EmptyState } from "@/components/data-status";
+import { DataError } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
+import { seedResearch } from "@/lib/content/seed";
 import { pageMetadata } from "@/lib/seo";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import type { Research } from "@/lib/types/research";
@@ -48,6 +49,7 @@ function formatDate(value: string | null) {
 
 export default async function ResearchPage() {
   const { items, error } = await getResearch();
+  const displayItems = !error && items.length === 0 ? seedResearch : items;
 
   return (
     <PageShell
@@ -56,11 +58,9 @@ export default async function ResearchPage() {
     >
       {error ? (
         <DataError message={error} />
-      ) : items.length === 0 ? (
-        <EmptyState message="No research publications yet. Run supabase/schema.sql in the Supabase SQL Editor." />
       ) : (
         <ul className="mt-8 space-y-6">
-          {items.map((item) => (
+          {displayItems.map((item) => (
             <li
               key={item.id}
               className="rounded-lg border border-neutral-200 bg-white p-5"

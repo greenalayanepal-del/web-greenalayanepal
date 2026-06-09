@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { DataError } from "@/components/data-status";
 import { FeaturedResource } from "@/components/featured-resource";
+import { JsonLd } from "@/components/json-ld";
 import { NewsletterCta } from "@/components/newsletter-cta";
 import { PageHero } from "@/components/page-hero";
+import { publicationJsonLd } from "@/lib/json-ld";
 import { pageMetadata } from "@/lib/seo";
 import {
   butterflyPublication,
@@ -61,6 +63,7 @@ export default async function ResourcesPage() {
 
   return (
     <>
+      <JsonLd data={publicationJsonLd()} />
       <PageHero
         title="Knowledge Hub & Resources"
         description="Access research reports, toolkits, datasets, and multimedia resources to support evidence-based conservation and environmental action across Nepal."
