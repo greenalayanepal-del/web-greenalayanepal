@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { SiteLogo } from "@/components/site-logo";
 import { mainNavItems, siteConfig } from "@/lib/site";
 
 export function SiteHeader() {
@@ -7,15 +7,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-black/5 bg-white/95 backdrop-blur-xl shadow-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 lg:px-8">
         <Link href="/" className="flex items-center gap-3 transition hover:opacity-90">
-          <Image
-            src="/logo.png"
-            alt={siteConfig.name}
-            width={55}
-            height={55}
-            className="h-12 w-auto object-contain lg:h-14"
-            priority
-            unoptimized
-          />
+          <SiteLogo surface="header" priority />
           <span className="font-display text-xl font-bold tracking-tight text-[#2e7d32] lg:text-2xl">
             {siteConfig.name}
           </span>

@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { SiteLogo } from "@/components/site-logo";
 import type { SVGProps } from "react";
 import { SocialLinks } from "@/components/social-links";
 import {
@@ -90,13 +90,11 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <div className="flex justify-center gap-2 sm:justify-start">
-              <Image
-                src="/logo.png"
-                alt={siteConfig.name}
-                width={32}
-                height={32}
+              <SiteLogo
+                surface="footer"
+                width={40}
+                height={40}
                 className="h-10 w-10 object-contain"
-                unoptimized
               />
               <span className="font-display text-2xl font-semibold text-[#2e7d32]">
                 {siteConfig.name}

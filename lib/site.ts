@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const faviconVersion = "4";
+const faviconVersion = "5";
 
 /** Static favicon set in /public — kept small for sub-100ms loads on every route. */
 export const siteIcons: NonNullable<Metadata["icons"]> = {
