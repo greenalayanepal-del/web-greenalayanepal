@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const faviconVersion = "3";
+const faviconVersion = "4";
 
 /** Static favicon set in /public — kept small for sub-100ms loads on every route. */
 export const siteIcons: NonNullable<Metadata["icons"]> = {
@@ -19,7 +19,7 @@ export const siteConfig = {
   tagline: "Research & Innovation for Nature",
   description:
     "Data-driven conservation, green enterprise, and community collaboration for resilient ecosystems in Nepal.",
-  ogImage: "/logo.png",
+  ogImage: "/og-image.png",
   social: {
     facebook: "https://www.facebook.com/greenalayanepal/",
     instagram: "https://www.instagram.com/greenalayanepal/",

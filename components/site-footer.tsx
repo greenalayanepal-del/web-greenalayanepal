@@ -95,7 +95,7 @@ export function SiteFooter() {
                 alt={siteConfig.name}
                 width={32}
                 height={32}
-                className="h-8 w-8 rounded-full object-contain"
+                className="h-10 w-10 object-contain"
                 unoptimized
               />
               <span className="font-display text-2xl font-semibold text-[#2e7d32]">

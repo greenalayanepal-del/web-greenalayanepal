@@ -7,15 +7,23 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const publicDir = path.join(root, "public");
 const appDir = path.join(root, "app");
+const brandDir = path.join(root, "brand");
 
-const source = path.resolve(process.argv[2] ?? path.join(root, "brand", "logo-source.png"));
+const faviconSource = path.resolve(
+  process.argv[2] ?? path.join(brandDir, "logo-favicon.png")
+);
+const headerSource = path.resolve(
+  process.argv[3] ?? path.join(brandDir, "logo-header.png")
+);
 
-const input = readFileSync(source);
-const bg = { r: 0, g: 0, b: 0, alpha: 1 };
+const faviconInput = readFileSync(faviconSource);
+const headerInput = readFileSync(headerSource);
+const darkBg = { r: 0, g: 0, b: 0, alpha: 1 };
+const lightBg = { r: 255, g: 255, b: 255, alpha: 1 };
 
-async function writePng(size, filename) {
-  const buf = await sharp(input)
-    .resize(size, size, { fit: "contain", background: bg })
+async function writeFaviconPng(size, filename) {
+  const buf = await sharp(faviconInput)
+    .resize(size, size, { fit: "contain", background: darkBg })
     .png({ compressionLevel: 9 })
     .toBuffer();
   writeFileSync(path.join(publicDir, filename), buf);
@@ -52,21 +60,46 @@ function pngBuffersToIco(pngBuffers) {
   return Buffer.concat(parts);
 }
 
-const png16 = await writePng(16, "favicon-16x16.png");
-const png32 = await writePng(32, "favicon-32x32.png");
-const png48 = await writePng(48, "favicon-48x48.png");
-await writePng(180, "apple-touch-icon.png");
-await writePng(128, "logo.png");
+const png16 = await writeFaviconPng(16, "favicon-16x16.png");
+const png32 = await writeFaviconPng(32, "favicon-32x32.png");
+const png48 = await writeFaviconPng(48, "favicon-48x48.png");
+await writeFaviconPng(180, "apple-touch-icon.png");
 
 const ico = pngBuffersToIco([png16, png32, png48]);
 writeFileSync(path.join(publicDir, "favicon.ico"), ico);
 writeFileSync(path.join(appDir, "favicon.ico"), ico);
 
-await sharp(input).resize(32, 32, { fit: "contain", background: bg }).png().toFile(path.join(appDir, "icon.png"));
-await sharp(input)
-  .resize(180, 180, { fit: "contain", background: bg })
+await sharp(faviconInput)
+  .resize(32, 32, { fit: "contain", background: darkBg })
+  .png()
+  .toFile(path.join(appDir, "icon.png"));
+await sharp(faviconInput)
+  .resize(180, 180, { fit: "contain", background: darkBg })
   .png()
   .toFile(path.join(appDir, "apple-icon.png"));
 
-console.log("Generated favicons from", source);
+await sharp(headerInput)
+  .resize(512, 512, { fit: "contain", background: lightBg })
+  .png({ compressionLevel: 9 })
+  .toFile(path.join(publicDir, "logo.png"));
+
+const ogLogo = await sharp(headerInput)
+  .resize(520, 520, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+  .png()
+  .toBuffer();
+
+await sharp({
+  create: {
+    width: 1200,
+    height: 630,
+    channels: 3,
+    background: { r: 236, g: 253, b: 245 },
+  },
+})
+  .composite([{ input: ogLogo, gravity: "center" }])
+  .png({ compressionLevel: 9 })
+  .toFile(path.join(publicDir, "og-image.png"));
+
+console.log("Favicon source:", faviconSource);
+console.log("Header/OG source:", headerSource);
 console.log("favicon.ico", ico.length, "bytes, magic", ico.slice(0, 4).toString("hex"));
