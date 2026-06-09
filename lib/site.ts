@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 
+const faviconVersion = "2";
+
 /** Static favicon set in /public — kept small for sub-100ms loads on every route. */
 export const siteIcons: NonNullable<Metadata["icons"]> = {
   icon: [
-    { url: "/favicon.ico", sizes: "any" },
-    { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    { url: `/favicon.ico?v=${faviconVersion}`, sizes: "any" },
+    { url: `/favicon-32x32.png?v=${faviconVersion}`, sizes: "32x32", type: "image/png" },
+    { url: `/favicon-16x16.png?v=${faviconVersion}`, sizes: "16x16", type: "image/png" },
   ],
-  apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
-  shortcut: "/favicon.ico",
+  apple: [{ url: `/apple-touch-icon.png?v=${faviconVersion}`, sizes: "180x180", type: "image/png" }],
+  shortcut: `/favicon.ico?v=${faviconVersion}`,
 };
+
+export const faviconAssetVersion = faviconVersion;
 
 export const siteConfig = {
   name: "Greenalaya Nepal",
@@ -68,6 +72,43 @@ export const siteContact = {
   location: "Pokhara, Nepal",
   phone: "+977-9823232424",
 } as const;
+
+export const mainNavItems = [
+  { href: "/about", label: "About" },
+  { href: "/projects", label: "Projects" },
+  { href: "/research", label: "Research" },
+  { href: "/resources", label: "Resources" },
+  { href: "/team", label: "Team" },
+  { href: "/news", label: "News" },
+  { href: "/contact", label: "Contact" },
+] as const;
+
+export const footerAboutLinks = [
+  { text: "About Greenalaya", href: "/about" },
+  { text: "Meet the Team", href: "/team" },
+  { text: "Strategic Pillars", href: "/about#strategic-pillars" },
+  { text: "Thematic Areas", href: "/about#thematic-areas" },
+] as const;
+
+export const footerWorkLinks = [
+  { text: "Projects", href: "/projects" },
+  { text: "Research", href: "/research" },
+  { text: "Resources", href: "/resources" },
+  { text: "News & Updates", href: "/news" },
+] as const;
+
+export const footerHelpfulLinks = [
+  { text: "Contact Us", href: "/contact" },
+  { text: "Get Involved", href: "/#get-involved" },
+  { text: "Browse Resources", href: "/resources" },
+  { text: "Send a Message", href: "/contact", hasIndicator: true },
+] as const;
+
+export const socialProfiles = [
+  { label: "Facebook", href: siteConfig.social.facebook },
+  { label: "Instagram", href: siteConfig.social.instagram },
+  { label: "LinkedIn", href: siteConfig.social.linkedin },
+] as const;
 
 export const thematicAreas = [
   {
