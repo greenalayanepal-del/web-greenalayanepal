@@ -23,6 +23,7 @@ export function SiteHeader() {
             height={55}
             className="h-12 w-auto object-contain lg:h-14"
             priority
+            unoptimized
           />
           <span className="font-display text-xl font-bold tracking-tight text-[#2e7d32] lg:text-2xl">
             Greenalaya Nepal

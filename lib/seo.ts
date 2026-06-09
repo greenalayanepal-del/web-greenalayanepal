@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, siteIcons } from "@/lib/site";
 
 type PageMetaInput = {
   title: string;
@@ -22,6 +22,7 @@ export function pageMetadata({
   return {
     title,
     description,
+    icons: siteIcons,
     alternates: { canonical: url },
     openGraph: {
       type: "website",
