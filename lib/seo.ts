@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { siteConfig, siteIcons } from "@/lib/site";
 
+/** Separator between page name and site name in browser tabs. */
+export const titleSeparator = " │ ";
+
+export function documentTitle(pageTitle: string) {
+  return `${pageTitle}${titleSeparator}${siteConfig.name}`;
+}
+
 type PageMetaInput = {
   title: string;
   description: string;
@@ -18,9 +25,12 @@ export function pageMetadata({
   const ogImage = siteConfig.ogImage.startsWith("http")
     ? siteConfig.ogImage
     : `${siteConfig.url}${siteConfig.ogImage}`;
+  const fullTitle = documentTitle(title);
 
   return {
-    title,
+    title: {
+      absolute: fullTitle,
+    },
     description,
     icons: siteIcons,
     alternates: { canonical: url },
@@ -29,13 +39,13 @@ export function pageMetadata({
       locale: "en_NP",
       url,
       siteName: siteConfig.name,
-      title: `${title} | ${siteConfig.name}`,
+      title: fullTitle,
       description,
       images: [{ url: ogImage, width: 1200, height: 630, alt: siteConfig.name }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | ${siteConfig.name}`,
+      title: fullTitle,
       description,
       images: [ogImage],
     },

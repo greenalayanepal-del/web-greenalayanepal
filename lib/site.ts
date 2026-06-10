@@ -72,6 +72,7 @@ export const siteContact = {
 } as const;
 
 export const mainNavItems = [
+  { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/research", label: "Research" },

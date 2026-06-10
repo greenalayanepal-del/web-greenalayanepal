@@ -1,30 +1,25 @@
 import type { Metadata } from "next";
-import { Montserrat, Open_Sans } from "next/font/google";
+import { Roboto } from "next/font/google";
 import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { organizationJsonLd } from "@/lib/json-ld";
+import { titleSeparator } from "@/lib/seo";
 import { siteConfig, siteIcons } from "@/lib/site";
 import "./globals.css";
 
-const montserrat = Montserrat({
+const roboto = Roboto({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["600", "700"],
-});
-
-const openSans = Open_Sans({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "600"],
+  weight: ["500", "700"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
+    template: `%s${titleSeparator}${siteConfig.name}`,
   },
   description: siteConfig.description,
   icons: siteIcons,
@@ -61,10 +56,15 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${montserrat.variable} ${openSans.variable} h-full scroll-smooth antialiased`}
+      className={`${roboto.variable} h-full scroll-smooth antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background font-body text-foreground">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <JsonLd data={organizationJsonLd()} />
           <SiteHeader />
           <div className="flex-1">{children}</div>

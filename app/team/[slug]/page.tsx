@@ -1,15 +1,16 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
 import { getSeedTeamMember } from "@/lib/content/seed";
+import { pageMetadata } from "@/lib/seo";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export default async function TeamMemberPage({ params }: PageProps) {
-  const { slug } = await params;
+async function loadTeamMember(slug: string) {
   let member = getSeedTeamMember(slug);
 
   if (isSupabaseConfigured()) {
@@ -24,6 +25,32 @@ export default async function TeamMemberPage({ params }: PageProps) {
       member = data;
     }
   }
+
+  return member;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const member = await loadTeamMember(slug);
+
+  if (!member) {
+    return pageMetadata({
+      title: "Team",
+      description: "Greenalaya Nepal team member",
+      path: `/team/${slug}`,
+    });
+  }
+
+  return pageMetadata({
+    title: member.name,
+    description: member.position ?? "Greenalaya Nepal team member",
+    path: `/team/${member.slug}`,
+  });
+}
+
+export default async function TeamMemberPage({ params }: PageProps) {
+  const { slug } = await params;
+  const member = await loadTeamMember(slug);
 
   if (!member) {
     notFound();

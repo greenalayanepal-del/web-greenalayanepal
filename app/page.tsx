@@ -1,16 +1,12 @@
-import type { Metadata } from "next";
 import { HomeLanding } from "@/components/home-landing";
 import { pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
-export const metadata: Metadata = {
-  ...pageMetadata({
-    title: siteConfig.name,
-    description: siteConfig.description,
-    path: "/",
-  }),
-  title: { absolute: siteConfig.name },
-};
+export const metadata = pageMetadata({
+  title: "Home",
+  description: siteConfig.description,
+  path: "/",
+});
 
 export default function Home() {
   return <HomeLanding />;

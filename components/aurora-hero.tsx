@@ -62,13 +62,15 @@ export function AuroraHero({
       role="banner"
       aria-label="Hero section"
     >
-      <div className="absolute inset-0 overflow-hidden opacity-40 dark:opacity-30" aria-hidden="true">
+      <div
+        className="pointer-events-none absolute inset-0 z-0 isolate overflow-hidden opacity-40 dark:opacity-30"
+        aria-hidden="true"
+      >
         <motion.div
-          className="absolute inset-[-100%]"
+          className="absolute inset-[-100%] blur-[80px]"
           style={{
             background: auroraGradient,
             backgroundSize: "300% 100%",
-            filter: "blur(80px)",
           }}
           animate={{
             backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
@@ -80,12 +82,11 @@ export function AuroraHero({
           }}
         />
         <motion.div
-          className="absolute inset-[-10px]"
+          className="absolute inset-[-10px] opacity-70 mix-blend-soft-light"
           style={{
             background: auroraShimmer,
             backgroundSize: "200%, 100%",
             backgroundPosition: "50% 50%, 50% 50%",
-            mixBlendMode: "difference",
           }}
           animate={{
             backgroundPosition: [
@@ -103,12 +104,12 @@ export function AuroraHero({
       </div>
 
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.55)_100%)] dark:bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.75)_100%)]"
+        className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.55)_100%)] dark:bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.75)_100%)]"
         aria-hidden="true"
       />
 
       {children ? (
-        <div className="relative z-10 w-full">{children}</div>
+        <div className="relative z-10 isolate w-full">{children}</div>
       ) : (
         <div className="relative z-10 container mx-auto px-4 text-center md:px-6">
           <motion.div

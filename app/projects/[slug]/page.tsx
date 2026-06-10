@@ -1,15 +1,16 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
 import { getSeedProject } from "@/lib/content/seed";
+import { pageMetadata } from "@/lib/seo";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export default async function ProjectDetailPage({ params }: PageProps) {
-  const { slug } = await params;
+async function loadProject(slug: string) {
   let project = getSeedProject(slug);
 
   if (isSupabaseConfigured()) {
@@ -24,6 +25,32 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       project = data;
     }
   }
+
+  return project;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const project = await loadProject(slug);
+
+  if (!project) {
+    return pageMetadata({
+      title: "Projects",
+      description: "Greenalaya Nepal project",
+      path: `/projects/${slug}`,
+    });
+  }
+
+  return pageMetadata({
+    title: project.title,
+    description: project.description ?? "Greenalaya Nepal project",
+    path: `/projects/${project.slug}`,
+  });
+}
+
+export default async function ProjectDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const project = await loadProject(slug);
 
   if (!project) {
     notFound();

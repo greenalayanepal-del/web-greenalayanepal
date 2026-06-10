@@ -1,8 +1,10 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
 import { getSeedResearch } from "@/lib/content/seed";
 import { articleJsonLd } from "@/lib/json-ld";
+import { pageMetadata } from "@/lib/seo";
 import { resolvePublicationPdfUrl } from "@/lib/site";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { JsonLd } from "@/components/json-ld";
@@ -11,17 +13,7 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-function formatDate(value: string | null) {
-  if (!value) return null;
-  return new Date(value).toLocaleDateString("en-NP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-
-export default async function ResearchDetailPage({ params }: PageProps) {
-  const { slug } = await params;
+async function loadResearchItem(slug: string) {
   let item = getSeedResearch(slug);
 
   if (isSupabaseConfigured()) {
@@ -36,6 +28,41 @@ export default async function ResearchDetailPage({ params }: PageProps) {
       item = data;
     }
   }
+
+  return item;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const item = await loadResearchItem(slug);
+
+  if (!item) {
+    return pageMetadata({
+      title: "Research",
+      description: "Research publication from Greenalaya Nepal",
+      path: `/research/${slug}`,
+    });
+  }
+
+  return pageMetadata({
+    title: item.title,
+    description: item.abstract ?? "Research publication from Greenalaya Nepal",
+    path: `/research/${item.slug}`,
+  });
+}
+
+function formatDate(value: string | null) {
+  if (!value) return null;
+  return new Date(value).toLocaleDateString("en-NP", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export default async function ResearchDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const item = await loadResearchItem(slug);
 
   if (!item) {
     notFound();

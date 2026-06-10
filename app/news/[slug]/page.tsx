@@ -1,26 +1,18 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
 import { PageShell } from "@/components/page-shell";
 import { getSeedNewsPost } from "@/lib/content/seed";
 import { articleJsonLd } from "@/lib/json-ld";
+import { pageMetadata } from "@/lib/seo";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-function formatDate(value: string | null) {
-  if (!value) return null;
-  return new Date(value).toLocaleDateString("en-NP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-
-export default async function NewsDetailPage({ params }: PageProps) {
-  const { slug } = await params;
+async function loadNewsPost(slug: string) {
   let post = getSeedNewsPost(slug);
 
   if (isSupabaseConfigured()) {
@@ -37,6 +29,41 @@ export default async function NewsDetailPage({ params }: PageProps) {
       post = data;
     }
   }
+
+  return post;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await loadNewsPost(slug);
+
+  if (!post) {
+    return pageMetadata({
+      title: "News",
+      description: "News update from Greenalaya Nepal",
+      path: `/news/${slug}`,
+    });
+  }
+
+  return pageMetadata({
+    title: post.title,
+    description: post.excerpt ?? "News update from Greenalaya Nepal",
+    path: `/news/${post.slug}`,
+  });
+}
+
+function formatDate(value: string | null) {
+  if (!value) return null;
+  return new Date(value).toLocaleDateString("en-NP", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export default async function NewsDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const post = await loadNewsPost(slug);
 
   if (!post) {
     notFound();
