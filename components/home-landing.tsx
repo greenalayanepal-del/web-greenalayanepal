@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { HomeHero } from "@/components/home-hero";
 import {
   siteConfig,
   strategicPillars,
@@ -88,54 +89,7 @@ function SectionHeader({
 export function HomeLanding() {
   return (
     <div className="bg-background text-foreground">
-      <section
-        className="relative flex min-h-[calc(100vh-5rem)] items-center justify-center overflow-hidden bg-cover bg-center px-5 pt-24 text-center text-white"
-        style={{
-          backgroundImage: `linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.6) 100%), url('${siteConfig.images.hero}')`,
-        }}
-      >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.3)_100%)]" />
-        <div className="relative z-10 max-w-4xl">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-6 py-2.5 text-sm font-semibold backdrop-blur-xl">
-            {siteConfig.tagline}
-          </div>
-          <h1 className="font-display text-4xl font-bold leading-tight drop-shadow-lg sm:text-5xl lg:text-6xl">
-            Building a{" "}
-            <span className="bg-gradient-to-br from-[#81c784] to-[#4caf50] bg-clip-text text-transparent">
-              Resilient Nepal
-            </span>{" "}
-            Through Data-Driven Conservation
-          </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-white/95 sm:text-xl">
-            Greenalaya Nepal leverages research, technological innovation, and green
-            enterprise to deliver data-driven solutions for resilient ecosystems
-            through collaboration.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="#thematic"
-              className="inline-flex items-center gap-3 rounded-full bg-gradient-to-br from-[#2e7d32] to-[#1b5e20] px-10 py-4 text-sm font-semibold text-white shadow-lg shadow-emerald-900/30 transition hover:-translate-y-1 hover:shadow-xl"
-            >
-              Explore Our Work
-            </Link>
-            <Link
-              href="#get-involved"
-              className="inline-flex items-center gap-3 rounded-full border-2 border-white/50 bg-white/15 px-10 py-4 text-sm font-semibold text-white backdrop-blur-sm transition hover:-translate-y-1 hover:border-white/70 hover:bg-white/25"
-            >
-              Join as Citizen Scientist
-            </Link>
-          </div>
-        </div>
-        <a
-          href="#about"
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/80 transition hover:text-white"
-          aria-label="Scroll to about section"
-        >
-          <svg viewBox="0 0 24 24" className="h-8 w-8 animate-bounce" aria-hidden>
-            <path fill="currentColor" d="M12 16.5 6 10.5l1.4-1.4 4.6 4.6 4.6-4.6L18 10.5z" />
-          </svg>
-        </a>
-      </section>
+      <HomeHero />
 
       <section id="about" className="scroll-mt-24 px-5 py-24 lg:py-28">
         <div className="mx-auto grid max-w-6xl items-center gap-16 lg:grid-cols-2 lg:gap-20">
