@@ -26,7 +26,6 @@ export const siteConfig = {
     linkedin: "https://www.linkedin.com/company/greenalaya-nepal/",
   },
   images: {
-    hero: "/images/hero.png",
     community: "/images/community.png",
     resourcesHeader: "/images/resources-header.png",
   },
@@ -103,17 +102,6 @@ export const footerHelpfulLinks = [
   { text: "Send a Message", href: "/contact", hasIndicator: true },
 ] as const;
 
-export const mobileNavGroups = [
-  {
-    location: "About",
-    venues: footerAboutLinks.map(({ text, href }) => ({ name: text, href })),
-  },
-  {
-    location: "Our Work",
-    venues: footerWorkLinks.map(({ text, href }) => ({ name: text, href })),
-  },
-] as const;
-
 export const socialProfiles = [
   { label: "Facebook", href: siteConfig.social.facebook },
   { label: "Instagram", href: siteConfig.social.instagram },
@@ -173,8 +161,7 @@ const legacyButterflyGithubPdf =
 export const butterflyPublication = {
   title: "Butterfly Images of Kathmandu Valley",
   slug: "butterfly-images-kathmandu-valley",
-  pdfUrl:
-    "https://greenalayanepal.org.np/publications/butterfly_images_of_kathmandu_valley.pdf",
+  pdfUrl: "/publications/butterfly_images_of_kathmandu_valley.pdf",
   abstract:
     "A comprehensive photographic collection documenting 174 butterfly species across the Kathmandu Valley, captured across different seasons and habitats.",
   description:

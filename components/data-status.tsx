@@ -10,11 +10,3 @@ export function DataError({ message }: DataErrorProps) {
     </div>
   );
 }
-
-type EmptyStateProps = {
-  message: string;
-};
-
-export function EmptyState({ message }: EmptyStateProps) {
-  return <p className="mt-8 text-neutral-600">{message}</p>;
-}

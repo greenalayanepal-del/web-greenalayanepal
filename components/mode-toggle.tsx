@@ -6,15 +6,19 @@ import { useTheme } from "next-themes";
 import { Toggle } from "@/components/ui/toggle";
 import { cn } from "@/lib/utils";
 
+function useIsClient() {
+  return React.useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+}
+
 export function ModeToggle({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const isClient = useIsClient();
 
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
+  if (!isClient) return null;
 
   return (
     <Toggle

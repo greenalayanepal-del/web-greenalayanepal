@@ -4,7 +4,7 @@ import { siteConfig, siteIcons } from "@/lib/site";
 /** Separator between page name and site name in browser tabs. */
 export const titleSeparator = " │ ";
 
-export function documentTitle(pageTitle: string) {
+function documentTitle(pageTitle: string) {
   return `${pageTitle}${titleSeparator}${siteConfig.name}`;
 }
 

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-export const COMMUNITY_HERO_BG = "/images/community-fist-bump-4k.jpg";
+const COMMUNITY_HERO_BG = "/images/community-fist-bump-4k.jpg";
 
 const HERO_DESCRIPTION =
   "Greenalaya Nepal leverages research, technological innovation, and green enterprise to deliver data-driven solutions for resilient ecosystems through collaboration.";
@@ -133,23 +133,16 @@ function HeroParallaxImage() {
 
 export function ShaderBackground({
   children,
-  pinBackground = false,
   className,
 }: {
   children: React.ReactNode;
-  pinBackground?: boolean;
   className?: string;
 }) {
   return (
     <section
       className={cn("relative bg-[#0a0f0a]", className ?? "min-h-screen")}
     >
-      <div
-        className={cn(
-          "pointer-events-none inset-0 z-0 overflow-hidden bg-[#0a0f0a]",
-          pinBackground ? "fixed" : "absolute",
-        )}
-      >
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-[#0a0f0a]">
         <HeroParallaxImage />
         <HeroOverlays />
       </div>

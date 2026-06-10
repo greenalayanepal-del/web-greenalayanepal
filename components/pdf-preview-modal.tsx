@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 type PdfPreviewModalProps = {
   title: string;
@@ -17,21 +17,15 @@ export function PdfPreviewModal({
   isOpen,
   onClose,
 }: PdfPreviewModalProps) {
-  const [iframeSrc, setIframeSrc] = useState("");
+  const iframeSrc = isOpen ? pdfUrl : "";
 
   useEffect(() => {
-    if (isOpen) {
-      setIframeSrc(pdfUrl);
-      document.body.style.overflow = "hidden";
-    } else {
-      setIframeSrc("");
-      document.body.style.overflow = "";
-    }
-
+    if (!isOpen) return;
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isOpen, pdfUrl]);
+  }, [isOpen]);
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
