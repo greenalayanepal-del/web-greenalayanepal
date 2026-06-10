@@ -85,7 +85,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-16 w-full place-self-end rounded-t-xl bg-emerald-50">
+    <footer className="mt-16 w-full place-self-end rounded-t-xl bg-muted">
       <div className="mx-auto max-w-6xl px-4 pt-16 pb-6 sm:px-6 lg:px-8 lg:pt-24">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
@@ -101,7 +101,7 @@ export function SiteFooter() {
               </span>
             </div>
 
-            <p className="mt-6 max-w-md text-center leading-relaxed text-neutral-600 sm:max-w-xs sm:text-left">
+            <p className="mt-6 max-w-md text-center leading-relaxed text-muted-foreground sm:max-w-xs sm:text-left">
               {siteConfig.description}
             </p>
 
@@ -110,13 +110,13 @@ export function SiteFooter() {
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 lg:col-span-2">
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-emerald-950">About Us</p>
+              <p className="text-lg font-medium text-foreground">About Us</p>
               <ul className="mt-8 space-y-4 text-sm">
                 {footerAboutLinks.map(({ text, href }) => (
                   <li key={text}>
                     <Link
                       href={href}
-                      className="text-neutral-600 transition hover:text-[#2e7d32]"
+                      className="text-muted-foreground transition hover:text-[#2e7d32]"
                     >
                       {text}
                     </Link>
@@ -126,13 +126,13 @@ export function SiteFooter() {
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-emerald-950">Our Work</p>
+              <p className="text-lg font-medium text-foreground">Our Work</p>
               <ul className="mt-8 space-y-4 text-sm">
                 {footerWorkLinks.map(({ text, href }) => (
                   <li key={text}>
                     <Link
                       href={href}
-                      className="text-neutral-600 transition hover:text-[#2e7d32]"
+                      className="text-muted-foreground transition hover:text-[#2e7d32]"
                     >
                       {text}
                     </Link>
@@ -142,7 +142,7 @@ export function SiteFooter() {
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-emerald-950">
+              <p className="text-lg font-medium text-foreground">
                 Helpful Links
               </p>
               <ul className="mt-8 space-y-4 text-sm">
@@ -155,13 +155,13 @@ export function SiteFooter() {
                         className={
                           hasIndicator
                             ? "group flex items-center justify-center gap-1.5 sm:justify-start"
-                            : "text-neutral-600 transition hover:text-[#2e7d32]"
+                            : "text-muted-foreground transition hover:text-[#2e7d32]"
                         }
                       >
                         <span
                           className={
                             hasIndicator
-                              ? "text-neutral-600 transition group-hover:text-[#2e7d32]"
+                              ? "text-muted-foreground transition group-hover:text-[#2e7d32]"
                               : undefined
                           }
                         >
@@ -181,7 +181,7 @@ export function SiteFooter() {
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-emerald-950">Contact Us</p>
+              <p className="text-lg font-medium text-foreground">Contact Us</p>
               <ul className="mt-8 space-y-4 text-sm">
                 {contactInfo.map((item) => {
                   const Icon = item.icon;
@@ -193,7 +193,7 @@ export function SiteFooter() {
                           className="flex items-center justify-center gap-1.5 sm:justify-start"
                         >
                           <Icon className="size-5 shrink-0 text-[#2e7d32]" />
-                          <span className="flex-1 text-neutral-600 transition hover:text-[#2e7d32]">
+                          <span className="flex-1 text-muted-foreground transition hover:text-[#2e7d32]">
                             {item.text}
                           </span>
                         </a>
@@ -204,7 +204,7 @@ export function SiteFooter() {
                     <li key={item.text}>
                       <div className="flex items-center justify-center gap-1.5 sm:justify-start">
                         <Icon className="size-5 shrink-0 text-[#2e7d32]" />
-                        <address className="-mt-0.5 flex-1 not-italic text-neutral-600">
+                        <address className="-mt-0.5 flex-1 not-italic text-muted-foreground">
                           {item.text}
                         </address>
                       </div>
@@ -216,13 +216,13 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-emerald-200 pt-6">
+        <div className="mt-12 border-t border-border pt-6">
           <div className="text-center sm:flex sm:justify-between sm:text-left">
-            <p className="text-sm text-neutral-600">
+            <p className="text-sm text-muted-foreground">
               <span className="block sm:inline">All rights reserved.</span>
             </p>
 
-            <p className="mt-4 text-sm text-neutral-500 transition sm:order-first sm:mt-0">
+            <p className="mt-4 text-sm text-muted-foreground/80 transition sm:order-first sm:mt-0">
               &copy; {year} {siteConfig.name}
             </p>
           </div>

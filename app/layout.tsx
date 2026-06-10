@@ -3,6 +3,7 @@ import { Montserrat, Open_Sans } from "next/font/google";
 import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ThemeProvider } from "@/components/theme-provider";
 import { organizationJsonLd } from "@/lib/json-ld";
 import { siteConfig, siteIcons } from "@/lib/site";
 import "./globals.css";
@@ -59,13 +60,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${montserrat.variable} ${openSans.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-white font-body text-neutral-900">
-        <JsonLd data={organizationJsonLd()} />
-        <SiteHeader />
-        <div className="flex-1">{children}</div>
-        <SiteFooter />
+      <body className="flex min-h-full flex-col bg-background font-body text-foreground">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <JsonLd data={organizationJsonLd()} />
+          <SiteHeader />
+          <div className="flex-1">{children}</div>
+          <SiteFooter />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -58,7 +58,7 @@ function PillarIcon({ type }: { type: (typeof strategicPillars)[number]["icon"] 
 
 function SectionTag({ children }: { children: ReactNode }) {
   return (
-    <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-[#2e7d32] shadow-sm">
+    <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-[#2e7d32] shadow-sm">
       {children}
     </span>
   );
@@ -76,18 +76,18 @@ function SectionHeader({
   return (
     <div className="mx-auto mb-16 max-w-3xl text-center">
       <SectionTag>{tag}</SectionTag>
-      <h2 className="font-display text-3xl font-bold text-neutral-900 sm:text-4xl lg:text-5xl">
+      <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
         {title}
       </h2>
       <div className="mx-auto mt-5 h-1 w-20 rounded-full bg-gradient-to-r from-[#2e7d32] to-[#1b5e20]" />
-      <p className="mt-6 text-lg leading-relaxed text-neutral-600">{description}</p>
+      <p className="mt-6 text-lg leading-relaxed text-muted-foreground">{description}</p>
     </div>
   );
 }
 
 export function HomeLanding() {
   return (
-    <div className="bg-white text-neutral-900">
+    <div className="bg-background text-foreground">
       <section
         className="relative flex min-h-[calc(100vh-5rem)] items-center justify-center overflow-hidden bg-cover bg-center px-5 pt-24 text-center text-white"
         style={{
@@ -144,17 +144,17 @@ export function HomeLanding() {
             <h3 className="relative pl-5 font-display text-3xl font-bold text-[#2e7d32] before:absolute before:left-0 before:top-1/2 before:h-10 before:w-1 before:-translate-y-1/2 before:rounded-full before:bg-gradient-to-b before:from-[#2e7d32] before:to-[#1b5e20]">
               National Environmental NGO for Research &amp; Innovation
             </h3>
-            <p className="mt-6 text-base leading-relaxed text-neutral-600">
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
               Greenalaya Nepal is a national environmental NGO that leverages research,
               technological innovation, and green enterprise to deliver data-driven
               solutions for resilient ecosystems through collaboration.
             </p>
-            <p className="mt-4 text-base leading-relaxed text-neutral-600">
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground">
               We work at the intersection of nature and technology, empowering
               communities to conserve and restore ecosystems while fostering sustainable
               green innovative enterprises in balance with nature.
             </p>
-            <div className="mt-8 rounded-2xl border-l-4 border-[#2e7d32] bg-emerald-50 p-8 shadow-sm transition hover:translate-x-1 hover:shadow-md">
+            <div className="mt-8 rounded-2xl border-l-4 border-[#2e7d32] bg-accent p-8 shadow-sm transition hover:translate-x-1 hover:shadow-md">
               <h4 className="font-display text-xl font-bold text-[#2e7d32]">
                 Our Vision
               </h4>
@@ -164,7 +164,7 @@ export function HomeLanding() {
                 and technology.
               </p>
             </div>
-            <div className="mt-5 rounded-2xl border-l-4 border-[#1976d2] bg-emerald-50 p-8 shadow-sm transition hover:translate-x-1 hover:shadow-md">
+            <div className="mt-5 rounded-2xl border-l-4 border-[#1976d2] bg-accent p-8 shadow-sm transition hover:translate-x-1 hover:shadow-md">
               <h4 className="font-display text-xl font-bold text-[#1976d2]">
                 Our Mission
               </h4>
@@ -210,7 +210,7 @@ export function HomeLanding() {
             {strategicPillars.map((pillar, index) => (
               <div
                 key={pillar.title}
-                className="group relative overflow-hidden rounded-3xl border border-black/5 bg-white p-8 text-center shadow-sm transition hover:-translate-y-3 hover:shadow-xl"
+                className="group relative overflow-hidden rounded-3xl border border-border bg-card p-8 text-center shadow-sm transition hover:-translate-y-3 hover:shadow-xl"
               >
                 <div className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-[#2e7d32] to-[#1b5e20] transition group-hover:scale-x-100" />
                 <div
@@ -218,10 +218,10 @@ export function HomeLanding() {
                 >
                   <PillarIcon type={pillar.icon} />
                 </div>
-                <h3 className="font-display text-lg font-bold text-neutral-900">
+                <h3 className="font-display text-lg font-bold text-foreground">
                   {pillar.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-neutral-600">
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {pillar.description}
                 </p>
               </div>
@@ -241,7 +241,7 @@ export function HomeLanding() {
             {thematicAreasWithStyle.map((area, index) => (
               <article
                 key={area.title}
-                className={`overflow-hidden rounded-3xl border border-black/5 bg-white shadow-md transition hover:-translate-y-2 hover:shadow-xl ${
+                className={`overflow-hidden rounded-3xl border border-border bg-card shadow-md transition hover:-translate-y-2 hover:shadow-xl ${
                   index === 6 ? "lg:col-start-2" : ""
                 }`}
               >

@@ -102,6 +102,17 @@ export const footerHelpfulLinks = [
   { text: "Send a Message", href: "/contact", hasIndicator: true },
 ] as const;
 
+export const mobileNavGroups = [
+  {
+    location: "About",
+    venues: footerAboutLinks.map(({ text, href }) => ({ name: text, href })),
+  },
+  {
+    location: "Our Work",
+    venues: footerWorkLinks.map(({ text, href }) => ({ name: text, href })),
+  },
+] as const;
+
 export const socialProfiles = [
   { label: "Facebook", href: siteConfig.social.facebook },
   { label: "Instagram", href: siteConfig.social.instagram },
