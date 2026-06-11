@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { AboutSection } from "@/components/about-section";
 import { HomeHero } from "@/components/home-hero";
 import {
   siteConfig,
@@ -57,9 +57,17 @@ function PillarIcon({ type }: { type: (typeof strategicPillars)[number]["icon"] 
   );
 }
 
-function SectionTag({ children }: { children: ReactNode }) {
+function SectionTag({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-[#2e7d32] shadow-sm">
+    <span
+      className={`mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-[#2e7d32] shadow-sm backdrop-blur-md dark:border-white/15 dark:bg-white/10 dark:text-[#81c784] ${className ?? ""}`}
+    >
       {children}
     </span>
   );
@@ -91,64 +99,7 @@ export function HomeLanding() {
     <div className="bg-background text-foreground">
       <HomeHero />
 
-      <section id="about" className="scroll-mt-24 px-5 py-24 lg:py-28">
-        <div className="mx-auto grid max-w-6xl items-center gap-16 lg:grid-cols-2 lg:gap-20">
-          <div>
-            <SectionTag>Who We Are</SectionTag>
-            <h3 className="relative pl-5 font-display text-3xl font-bold text-[#2e7d32] before:absolute before:left-0 before:top-1/2 before:h-10 before:w-1 before:-translate-y-1/2 before:rounded-full before:bg-gradient-to-b before:from-[#2e7d32] before:to-[#1b5e20]">
-              National Environmental NGO for Research &amp; Innovation
-            </h3>
-            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-              Greenalaya Nepal is a national environmental NGO that leverages research,
-              technological innovation, and green enterprise to deliver data-driven
-              solutions for resilient ecosystems through collaboration.
-            </p>
-            <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-              We work at the intersection of nature and technology, empowering
-              communities to conserve and restore ecosystems while fostering sustainable
-              green innovative enterprises in balance with nature.
-            </p>
-            <div className="mt-8 rounded-2xl border-l-4 border-[#2e7d32] bg-accent p-8 shadow-sm transition hover:translate-x-1 hover:shadow-md">
-              <h4 className="font-display text-xl font-bold text-[#2e7d32]">
-                Our Vision
-              </h4>
-              <p className="mt-3 italic leading-relaxed text-neutral-800">
-                A resilient Nepal where empowered communities conserve ecosystems and
-                foster sustainable green innovative enterprises in balance with nature
-                and technology.
-              </p>
-            </div>
-            <div className="mt-5 rounded-2xl border-l-4 border-[#1976d2] bg-accent p-8 shadow-sm transition hover:translate-x-1 hover:shadow-md">
-              <h4 className="font-display text-xl font-bold text-[#1976d2]">
-                Our Mission
-              </h4>
-              <p className="mt-3 italic leading-relaxed text-neutral-800">
-                To generate credible environmental knowledge, advance community-centered
-                conservation, and catalyze innovative eco-business solutions that protect
-                biodiversity, strengthen local livelihoods, and influence sustainable
-                development pathways in Nepal.
-              </p>
-            </div>
-          </div>
-          <div className="group relative overflow-hidden rounded-3xl shadow-2xl transition hover:-translate-y-1">
-            <Image
-              src={siteConfig.images.community}
-              alt="Community-led conservation in Nepal"
-              width={900}
-              height={700}
-              className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-              priority
-            />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent p-8 text-white">
-              <h4 className="font-display text-xl font-bold">Community-Led Conservation</h4>
-              <p className="mt-2 text-sm text-white/90">
-                Empowering local communities through participatory conservation and
-                capacity building
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <AboutSection />
 
       <section
         id="pillars"
