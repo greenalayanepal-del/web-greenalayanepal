@@ -3,7 +3,8 @@ import type { ReactNode } from "react";
 import { AboutSection } from "@/components/about-section";
 import { HomeHero } from "@/components/home-hero";
 import { StrategicPillarsOrbit } from "@/components/strategic-pillars-orbit";
-import { siteConfig, thematicAreasWithStyle } from "@/lib/site";
+import { ThematicAreasGrid } from "@/components/thematic-areas-grid";
+import { siteConfig } from "@/lib/site";
 
 function SectionTag({
   children,
@@ -25,19 +26,40 @@ function SectionHeader({
   tag,
   title,
   description,
+  tone = "light",
+  outlinedTitle = false,
 }: {
-  tag: ReactNode;
+  tag?: ReactNode;
   title: string;
-  description: string;
+  description?: string;
+  tone?: "light" | "dark";
+  outlinedTitle?: boolean;
 }) {
+  const isDark = tone === "dark";
+
   return (
     <div className="mx-auto mb-16 max-w-3xl text-center">
-      <SectionTag>{tag}</SectionTag>
-      <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
+      {tag ? <SectionTag>{tag}</SectionTag> : null}
+      <h2
+        className={
+          outlinedTitle
+            ? "font-display text-4xl font-bold tracking-tight text-[#4caf50] uppercase [-webkit-text-stroke:1px_#000] [paint-order:stroke_fill] md:text-5xl"
+            : `font-display text-3xl font-bold sm:text-4xl lg:text-5xl ${
+                isDark ? "text-white" : "text-foreground"
+              }`
+        }
+      >
         {title}
       </h2>
-      <div className="mx-auto mt-5 h-1 w-20 rounded-full bg-gradient-to-r from-[#2e7d32] to-[#1b5e20]" />
-      <p className="mt-6 text-lg leading-relaxed text-muted-foreground">{description}</p>
+      {description ? (
+        <p
+          className={`mt-6 text-lg leading-relaxed ${
+            isDark ? "text-white/65" : "text-muted-foreground"
+          }`}
+        >
+          {description}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -51,44 +73,31 @@ export function HomeLanding() {
 
       <StrategicPillarsOrbit />
 
-      <section id="thematic" className="scroll-mt-24 px-5 py-24 lg:py-28">
-        <div className="mx-auto max-w-6xl">
-          <SectionHeader
-            tag="What We Do"
-            title="Thematic Areas of Focus"
-            description="Seven key thematic areas drive our work, addressing emerging environmental challenges through innovation, research, and community engagement."
+      <section
+        id="thematic"
+        className="relative scroll-mt-24 bg-gradient-to-b from-[#0a0f0a] via-[#0f1610] to-[#0a0f0a] px-5 pt-14 pb-24 lg:pt-[72px] lg:pb-28"
+      >
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25"
+            style={{
+              backgroundImage: `url('${siteConfig.images.thematicAreasBackground}')`,
+            }}
           />
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {thematicAreasWithStyle.map((area, index) => (
-              <article
-                key={area.title}
-                className={`overflow-hidden rounded-3xl border border-border bg-card shadow-md transition hover:-translate-y-2 hover:shadow-xl ${
-                  index === 6 ? "lg:col-start-2" : ""
-                }`}
-              >
-                <div
-                  className={`relative overflow-hidden bg-gradient-to-br ${area.gradient} p-8 text-left text-white`}
-                >
-                  <div className="pointer-events-none absolute -right-1/2 -top-1/2 h-full w-full rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.1)_0%,transparent_70%)]" />
-                  <div className="relative">
-                    <div className="mb-4 text-4xl font-bold opacity-30">{area.number}</div>
-                    <h3 className="font-display text-xl font-bold leading-snug">
-                      {area.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-white/90">{area.description}</p>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-          <div className="mt-10 text-center">
-            <Link
-              href="/projects"
-              className="text-sm font-semibold text-[#2e7d32] hover:underline"
-            >
-              View all focus areas →
-            </Link>
-          </div>
+          <div
+            className="absolute inset-0 motion-reduce:opacity-75 motion-safe:animate-[hero-mesh-pulse_10s_ease-in-out_infinite]"
+            style={{
+              background:
+                "radial-gradient(ellipse 72% 68% at 50% 42%, rgba(76,175,80,0.10) 0%, transparent 68%)",
+            }}
+          />
+          <div className="absolute top-1/4 left-1/4 h-80 w-80 rounded-full bg-[#2e7d32]/6 blur-3xl" />
+          <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-[#4caf50]/8 blur-3xl" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(76,175,80,0.04)_0%,transparent_50%,rgba(0,0,0,0.2)_100%)]" />
+        </div>
+        <div className="relative z-10 mx-auto -mt-[30px] max-w-6xl">
+          <SectionHeader title="Thematic Areas" tone="dark" outlinedTitle />
+          <ThematicAreasGrid />
         </div>
       </section>
 

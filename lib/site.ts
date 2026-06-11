@@ -30,6 +30,7 @@ export const siteConfig = {
     community: "/images/community.png",
     foundationBackground: "/images/foundation-background.png",
     resourcesHeader: "/images/resources-header.png",
+    thematicAreasBackground: "/images/thematic-areas-background.png",
   },
 } as const;
 
@@ -141,19 +142,8 @@ export const thematicAreas = [
   },
 ] as const;
 
-const thematicGradients = [
-  "from-[#2e7d32] to-[#1b5e20]",
-  "from-[#1976d2] to-[#0d47a1]",
-  "from-[#d4a574] to-[#a67c52]",
-  "from-[#673ab7] to-[#512da8]",
-  "from-[#00bcd4] to-[#0097a7]",
-  "from-[#ff9800] to-[#f57c00]",
-  "from-[#e91e63] to-[#c2185b]",
-] as const;
-
 export const thematicAreasWithStyle = thematicAreas.map((area, index) => ({
   ...area,
-  gradient: thematicGradients[index],
   number: String(index + 1).padStart(2, "0"),
 }));
 

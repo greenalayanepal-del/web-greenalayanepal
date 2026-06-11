@@ -159,10 +159,10 @@ export function StrategicPillarsOrbit() {
 
       <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 lg:grid-cols-2 lg:gap-12 lg:py-20">
         <header className="translate-y-5 text-center lg:text-left">
-          <h2 className="font-display text-4xl font-bold tracking-tight text-[#2196f3] uppercase md:text-5xl">
+          <h2 className="font-display text-4xl font-bold tracking-tight text-[#2196f3] uppercase [-webkit-text-stroke:2px_#000] [paint-order:stroke_fill] md:text-5xl">
             Strategic Pillars
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-white md:text-base lg:mx-0">
+          <p className="mx-auto mt-6 max-w-xl font-sans text-lg leading-relaxed text-white md:text-xl lg:mx-0">
             Five interconnected pillars guide all our initiatives, ensuring holistic and sustainable
             environmental solutions for Nepal.
           </p>
