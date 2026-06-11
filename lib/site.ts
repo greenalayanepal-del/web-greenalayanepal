@@ -26,6 +26,7 @@ export const siteConfig = {
     linkedin: "https://www.linkedin.com/company/greenalaya-nepal/",
   },
   images: {
+    aboutBackground: "/images/about-background.jpg",
     community: "/images/community.png",
     resourcesHeader: "/images/resources-header.png",
   },

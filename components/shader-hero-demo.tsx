@@ -5,6 +5,10 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import {
+  computeParallaxTransform,
+  PARALLAX_INITIAL_TRANSFORM,
+} from "@/lib/scroll-parallax";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -91,18 +95,12 @@ function HeroOverlays() {
 }
 
 function HeroParallaxImage() {
-  const [transform, setTransform] = useState("scale(1.15) translate3d(0, 0, 0)");
+  const [transform, setTransform] = useState(PARALLAX_INITIAL_TRANSFORM);
 
   useEffect(() => {
     const update = () => {
-      const scrollY = window.scrollY;
       const viewportScale = window.visualViewport?.scale ?? 1;
-      const scrollZoom = 1.15 + Math.min(scrollY / 900, 0.28);
-      const pinchZoom = 1 + (viewportScale - 1) * 0.65;
-      const scale = scrollZoom * pinchZoom;
-      const y = scrollY * 0.18;
-
-      setTransform(`scale(${scale.toFixed(4)}) translate3d(0, ${(-y).toFixed(2)}px, 0)`);
+      setTransform(computeParallaxTransform(window.scrollY, viewportScale));
     };
 
     update();
