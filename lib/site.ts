@@ -28,6 +28,7 @@ export const siteConfig = {
   images: {
     aboutBackground: "/images/about-rings.png",
     community: "/images/community.png",
+    foundationBackground: "/images/foundation-background.png",
     resourcesHeader: "/images/resources-header.png",
   },
 } as const;

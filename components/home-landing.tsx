@@ -2,60 +2,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { AboutSection } from "@/components/about-section";
 import { HomeHero } from "@/components/home-hero";
-import {
-  siteConfig,
-  strategicPillars,
-  thematicAreasWithStyle,
-} from "@/lib/site";
-
-const pillarIconGradients = [
-  "from-[#2e7d32] to-[#1b5e20]",
-  "from-[#1976d2] to-[#0d47a1]",
-  "from-[#d4a574] to-[#a67c52]",
-  "from-[#4caf50] to-[#2e7d32]",
-  "from-[#2196f3] to-[#1976d2]",
-] as const;
-
-function PillarIcon({ type }: { type: (typeof strategicPillars)[number]["icon"] }) {
-  const paths: Record<(typeof strategicPillars)[number]["icon"], ReactNode> = {
-    people: (
-      <path
-        fill="currentColor"
-        d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"
-      />
-    ),
-    technology: (
-      <path
-        fill="currentColor"
-        d="M4 6h16v12H4V6Zm2 2v8h12V8H6Zm2 2h8v4H8v-4Z"
-      />
-    ),
-    research: (
-      <path
-        fill="currentColor"
-        d="M9 3h6v2h-1v3.17A5 5 0 0 1 18 13v6H6v-6a5 5 0 0 1 4-4.83V5H9V3Zm2 4.58V5h2v2.58A3 3 0 0 0 11 11v6h2v-6a3 3 0 0 0-2-3.42Z"
-      />
-    ),
-    nature: (
-      <path
-        fill="currentColor"
-        d="M12 3c-1.5 2.5-4 4.5-4 8a4 4 0 0 0 8 0c0-3.5-2.5-5.5-4-8Zm0 14a6 6 0 0 1-6-6c0-2.2 1.2-4 2.6-5.8C10.2 7.8 11 9.2 12 11c1-1.8 1.8-3.2 3.4-5.8C16.8 7 18 8.8 18 11a6 6 0 0 1-6 6Z"
-      />
-    ),
-    collaboration: (
-      <path
-        fill="currentColor"
-        d="M16 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3Zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3Zm0 2c-2.67 0-8 1.34-8 4v2h9.1a5.9 5.9 0 0 1 .9-3.1 6 6 0 0 1 1.1-1.9H8Zm8 0a5.9 5.9 0 0 0-4.3 1.8A5.9 5.9 0 0 0 11 19H24v-2c0-2.66-5.33-4-8-4Z"
-      />
-    ),
-  };
-
-  return (
-    <svg viewBox="0 0 24 24" className="h-9 w-9" aria-hidden>
-      {paths[type]}
-    </svg>
-  );
-}
+import { StrategicPillarsOrbit } from "@/components/strategic-pillars-orbit";
+import { siteConfig, thematicAreasWithStyle } from "@/lib/site";
 
 function SectionTag({
   children,
@@ -101,39 +49,7 @@ export function HomeLanding() {
 
       <AboutSection />
 
-      <section
-        id="pillars"
-        className="scroll-mt-24 bg-gradient-to-b from-neutral-100 to-white px-5 py-24 lg:py-28"
-      >
-        <div className="mx-auto max-w-6xl">
-          <SectionHeader
-            tag="Our Foundation"
-            title="Core Strategic Pillars"
-            description="Five interconnected pillars guide all our initiatives, ensuring holistic and sustainable environmental solutions for Nepal."
-          />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-            {strategicPillars.map((pillar, index) => (
-              <div
-                key={pillar.title}
-                className="group relative overflow-hidden rounded-3xl border border-border bg-card p-8 text-center shadow-sm transition hover:-translate-y-3 hover:shadow-xl"
-              >
-                <div className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-[#2e7d32] to-[#1b5e20] transition group-hover:scale-x-100" />
-                <div
-                  className={`mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${pillarIconGradients[index]} text-white shadow-lg`}
-                >
-                  <PillarIcon type={pillar.icon} />
-                </div>
-                <h3 className="font-display text-lg font-bold text-foreground">
-                  {pillar.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {pillar.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <StrategicPillarsOrbit />
 
       <section id="thematic" className="scroll-mt-24 px-5 py-24 lg:py-28">
         <div className="mx-auto max-w-6xl">
