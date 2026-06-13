@@ -102,13 +102,10 @@ await writeFaviconPng(180, "apple-touch-icon.png", theme.header);
 
 const ico = pngBuffersToIco([png16, png32, png48]);
 writeFileSync(path.join(publicDir, "favicon.ico"), ico);
-writeFileSync(path.join(root, "app", "favicon.ico"), ico);
 
-// Next.js file-based metadata: white-backed icon for /icon and Google auto-discovery.
-const appIcon = await renderLogo(512, theme.header);
-writeFileSync(path.join(root, "app", "icon.png"), appIcon);
-const apple180 = await renderLogo(180, theme.header);
-writeFileSync(path.join(root, "app", "apple-icon.png"), apple180);
+// Icons live in /public only — do NOT write app/favicon.ico, app/icon.png, or
+// app/apple-icon.png. Next.js file-based metadata injects extra rel=icon links
+// (often before the 48×48 PNG) and can override Google SERP favicons.
 
 // PWA / manifest + Organization schema logo (square, white background).
 await writeFaviconPng(192, "icon-192.png", theme.header);
