@@ -117,21 +117,22 @@ export function FooterStayAhead() {
               Stay ahead with {siteConfig.name}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-white lg:mx-0">
-              Join researchers, communities, and organizations who trust{" "}
-              {siteConfig.name}
-              <br />
-              for evidence-based conservation and environmental action across
+              Join researchers, communities, and organizations
+              <br className="sm:hidden" />
+              {" "}who trust {siteConfig.name}
+              <br className="sm:hidden" />
+              {" "}for evidence-based conservation and environmental action across
               Nepal.
             </p>
 
-            <div className="mt-8 flex flex-nowrap items-center justify-center gap-2 overflow-x-auto pb-0.5 sm:gap-3 lg:justify-start">
+            <div className="mt-8 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center lg:justify-start">
               {involvementTabs.map((tab) => (
                 <Button
                   key={tab.label}
                   asChild
                   variant={tab.variant}
                   size="pill"
-                  className="shrink-0 no-underline"
+                  className="w-full shrink-0 no-underline sm:w-auto"
                 >
                   <Link href={tab.href}>{tab.label}</Link>
                 </Button>

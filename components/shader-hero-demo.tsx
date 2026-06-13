@@ -30,12 +30,20 @@ const fadeUp = {
 };
 
 const heroButtonClass =
-  "inline-flex min-h-12 items-center justify-center rounded-full px-8 text-[18px] font-semibold no-underline transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out active:scale-[0.98] motion-reduce:transition-none";
+  "inline-flex min-h-12 items-center justify-center rounded-full px-8 text-[calc(18px-2px)] font-semibold no-underline transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out active:scale-[0.98] motion-reduce:transition-none lg:text-[18px]";
 
 const HERO_ACCENT = "text-[#7dd87f]";
-const HERO_HEADLINE_LINE_1_SIZE =
-  "text-[clamp(calc(2.25rem-10px),calc(6.2vw-10px),calc(4.25rem-10px))]";
-const HERO_HEADLINE_LINE_2_SIZE = "text-[clamp(2rem,6.2vw,68px)]";
+const HERO_HEADLINE_LINE_1_MOBILE =
+  "max-md:text-[clamp(calc(1.05rem+7px),calc(3.6vw+7px),calc(1.65rem+7px))]";
+const HERO_HEADLINE_LINE_1_TABLET =
+  "md:max-lg:text-[clamp(calc(2.25rem-3px),calc(6.2vw-3px),calc(4.25rem-3px))]";
+const HERO_HEADLINE_LINE_1_DESKTOP =
+  "lg:text-[clamp(calc(2.25rem-10px),calc(6.2vw-10px),calc(4.25rem-10px))]";
+const HERO_HEADLINE_LINE_2_MOBILE =
+  "max-md:text-[clamp(calc(1.05rem+7px),calc(3.6vw+7px),calc(1.65rem+7px))]";
+const HERO_HEADLINE_LINE_2_TABLET =
+  "md:max-lg:text-[clamp(calc(2rem+7px),calc(6.2vw+7px),75px)]";
+const HERO_HEADLINE_LINE_2_DESKTOP = "lg:text-[clamp(2rem,6.2vw,68px)]";
 
 function HeroHeadline() {
   return (
@@ -48,16 +56,20 @@ function HeroHeadline() {
     >
       <span
         className={cn(
-          "block font-bold leading-[1.08] tracking-[-0.03em] text-white/88",
-          HERO_HEADLINE_LINE_1_SIZE,
+          "block font-bold leading-[1.08] tracking-[-0.03em] text-white/88 max-md:whitespace-nowrap",
+          HERO_HEADLINE_LINE_1_MOBILE,
+          HERO_HEADLINE_LINE_1_TABLET,
+          HERO_HEADLINE_LINE_1_DESKTOP,
         )}
       >
         Building a <span className={HERO_ACCENT}>Resilient Nepal</span> Through
       </span>
       <span
         className={cn(
-          "mt-4 block font-bold leading-[1.08] tracking-[-0.03em] text-white md:mt-5",
-          HERO_HEADLINE_LINE_2_SIZE,
+          "mt-4 block font-bold leading-[1.08] tracking-[-0.03em] text-white max-md:whitespace-nowrap md:mt-5",
+          HERO_HEADLINE_LINE_2_MOBILE,
+          HERO_HEADLINE_LINE_2_TABLET,
+          HERO_HEADLINE_LINE_2_DESKTOP,
         )}
       >
         <span className={HERO_ACCENT}>Data-Driven</span> Conservation
@@ -176,16 +188,15 @@ export function HeroContent({
     >
       <div className="mx-auto w-full max-w-4xl translate-y-[18px]">
         <motion.p
-          className="mb-[31px] inline-flex flex-col items-center gap-1 rounded-full border border-white/15 bg-black/40 px-5 py-2.5 text-[17px] font-medium text-white/90 backdrop-blur-sm md:mb-[39px] md:px-6"
+          className="mb-[31px] inline-flex items-center rounded-full border border-white/15 bg-black/40 px-5 py-2.5 text-[calc(17px-3px)] font-medium text-white/90 backdrop-blur-sm md:mb-[39px] md:px-6 lg:text-[17px]"
           variants={fadeDown}
           initial="hidden"
           animate="visible"
           transition={{ duration: 0.7, ease: easeOut, delay: 0.15 }}
         >
-          <span className="font-display text-lg font-semibold tracking-tight text-white">
-            {siteConfig.name}
+          <span className="font-display text-[calc(1.125rem-3px)] font-semibold tracking-tight text-white lg:text-lg">
+            {siteConfig.tagline}
           </span>
-          <span className="text-sm text-white/75">{siteConfig.tagline}</span>
         </motion.p>
 
         <div className="mb-[31px] md:mb-[39px]">
@@ -193,7 +204,7 @@ export function HeroContent({
         </div>
 
         <motion.p
-          className="mx-auto mb-[39px] max-w-2xl text-pretty text-[19px] leading-[1.75] text-white/82 md:mb-[47px] md:text-[21px] md:leading-[1.8] lg:max-w-3xl"
+          className="mx-auto mb-[39px] max-w-2xl text-pretty text-[calc(19px-2px)] leading-[1.75] text-white/82 md:mb-[47px] md:max-lg:text-[calc(21px-2px)] md:leading-[1.8] lg:max-w-3xl lg:text-[21px]"
           variants={fadeUp}
           initial="hidden"
           animate="visible"

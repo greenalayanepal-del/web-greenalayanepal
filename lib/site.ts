@@ -103,7 +103,7 @@ export const mainNavItems = [
 ] as const;
 
 export const footerAboutLinks = [
-  { href: "/about", lines: ["About Greenalaya", "Nepal"] as const },
+  { text: "About Greenalaya Nepal", href: "/about" },
   { text: "Advisors & Partners", href: "/team" },
   { text: "Team", href: "/team" },
 ] as const;

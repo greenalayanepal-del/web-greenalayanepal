@@ -48,9 +48,11 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setMenuOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -112,7 +114,7 @@ export function SiteHeader() {
       >
         <Link href="/" className="flex min-w-0 items-center gap-2 no-underline">
           <SiteLogo surface="default" priority className="h-10 w-auto shrink-0 object-contain" />
-          <span className="hidden truncate font-display text-xl font-semibold text-[#2e7d32] sm:inline">
+          <span className="min-w-0 translate-y-1 truncate font-display text-lg font-semibold text-[#2e7d32] sm:text-xl">
             {siteConfig.name}
           </span>
         </Link>

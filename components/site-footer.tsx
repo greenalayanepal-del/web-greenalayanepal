@@ -85,19 +85,9 @@ function FooterAboutLinks() {
   return (
     <>
       {footerAboutLinks.map((link) => (
-        <li key={"lines" in link ? link.lines.join("-") : link.text}>
+        <li key={link.text}>
           <Link href={link.href} className={footerColumnLinkClass}>
-            {"lines" in link ? (
-              <>
-                {link.lines.map((line, index) => (
-                  <span key={line} className={index === 0 ? "block" : "mt-[11px] block"}>
-                    {line}
-                  </span>
-                ))}
-              </>
-            ) : (
-              link.text
-            )}
+            {link.text}
           </Link>
         </li>
       ))}

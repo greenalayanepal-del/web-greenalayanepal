@@ -18,10 +18,12 @@ async function getResearch(): Promise<{
   error: string | null;
 }> {
   if (!isSupabaseConfigured()) {
+    console.warn(
+      "Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to .env.local. Falling back to seed research data."
+    );
     return {
       items: [],
-      error:
-        "Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to .env.local.",
+      error: null,
     };
   }
 
