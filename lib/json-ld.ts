@@ -43,10 +43,25 @@ export function websiteJsonLd() {
     "@type": "WebSite",
     "@id": websiteId,
     name: siteConfig.name,
-    alternateName: ["Greenalaya", "greenalayanepal.org.np"],
+    alternateName: "Greenalaya",
     url: `${siteConfig.url}/`,
     description: siteConfig.description,
     publisher: { "@id": organizationId },
+    inLanguage: "en-NP",
+  };
+}
+
+/** Homepage WebPage — reinforces branded site name on the root URL. */
+export function homePageJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${siteConfig.url}/#webpage`,
+    url: `${siteConfig.url}/`,
+    name: siteConfig.name,
+    description: siteConfig.description,
+    isPartOf: { "@id": websiteId },
+    about: { "@id": organizationId },
     inLanguage: "en-NP",
   };
 }

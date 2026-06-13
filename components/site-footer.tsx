@@ -1,8 +1,9 @@
 "use client";
 
-import { Mail, MapPin, Phone } from "lucide-react";
+import { ChevronDown, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useId, useState, type ReactNode } from "react";
 import { SiteLogo } from "@/components/site-logo";
 import { SocialLinks } from "@/components/social-links";
 import {
@@ -12,6 +13,7 @@ import {
   siteConfig,
   siteContact,
 } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 const footerColumnLinkClass =
   "text-black leading-none transition hover:opacity-70 dark:text-white";
@@ -36,7 +38,16 @@ const contactInfo = [
   },
 ];
 
-function FooterContactList({ className }: { className?: string }) {
+function FooterContactList({
+  className,
+  align = "responsive",
+}: {
+  className?: string;
+  align?: "responsive" | "start";
+}) {
+  const itemAlign =
+    align === "start" ? "justify-start" : "justify-center sm:justify-start";
+
   return (
     <ul className={className}>
       {contactInfo.map((item) => {
@@ -44,10 +55,7 @@ function FooterContactList({ className }: { className?: string }) {
         if ("href" in item && item.href) {
           return (
             <li key={item.text}>
-              <a
-                href={item.href}
-                className="flex items-center justify-center gap-1.5 sm:justify-start"
-              >
+              <a href={item.href} className={`flex items-center gap-1.5 ${itemAlign}`}>
                 <Icon className="size-4 shrink-0 text-primary" />
                 <span
                   className={`transition hover:opacity-70 ${footerBodyTextClass}`}
@@ -60,7 +68,7 @@ function FooterContactList({ className }: { className?: string }) {
         }
         return (
           <li key={item.text}>
-            <div className="flex items-center justify-center gap-1.5 sm:justify-start">
+            <div className={`flex items-center gap-1.5 ${itemAlign}`}>
               <Icon className="size-4 shrink-0 text-primary" />
               <address className={`not-italic ${footerBodyTextClass}`}>
                 {item.text}
@@ -70,6 +78,107 @@ function FooterContactList({ className }: { className?: string }) {
         );
       })}
     </ul>
+  );
+}
+
+function FooterAboutLinks() {
+  return (
+    <>
+      {footerAboutLinks.map((link) => (
+        <li key={"lines" in link ? link.lines.join("-") : link.text}>
+          <Link href={link.href} className={footerColumnLinkClass}>
+            {"lines" in link ? (
+              <>
+                {link.lines.map((line, index) => (
+                  <span key={line} className={index === 0 ? "block" : "mt-[11px] block"}>
+                    {line}
+                  </span>
+                ))}
+              </>
+            ) : (
+              link.text
+            )}
+          </Link>
+        </li>
+      ))}
+    </>
+  );
+}
+
+function FooterAccordionSection({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const panelId = useId();
+
+  return (
+    <div className="border-b border-black/10 dark:border-white/10">
+      <button
+        type="button"
+        className="flex min-h-11 w-full items-center justify-between gap-4 py-4 text-left"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <span className="text-lg font-semibold text-black dark:text-white">{title}</span>
+        <ChevronDown
+          aria-hidden
+          className={cn(
+            "size-5 shrink-0 text-black/70 transition-transform duration-200 dark:text-white/70",
+            open && "rotate-180",
+          )}
+        />
+      </button>
+      {open ? (
+        <div id={panelId} className="pb-4">
+          {children}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function MobileFooterNav() {
+  return (
+    <nav className="lg:hidden" aria-label="Footer">
+      <FooterAccordionSection title="About">
+        <ul className="space-y-3 text-[16px] leading-snug">
+          <FooterAboutLinks />
+        </ul>
+      </FooterAccordionSection>
+
+      <FooterAccordionSection title="Our Work">
+        <ul className="space-y-3 text-[16px]">
+          {footerWorkLinks.map(({ text, href }) => (
+            <li key={text}>
+              <Link href={href} className={footerColumnLinkClass}>
+                {text}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </FooterAccordionSection>
+
+      <FooterAccordionSection title="Media">
+        <ul className="space-y-3 text-[16px]">
+          {footerMediaLinks.map(({ text, href }) => (
+            <li key={text}>
+              <Link href={href} className={footerColumnLinkClass}>
+                {text}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </FooterAccordionSection>
+
+      <FooterAccordionSection title="Contact">
+        <FooterContactList align="start" className="space-y-3 text-[16px]" />
+      </FooterAccordionSection>
+    </nav>
   );
 }
 
@@ -112,34 +221,13 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
+          <div className="hidden grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
             <div className="text-center sm:text-left">
               <p className="text-[20px] font-medium text-black dark:text-white">
                 About
               </p>
               <ul className="mt-8 space-y-[11px] text-[16px] leading-none">
-                {footerAboutLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className={footerColumnLinkClass}>
-                      {"lines" in link ? (
-                        <>
-                          {link.lines.map((line, index) => (
-                            <span
-                              key={line}
-                              className={
-                                index === 0 ? "block" : "mt-[11px] block"
-                              }
-                            >
-                              {line}
-                            </span>
-                          ))}
-                        </>
-                      ) : (
-                        link.text
-                      )}
-                    </Link>
-                  </li>
-                ))}
+                <FooterAboutLinks />
               </ul>
             </div>
 
@@ -181,6 +269,8 @@ export function SiteFooter() {
             </div>
           </div>
         </div>
+
+        <MobileFooterNav />
 
         <div className="mt-[38px] border-t border-black/10 pt-[4px] dark:border-white/10">
           <div className="grid grid-cols-1 gap-4 text-center lg:grid-cols-3 lg:gap-8 lg:text-left">

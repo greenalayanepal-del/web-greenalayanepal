@@ -175,15 +175,18 @@ export function HeroContent({
       )}
     >
       <div className="mx-auto w-full max-w-4xl translate-y-[18px]">
-        <motion.div
-          className="mb-[31px] inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-black/40 px-5 py-2.5 text-[17px] font-medium text-white/90 backdrop-blur-sm md:mb-[39px] md:px-6"
+        <motion.p
+          className="mb-[31px] inline-flex flex-col items-center gap-1 rounded-full border border-white/15 bg-black/40 px-5 py-2.5 text-[17px] font-medium text-white/90 backdrop-blur-sm md:mb-[39px] md:px-6"
           variants={fadeDown}
           initial="hidden"
           animate="visible"
           transition={{ duration: 0.7, ease: easeOut, delay: 0.15 }}
         >
-          {siteConfig.tagline}
-        </motion.div>
+          <span className="font-display text-lg font-semibold tracking-tight text-white">
+            {siteConfig.name}
+          </span>
+          <span className="text-sm text-white/75">{siteConfig.tagline}</span>
+        </motion.p>
 
         <div className="mb-[31px] md:mb-[39px]">
           <HeroHeadline />

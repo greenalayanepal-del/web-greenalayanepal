@@ -7,6 +7,7 @@ export const siteIcons: NonNullable<Metadata["icons"]> = {
   icon: [
     // List 48×48 PNG first — Google’s preferred explicit size; /favicon.ico remains the default fetch path.
     { url: `/favicon-48x48.png?v=${faviconVersion}`, sizes: "48x48", type: "image/png" },
+    { url: `/favicon.png?v=${faviconVersion}`, sizes: "512x512", type: "image/png" },
     { url: `/favicon.ico?v=${faviconVersion}`, sizes: "any", type: "image/x-icon" },
     { url: `/icon-192.png?v=${faviconVersion}`, sizes: "192x192", type: "image/png" },
     { url: `/icon-512.png?v=${faviconVersion}`, sizes: "512x512", type: "image/png" },

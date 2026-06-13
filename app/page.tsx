@@ -1,4 +1,6 @@
 import { HomeLanding } from "@/components/home-landing";
+import { JsonLd } from "@/components/json-ld";
+import { homePageJsonLd } from "@/lib/json-ld";
 import { pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
@@ -10,5 +12,10 @@ export const metadata = pageMetadata({
 });
 
 export default function Home() {
-  return <HomeLanding />;
+  return (
+    <>
+      <JsonLd data={homePageJsonLd()} />
+      <HomeLanding />
+    </>
+  );
 }
