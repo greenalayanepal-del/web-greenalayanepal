@@ -17,7 +17,7 @@ export function ThematicAreasGrid() {
           glassTone="black"
           backdropOpacity={0.25}
           className={cn(
-            "mx-auto min-h-[190px] w-[calc(100%+20px)] max-w-[calc(100%+20px)] lg:col-span-2",
+            "mx-auto min-h-[190px] w-full lg:col-span-2",
             index >= 4 && secondRowColStart[index - 4],
           )}
         >

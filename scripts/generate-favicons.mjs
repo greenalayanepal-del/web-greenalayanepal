@@ -104,14 +104,18 @@ const ico = pngBuffersToIco([png16, png32, png48]);
 writeFileSync(path.join(publicDir, "favicon.ico"), ico);
 writeFileSync(path.join(appDir, "favicon.ico"), ico);
 
-const icon32 = await renderLogo(32, null);
-writeFileSync(path.join(appDir, "icon.png"), icon32);
+// Next.js file-based metadata: serve ≥48×48 so Google Search accepts the auto /icon route.
+const icon512 = await renderLogo(512, null);
+writeFileSync(path.join(appDir, "icon.png"), icon512);
 const apple180 = await renderLogo(180, theme.header);
 writeFileSync(path.join(appDir, "apple-icon.png"), apple180);
 
+// PWA / manifest sizes (Google also crawls manifest icons).
+await writeFaviconPng(192, "icon-192.png", theme.header);
+await writeFaviconPng(512, "icon-512.png", theme.header);
+
 // UI logo: transparent PNG for header (white) and footer (emerald-50).
-const logo512 = await renderLogo(512, null);
-writeFileSync(path.join(publicDir, "logo.png"), logo512);
+writeFileSync(path.join(publicDir, "logo.png"), icon512);
 
 // Social preview: emerald-50 canvas matching the footer band.
 const ogLogo = await renderLogo(520, null);

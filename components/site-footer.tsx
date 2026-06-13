@@ -84,7 +84,7 @@ export function SiteFooter() {
     <footer className="w-full place-self-end bg-secondary dark:bg-[#0a0f0a]">
       <div className={`mx-auto max-w-screen-xl ${mainPadding}`}>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          <div className="-ml-[20px] -mt-[15px]">
+          <div className="-mt-[15px]">
             <Link
               href="/"
               className="-translate-y-[3px] mt-[6px] flex items-center justify-center gap-2 no-underline sm:justify-start"
@@ -112,7 +112,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="-ml-[20px] grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
             <div className="text-center sm:text-left">
               <p className="text-[20px] font-medium text-black dark:text-white">
                 About
@@ -182,7 +182,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="-ml-[20px] mt-[38px] border-t border-black/10 pt-[4px] dark:border-white/10">
+        <div className="mt-[38px] border-t border-black/10 pt-[4px] dark:border-white/10">
           <div className="grid grid-cols-1 gap-4 text-center lg:grid-cols-3 lg:gap-8 lg:text-left">
             <p className={`text-[16px] lg:col-span-1 ${footerBodyTextClass}`}>
               &copy; {year} {siteConfig.name}

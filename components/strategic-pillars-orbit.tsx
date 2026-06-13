@@ -9,7 +9,7 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 type PillarIconKey = (typeof strategicPillars)[number]["icon"];
 
@@ -58,6 +58,7 @@ function Card({ children, className = "" }: { children: ReactNode; className?: s
 export function StrategicPillarsOrbit() {
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
   const [rotationAngle, setRotationAngle] = useState(0);
+  const [orbitRadius, setOrbitRadius] = useState(200);
   const [autoRotate, setAutoRotate] = useState(
     () =>
       typeof window === "undefined" ||
@@ -65,6 +66,27 @@ export function StrategicPillarsOrbit() {
   );
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const orbitEl = orbitRef.current;
+    if (!orbitEl) return;
+
+    const updateRadius = () => {
+      const size = orbitEl.getBoundingClientRect().width;
+      if (size <= 0) return;
+      setOrbitRadius(Math.max(72, Math.min(200, size * 0.38)));
+    };
+
+    updateRadius();
+    const resizeObserver = new ResizeObserver(updateRadius);
+    resizeObserver.observe(orbitEl);
+    window.addEventListener("resize", updateRadius);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateRadius);
+    };
+  }, []);
 
   const centerViewOnNode = (nodeId: number) => {
     const nodeIndex = TIMELINE_DATA.findIndex((item) => item.id === nodeId);
@@ -124,7 +146,7 @@ export function StrategicPillarsOrbit() {
 
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = 200;
+    const radius = orbitRadius;
     const radian = (angle * Math.PI) / 180;
     const x = radius * Math.cos(radian);
     const y = radius * Math.sin(radian);
@@ -171,13 +193,13 @@ export function StrategicPillarsOrbit() {
           ref={containerRef}
         >
           <div
-            className="relative flex h-full w-full max-w-lg items-center justify-center lg:max-w-none"
+            className="relative flex aspect-square h-full w-full max-w-[min(520px,90vw)] items-center justify-center lg:max-w-none"
             ref={orbitRef}
-            style={{ perspective: "1000px" }}
+            style={{ perspective: "1000px" } as CSSProperties}
           >
-            <div className="absolute h-[520px] w-[520px] rounded-full border border-[#2e7d32]/15" />
-            <div className="absolute h-[420px] w-[420px] rounded-full border border-[#4caf50]/20" />
-            <div className="absolute h-[320px] w-[320px] rounded-full border border-dashed border-[#4caf50]/25" />
+            <div className="absolute aspect-square h-full w-full rounded-full border border-[#2e7d32]/15" />
+            <div className="absolute aspect-square h-[80%] w-[80%] rounded-full border border-[#4caf50]/20" />
+            <div className="absolute aspect-square h-[62%] w-[62%] rounded-full border border-dashed border-[#4caf50]/25" />
 
             <div className="absolute z-10 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#2e7d32] via-[#4caf50] to-[#1b5e20] shadow-lg shadow-[#2e7d32]/40">
               <div className="absolute h-20 w-20 animate-ping rounded-full border border-[#4caf50]/40 opacity-70" />
@@ -201,7 +223,7 @@ export function StrategicPillarsOrbit() {
                 <div
                   key={item.id}
                   data-pillar-node
-                  className={`absolute cursor-pointer ${
+                  className={`absolute cursor-pointer p-1 ${
                     autoRotate ? "" : "transition-transform duration-700 ease-out"
                   }`}
                   style={{
@@ -241,7 +263,7 @@ export function StrategicPillarsOrbit() {
                     </div>
 
                     <div
-                      className={`text-center text-xs font-semibold tracking-wider whitespace-nowrap uppercase transition-all duration-300 ${
+                      className={`text-center text-xs font-semibold tracking-wider uppercase transition-all duration-300 max-sm:max-w-[4.5rem] max-sm:text-[10px] max-sm:leading-tight max-sm:whitespace-normal sm:whitespace-nowrap ${
                         isExpanded ? "scale-125 text-[#81c784]" : "text-[#c8e6c9]"
                       }`}
                     >
@@ -250,7 +272,7 @@ export function StrategicPillarsOrbit() {
                   </div>
 
                   {isExpanded && (
-                    <Card className="absolute top-full left-1/2 mt-4 w-72 -translate-x-1/2 overflow-visible p-5 text-center shadow-2xl shadow-[#0a0f0a]/60">
+                    <Card className="absolute top-full left-1/2 mt-4 w-[min(18rem,calc(100vw-2rem))] max-h-[min(16rem,50vh)] -translate-x-1/2 overflow-y-auto p-5 text-center shadow-2xl shadow-[#0a0f0a]/60">
                       <div
                         className="absolute -top-3 left-1/2 h-3 w-px -translate-x-1/2"
                         style={{

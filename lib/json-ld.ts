@@ -8,7 +8,7 @@ export function organizationJsonLd() {
     url: siteConfig.url,
     logo: {
       "@type": "ImageObject",
-      url: `${siteConfig.url}/logo.png`,
+      url: `${siteConfig.url}/icon-512.png`,
       width: 512,
       height: 512,
     },
@@ -46,7 +46,9 @@ export function articleJsonLd(input: {
       name: siteConfig.name,
       logo: {
         "@type": "ImageObject",
-        url: `${siteConfig.url}/logo.png`,
+        url: `${siteConfig.url}/icon-512.png`,
+        width: 512,
+        height: 512,
       },
     },
   };

@@ -112,8 +112,8 @@ export function FooterStayAhead() {
     >
       <div className="mx-auto max-w-screen-xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
-          <div className="-ml-[20px] text-center lg:text-left">
-            <h2 className="whitespace-nowrap font-display text-[27px] font-bold tracking-tight sm:text-[39px]">
+          <div className="text-center lg:text-left">
+            <h2 className="text-balance font-display text-[clamp(1.35rem,6vw,2.4375rem)] font-bold tracking-tight">
               Stay ahead with {siteConfig.name}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-white lg:mx-0">

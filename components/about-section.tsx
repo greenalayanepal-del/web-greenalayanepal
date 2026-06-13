@@ -279,7 +279,7 @@ export function AboutSection() {
             </div>
           </div>
 
-          <div className="relative z-10 mt-[calc(3rem+80px)] grid items-stretch gap-[calc(1.5rem+270px)] md:grid-cols-2 md:gap-[calc(2rem+270px)] lg:mt-[calc(4rem+80px)]">
+          <div className="relative z-10 mt-[calc(3rem+80px)] grid items-stretch gap-8 md:grid-cols-2 md:gap-[calc(2rem+270px)] lg:mt-[calc(4rem+80px)]">
             <div className="h-full min-h-0">
               <GlassInfoCard cardRef={missionRef} title="Our Mission">
                 To generate credible environmental knowledge, advance community-centered

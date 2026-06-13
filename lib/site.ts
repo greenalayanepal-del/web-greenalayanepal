@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 
-const faviconVersion = "6";
+const faviconVersion = "7";
 
 /** Static favicon set in /public — kept small for sub-100ms loads on every route. */
 export const siteIcons: NonNullable<Metadata["icons"]> = {
   icon: [
-    // Google Search requires a crawlable icon ≥48×48 (PNG preferred over ICO alone).
+    // Google Search requires a crawlable icon ≥48×48; /favicon.ico is the default discovery path.
+    { url: `/favicon.ico?v=${faviconVersion}`, sizes: "any", type: "image/x-icon" },
     { url: `/favicon-48x48.png?v=${faviconVersion}`, sizes: "48x48", type: "image/png" },
-    { url: `/favicon.ico?v=${faviconVersion}`, sizes: "any" },
+    { url: `/icon-192.png?v=${faviconVersion}`, sizes: "192x192", type: "image/png" },
+    { url: `/icon-512.png?v=${faviconVersion}`, sizes: "512x512", type: "image/png" },
     { url: `/favicon-32x32.png?v=${faviconVersion}`, sizes: "32x32", type: "image/png" },
     { url: `/favicon-16x16.png?v=${faviconVersion}`, sizes: "16x16", type: "image/png" },
   ],
