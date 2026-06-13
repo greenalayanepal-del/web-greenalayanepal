@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 
-const faviconVersion = "5";
+const faviconVersion = "6";
 
 /** Static favicon set in /public — kept small for sub-100ms loads on every route. */
 export const siteIcons: NonNullable<Metadata["icons"]> = {
   icon: [
+    // Google Search requires a crawlable icon ≥48×48 (PNG preferred over ICO alone).
+    { url: `/favicon-48x48.png?v=${faviconVersion}`, sizes: "48x48", type: "image/png" },
     { url: `/favicon.ico?v=${faviconVersion}`, sizes: "any" },
     { url: `/favicon-32x32.png?v=${faviconVersion}`, sizes: "32x32", type: "image/png" },
     { url: `/favicon-16x16.png?v=${faviconVersion}`, sizes: "16x16", type: "image/png" },
@@ -31,6 +33,12 @@ export const siteConfig = {
     foundationBackground: "/images/foundation-background.png",
     resourcesHeader: "/images/resources-header.png",
     thematicAreasBackground: "/images/thematic-areas-background.png",
+    footerCarousel: [
+      "/images/footer-carousel-1.png",
+      "/images/footer-carousel-2.png",
+      "/images/footer-carousel-3.png",
+      "/images/footer-carousel-4.png",
+    ] as const,
   },
 } as const;
 
@@ -68,9 +76,9 @@ export const strategicPillars = [
 ] as const;
 
 export const siteContact = {
-  email: "greenalayanepal@gmail.com",
+  email: "info@greenalayanepal.org.np",
   location: "Pokhara, Nepal",
-  phone: "+977-9823232424",
+  phone: "+977-9864835254",
 } as const;
 
 export const mainNavItems = [
@@ -85,24 +93,20 @@ export const mainNavItems = [
 ] as const;
 
 export const footerAboutLinks = [
-  { text: "About Greenalaya", href: "/about" },
-  { text: "Meet the Team", href: "/team" },
-  { text: "Strategic Pillars", href: "/about#strategic-pillars" },
-  { text: "Thematic Areas", href: "/about#thematic-areas" },
+  { href: "/about", lines: ["About Greenalaya", "Nepal"] as const },
+  { text: "Advisors & Partners", href: "/team" },
+  { text: "Team", href: "/team" },
 ] as const;
 
 export const footerWorkLinks = [
   { text: "Projects", href: "/projects" },
   { text: "Research", href: "/research" },
-  { text: "Resources", href: "/resources" },
-  { text: "News & Updates", href: "/news" },
+  { text: "Publications", href: "/research" },
 ] as const;
 
-export const footerHelpfulLinks = [
-  { text: "Contact Us", href: "/contact" },
-  { text: "Get Involved", href: "/#get-involved" },
-  { text: "Browse Resources", href: "/resources" },
-  { text: "Send a Message", href: "/contact", hasIndicator: true },
+export const footerMediaLinks = [
+  { text: "Blog", href: "/news" },
+  { text: "News", href: "/news" },
 ] as const;
 
 export const socialProfiles = [

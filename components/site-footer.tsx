@@ -1,124 +1,142 @@
+"use client";
+
+import { Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { SiteLogo } from "@/components/site-logo";
-import type { SVGProps } from "react";
 import { SocialLinks } from "@/components/social-links";
 import {
   footerAboutLinks,
-  footerHelpfulLinks,
+  footerMediaLinks,
   footerWorkLinks,
   siteConfig,
   siteContact,
 } from "@/lib/site";
 
-function IconMail(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      {...props}
-    >
-      <rect width="20" height="16" x="2" y="4" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  );
-}
+const footerColumnLinkClass =
+  "text-black leading-none transition hover:opacity-70 dark:text-white";
 
-function IconPhone(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      {...props}
-    >
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  );
-}
-
-function IconMapPin(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      {...props}
-    >
-      <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-}
+const footerBodyTextClass = "text-black dark:text-white";
 
 const contactInfo = [
   {
-    icon: IconMail,
+    icon: Mail,
     text: siteContact.email,
     href: `mailto:${siteContact.email}`,
   },
   {
-    icon: IconPhone,
+    icon: Phone,
     text: siteContact.phone,
     href: `tel:${siteContact.phone.replace(/[^+\d]/g, "")}`,
   },
   {
-    icon: IconMapPin,
+    icon: MapPin,
     text: siteContact.location,
     isAddress: true as const,
   },
 ];
 
+function FooterContactList({ className }: { className?: string }) {
+  return (
+    <ul className={className}>
+      {contactInfo.map((item) => {
+        const Icon = item.icon;
+        if ("href" in item && item.href) {
+          return (
+            <li key={item.text}>
+              <a
+                href={item.href}
+                className="flex items-center justify-center gap-1.5 sm:justify-start"
+              >
+                <Icon className="size-4 shrink-0 text-primary" />
+                <span
+                  className={`transition hover:opacity-70 ${footerBodyTextClass}`}
+                >
+                  {item.text}
+                </span>
+              </a>
+            </li>
+          );
+        }
+        return (
+          <li key={item.text}>
+            <div className="flex items-center justify-center gap-1.5 sm:justify-start">
+              <Icon className="size-4 shrink-0 text-primary" />
+              <address className={`not-italic ${footerBodyTextClass}`}>
+                {item.text}
+              </address>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 export function SiteFooter() {
   const year = new Date().getFullYear();
+  const isHome = usePathname() === "/";
+  const mainPadding = isHome
+    ? "-mt-[6px] px-4 pt-0 pb-6 sm:px-6 lg:mt-0 lg:px-8 lg:pt-[26px]"
+    : "px-4 pt-16 pb-6 sm:px-6 lg:px-8 lg:pt-24";
 
   return (
-    <footer className="mt-16 w-full place-self-end rounded-t-xl bg-muted">
-      <div className="mx-auto max-w-6xl px-4 pt-16 pb-6 sm:px-6 lg:px-8 lg:pt-24">
+    <footer className="w-full place-self-end bg-secondary dark:bg-[#0a0f0a]">
+      <div className={`mx-auto max-w-screen-xl ${mainPadding}`}>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          <div>
-            <div className="flex justify-center gap-2 sm:justify-start">
+          <div className="-ml-[20px] -mt-[15px]">
+            <Link
+              href="/"
+              className="-translate-y-[3px] mt-[6px] flex items-center justify-center gap-2 no-underline sm:justify-start"
+            >
               <SiteLogo
-                surface="footer"
-                width={40}
-                height={40}
-                className="h-10 w-10 object-contain"
+                surface="default"
+                className="-translate-y-[10px] h-[45px] w-auto object-contain sm:h-[49px]"
               />
-              <span className="font-display text-2xl font-semibold text-[#2e7d32]">
+              <span className="font-display text-[26px] font-semibold text-[#2e7d32]">
                 {siteConfig.name}
               </span>
+            </Link>
+
+            <div className="-translate-y-[10px]">
+              <p
+                className={`mt-[19px] max-w-md text-center text-[16px] leading-relaxed sm:max-w-xs sm:text-left ${footerBodyTextClass}`}
+              >
+                {siteConfig.description}
+              </p>
+
+              <SocialLinks
+                className="mt-[19px] flex justify-center gap-6 sm:justify-start md:gap-8"
+                iconClassName="size-6 text-primary transition hover:text-primary/80"
+              />
             </div>
-
-            <p className="mt-6 max-w-md text-center leading-relaxed text-muted-foreground sm:max-w-xs sm:text-left">
-              {siteConfig.description}
-            </p>
-
-            <SocialLinks className="mt-8 flex justify-center gap-6 sm:justify-start md:gap-8" />
           </div>
 
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 lg:col-span-2">
+          <div className="-ml-[20px] grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-foreground">About Us</p>
-              <ul className="mt-8 space-y-4 text-sm">
-                {footerAboutLinks.map(({ text, href }) => (
-                  <li key={text}>
-                    <Link
-                      href={href}
-                      className="text-muted-foreground transition hover:text-[#2e7d32]"
-                    >
-                      {text}
+              <p className="text-[20px] font-medium text-black dark:text-white">
+                About
+              </p>
+              <ul className="mt-8 space-y-[11px] text-[16px] leading-none">
+                {footerAboutLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className={footerColumnLinkClass}>
+                      {"lines" in link ? (
+                        <>
+                          {link.lines.map((line, index) => (
+                            <span
+                              key={line}
+                              className={
+                                index === 0 ? "block" : "mt-[11px] block"
+                              }
+                            >
+                              {line}
+                            </span>
+                          ))}
+                        </>
+                      ) : (
+                        link.text
+                      )}
                     </Link>
                   </li>
                 ))}
@@ -126,14 +144,13 @@ export function SiteFooter() {
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-foreground">Our Work</p>
-              <ul className="mt-8 space-y-4 text-sm">
+              <p className="text-[20px] font-medium text-black dark:text-white">
+                Our Work
+              </p>
+              <ul className="mt-8 space-y-[11px] text-[16px]">
                 {footerWorkLinks.map(({ text, href }) => (
                   <li key={text}>
-                    <Link
-                      href={href}
-                      className="text-muted-foreground transition hover:text-[#2e7d32]"
-                    >
+                    <Link href={href} className={footerColumnLinkClass}>
                       {text}
                     </Link>
                   </li>
@@ -142,88 +159,39 @@ export function SiteFooter() {
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-foreground">
-                Helpful Links
+              <p className="text-[20px] font-medium text-black dark:text-white">
+                Media
               </p>
-              <ul className="mt-8 space-y-4 text-sm">
-                {footerHelpfulLinks.map((link) => {
-                  const hasIndicator = "hasIndicator" in link && link.hasIndicator;
-                  return (
-                    <li key={link.text}>
-                      <Link
-                        href={link.href}
-                        className={
-                          hasIndicator
-                            ? "group flex items-center justify-center gap-1.5 sm:justify-start"
-                            : "text-muted-foreground transition hover:text-[#2e7d32]"
-                        }
-                      >
-                        <span
-                          className={
-                            hasIndicator
-                              ? "text-muted-foreground transition group-hover:text-[#2e7d32]"
-                              : undefined
-                          }
-                        >
-                          {link.text}
-                        </span>
-                        {hasIndicator && (
-                          <span className="relative flex size-2">
-                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2e7d32] opacity-75" />
-                            <span className="relative inline-flex size-2 rounded-full bg-[#2e7d32]" />
-                          </span>
-                        )}
-                      </Link>
-                    </li>
-                  );
-                })}
+              <ul className="mt-8 space-y-[11px] text-[16px]">
+                {footerMediaLinks.map(({ text, href }) => (
+                  <li key={text}>
+                    <Link href={href} className={footerColumnLinkClass}>
+                      {text}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-foreground">Contact Us</p>
-              <ul className="mt-8 space-y-4 text-sm">
-                {contactInfo.map((item) => {
-                  const Icon = item.icon;
-                  if ("href" in item && item.href) {
-                    return (
-                      <li key={item.text}>
-                        <a
-                          href={item.href}
-                          className="flex items-center justify-center gap-1.5 sm:justify-start"
-                        >
-                          <Icon className="size-5 shrink-0 text-[#2e7d32]" />
-                          <span className="flex-1 text-muted-foreground transition hover:text-[#2e7d32]">
-                            {item.text}
-                          </span>
-                        </a>
-                      </li>
-                    );
-                  }
-                  return (
-                    <li key={item.text}>
-                      <div className="flex items-center justify-center gap-1.5 sm:justify-start">
-                        <Icon className="size-5 shrink-0 text-[#2e7d32]" />
-                        <address className="-mt-0.5 flex-1 not-italic text-muted-foreground">
-                          {item.text}
-                        </address>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
+              <p className="text-[20px] font-medium text-black dark:text-white">
+                Contact
+              </p>
+              <FooterContactList className="mt-8 space-y-[11px] text-[16px]" />
             </div>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-border pt-6">
-          <div className="text-center sm:flex sm:justify-between sm:text-left">
-            <p className="text-sm text-muted-foreground">
-              <span className="block sm:inline">All rights reserved.</span>
+        <div className="-ml-[20px] mt-[38px] border-t border-black/10 pt-[4px] dark:border-white/10">
+          <div className="grid grid-cols-1 gap-4 text-center lg:grid-cols-3 lg:gap-8 lg:text-left">
+            <p className={`text-[16px] lg:col-span-1 ${footerBodyTextClass}`}>
+              &copy; {year} {siteConfig.name}
             </p>
 
-            <p className="mt-4 text-sm text-muted-foreground/80 transition sm:order-first sm:mt-0">
-              &copy; {year} {siteConfig.name}
+            <p
+              className={`text-[16px] lg:col-span-2 lg:text-right ${footerBodyTextClass}`}
+            >
+              All rights reserved.
             </p>
           </div>
         </div>

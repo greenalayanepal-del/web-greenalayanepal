@@ -7,7 +7,7 @@
  *   node scripts/setup-contact-alerts.mjs
  *
  * Optional overrides:
- *   CONTACT_NOTIFY_EMAIL (default: greenalayanepal@gmail.com)
+ *   CONTACT_NOTIFY_EMAIL (default: info@greenalayanepal.org.np)
  *   CONTACT_FROM_EMAIL   (default: Greenalaya Nepal <onboarding@resend.dev>)
  */
 
@@ -22,7 +22,7 @@ if (!apiKey) {
 }
 
 const notifyEmail =
-  process.env.CONTACT_NOTIFY_EMAIL?.trim() || "greenalayanepal@gmail.com";
+  process.env.CONTACT_NOTIFY_EMAIL?.trim() || "info@greenalayanepal.org.np";
 const fromEmail =
   process.env.CONTACT_FROM_EMAIL?.trim() ||
   "Greenalaya Nepal <onboarding@resend.dev>";

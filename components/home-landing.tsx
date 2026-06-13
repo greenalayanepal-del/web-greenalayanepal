@@ -1,6 +1,6 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { AboutSection } from "@/components/about-section";
+import { FooterStayAhead } from "@/components/footer-stay-ahead";
 import { HomeHero } from "@/components/home-hero";
 import { StrategicPillarsOrbit } from "@/components/strategic-pillars-orbit";
 import { ThematicAreasGrid } from "@/components/thematic-areas-grid";
@@ -101,44 +101,7 @@ export function HomeLanding() {
         </div>
       </section>
 
-      <section
-        id="get-involved"
-        className="scroll-mt-24 bg-cover bg-center px-5 py-28 text-center text-white"
-        style={{
-          backgroundImage: `linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.65) 100%), url('${siteConfig.images.community}')`,
-        }}
-      >
-        <div className="relative mx-auto max-w-3xl">
-          <h2 className="font-display text-4xl font-bold drop-shadow-lg sm:text-5xl">
-            Join Our Movement
-          </h2>
-          <p className="mt-6 text-lg leading-relaxed text-white/95 sm:text-xl">
-            Whether you&apos;re a researcher, community member, student, or
-            organization, there are many ways to contribute to Nepal&apos;s environmental
-            resilience.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-3 rounded-full bg-gradient-to-br from-[#2e7d32] to-[#1b5e20] px-8 py-4 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-1"
-            >
-              Become a Volunteer
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-3 rounded-full border-2 border-white/50 bg-white/15 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition hover:-translate-y-1 hover:bg-white/25"
-            >
-              Research Internship
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-3 rounded-full border-2 border-white/50 bg-white/15 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition hover:-translate-y-1 hover:bg-white/25"
-            >
-              Partner With Us
-            </Link>
-          </div>
-        </div>
-      </section>
+      <FooterStayAhead />
     </div>
   );
 }

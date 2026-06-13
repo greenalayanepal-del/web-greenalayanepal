@@ -2,7 +2,6 @@ import Link from "next/link";
 import { DataError } from "@/components/data-status";
 import { FeaturedResource } from "@/components/featured-resource";
 import { JsonLd } from "@/components/json-ld";
-import { NewsletterCta } from "@/components/newsletter-cta";
 import { PageHero } from "@/components/page-hero";
 import { publicationJsonLd } from "@/lib/json-ld";
 import { pageMetadata } from "@/lib/seo";
@@ -87,8 +86,6 @@ export default async function ResourcesPage() {
             pageCount={butterflyPublication.pageCount}
             researchSlug={slug}
           />
-
-          <NewsletterCta />
 
           <p className="mt-12 text-center text-sm text-neutral-600">
             More publications and datasets will be added as they become available.

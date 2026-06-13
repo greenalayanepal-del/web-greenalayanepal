@@ -12,7 +12,7 @@ type SiteLogoProps = {
 
 const surfaceBackdrop: Record<NonNullable<SiteLogoProps["surface"]>, string> = {
   header: "bg-background",
-  footer: "bg-muted",
+  footer: "bg-secondary",
   default: "bg-transparent",
 };
 

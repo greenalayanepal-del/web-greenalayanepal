@@ -58,15 +58,13 @@ function Card({ children, className = "" }: { children: ReactNode; className?: s
 export function StrategicPillarsOrbit() {
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
   const [rotationAngle, setRotationAngle] = useState(0);
-  const [autoRotate, setAutoRotate] = useState(true);
+  const [autoRotate, setAutoRotate] = useState(
+    () =>
+      typeof window === "undefined" ||
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setAutoRotate(false);
-    }
-  }, []);
 
   const centerViewOnNode = (nodeId: number) => {
     const nodeIndex = TIMELINE_DATA.findIndex((item) => item.id === nodeId);
