@@ -1,17 +1,26 @@
-import { butterflyPublication, siteConfig, siteContact } from "@/lib/site";
+import { butterflyPublication, siteConfig, siteContact, siteLogo } from "@/lib/site";
 
+const organizationId = `${siteConfig.url}/#organization`;
+const websiteId = `${siteConfig.url}/#website`;
+
+function organizationLogoJsonLd() {
+  return {
+    "@type": "ImageObject",
+    url: siteLogo.structuredData,
+    width: siteLogo.width,
+    height: siteLogo.height,
+  };
+}
+
+/** Organization entity — powers publisher logo in Article schema and Google site-name signals. */
 export function organizationJsonLd() {
   return {
-    "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": organizationId,
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: {
-      "@type": "ImageObject",
-      url: `${siteConfig.url}/icon-512.png`,
-      width: 512,
-      height: 512,
-    },
+    logo: organizationLogoJsonLd(),
+    image: siteLogo.structuredData,
     description: siteConfig.description,
     email: siteContact.email,
     telephone: siteContact.phone,
@@ -25,6 +34,27 @@ export function organizationJsonLd() {
       siteConfig.social.instagram,
       siteConfig.social.linkedin,
     ],
+  };
+}
+
+/** WebSite entity — primary signal Google uses for branded site name in SERPs. */
+export function websiteJsonLd() {
+  return {
+    "@type": "WebSite",
+    "@id": websiteId,
+    name: siteConfig.name,
+    url: siteConfig.url,
+    description: siteConfig.description,
+    publisher: { "@id": organizationId },
+    inLanguage: "en-NP",
+  };
+}
+
+/** Combined graph injected once in root layout `<head>`. */
+export function rootJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [organizationJsonLd(), websiteJsonLd()],
   };
 }
 
@@ -43,13 +73,9 @@ export function articleJsonLd(input: {
     datePublished: input.datePublished ?? undefined,
     publisher: {
       "@type": "Organization",
+      "@id": organizationId,
       name: siteConfig.name,
-      logo: {
-        "@type": "ImageObject",
-        url: `${siteConfig.url}/icon-512.png`,
-        width: 512,
-        height: 512,
-      },
+      logo: organizationLogoJsonLd(),
     },
   };
 }

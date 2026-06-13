@@ -6,7 +6,6 @@ import sharp from "sharp";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const publicDir = path.join(root, "public");
-const appDir = path.join(root, "app");
 const brandDir = path.join(root, "brand");
 
 const logoSource = path.resolve(
@@ -94,27 +93,29 @@ function pngBuffersToIco(pngBuffers) {
   return Buffer.concat(parts);
 }
 
-// Favicons: transparent so they read cleanly on light and dark browser chrome.
-const png16 = await writeFaviconPng(16, "favicon-16x16.png", null);
-const png32 = await writeFaviconPng(32, "favicon-32x32.png", null);
-const png48 = await writeFaviconPng(48, "favicon-48x48.png", null);
+// Google Search reads /favicon.ico and ≥48×48 icons — use a solid light canvas so the
+// bird stays visible on white SERP backgrounds (transparent/black letterbox gets rejected).
+const png16 = await writeFaviconPng(16, "favicon-16x16.png", theme.header);
+const png32 = await writeFaviconPng(32, "favicon-32x32.png", theme.header);
+const png48 = await writeFaviconPng(48, "favicon-48x48.png", theme.header);
 await writeFaviconPng(180, "apple-touch-icon.png", theme.header);
 
 const ico = pngBuffersToIco([png16, png32, png48]);
 writeFileSync(path.join(publicDir, "favicon.ico"), ico);
-writeFileSync(path.join(appDir, "favicon.ico"), ico);
+writeFileSync(path.join(root, "app", "favicon.ico"), ico);
 
-// Next.js file-based metadata: serve ≥48×48 so Google Search accepts the auto /icon route.
-const icon512 = await renderLogo(512, null);
-writeFileSync(path.join(appDir, "icon.png"), icon512);
+// Next.js file-based metadata: white-backed icon for /icon and Google auto-discovery.
+const appIcon = await renderLogo(512, theme.header);
+writeFileSync(path.join(root, "app", "icon.png"), appIcon);
 const apple180 = await renderLogo(180, theme.header);
-writeFileSync(path.join(appDir, "apple-icon.png"), apple180);
+writeFileSync(path.join(root, "app", "apple-icon.png"), apple180);
 
-// PWA / manifest sizes (Google also crawls manifest icons).
+// PWA / manifest + Organization schema logo (square, white background).
 await writeFaviconPng(192, "icon-192.png", theme.header);
 await writeFaviconPng(512, "icon-512.png", theme.header);
 
 // UI logo: transparent PNG for header (white) and footer (emerald-50).
+const icon512 = await renderLogo(512, null);
 writeFileSync(path.join(publicDir, "logo.png"), icon512);
 
 // Social preview: emerald-50 canvas matching the footer band.

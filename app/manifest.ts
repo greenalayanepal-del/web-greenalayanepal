@@ -3,8 +3,9 @@ import { siteConfig } from "@/lib/site";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
+    id: "/",
     name: siteConfig.name,
-    short_name: "Greenalaya",
+    short_name: siteConfig.name,
     description: siteConfig.description,
     start_url: "/",
     display: "standalone",

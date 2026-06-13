@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
-const faviconVersion = "7";
+const faviconVersion = "8";
 
 /** Static favicon set in /public — kept small for sub-100ms loads on every route. */
 export const siteIcons: NonNullable<Metadata["icons"]> = {
   icon: [
-    // Google Search requires a crawlable icon ≥48×48; /favicon.ico is the default discovery path.
-    { url: `/favicon.ico?v=${faviconVersion}`, sizes: "any", type: "image/x-icon" },
+    // List 48×48 PNG first — Google’s preferred explicit size; /favicon.ico remains the default fetch path.
     { url: `/favicon-48x48.png?v=${faviconVersion}`, sizes: "48x48", type: "image/png" },
+    { url: `/favicon.ico?v=${faviconVersion}`, sizes: "any", type: "image/x-icon" },
     { url: `/icon-192.png?v=${faviconVersion}`, sizes: "192x192", type: "image/png" },
     { url: `/icon-512.png?v=${faviconVersion}`, sizes: "512x512", type: "image/png" },
     { url: `/favicon-32x32.png?v=${faviconVersion}`, sizes: "32x32", type: "image/png" },
@@ -42,6 +42,14 @@ export const siteConfig = {
       "/images/footer-carousel-4.png",
     ] as const,
   },
+} as const;
+
+/** Square logo URLs for structured data (absolute) and favicon discovery. */
+export const siteLogo = {
+  path: "/icon-512.png",
+  width: 512,
+  height: 512,
+  structuredData: `${siteConfig.url}/icon-512.png`,
 } as const;
 
 export const strategicPillars = [

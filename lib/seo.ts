@@ -32,6 +32,7 @@ export function pageMetadata({
       absolute: fullTitle,
     },
     description,
+    applicationName: siteConfig.name,
     icons: siteIcons,
     alternates: { canonical: url },
     openGraph: {

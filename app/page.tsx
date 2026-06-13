@@ -3,7 +3,7 @@ import { pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 export const metadata = pageMetadata({
-  title: "Home",
+  title: siteConfig.tagline,
   description: siteConfig.description,
   path: "/",
 });

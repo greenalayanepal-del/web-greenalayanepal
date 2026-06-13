@@ -4,7 +4,7 @@ import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
-import { organizationJsonLd } from "@/lib/json-ld";
+import { rootJsonLd } from "@/lib/json-ld";
 import { titleSeparator } from "@/lib/seo";
 import { siteConfig, siteIcons } from "@/lib/site";
 import "./globals.css";
@@ -17,12 +17,18 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  applicationName: siteConfig.name,
   title: {
     default: siteConfig.name,
     template: `%s${titleSeparator}${siteConfig.name}`,
   },
   description: siteConfig.description,
   icons: siteIcons,
+  appleWebApp: {
+    capable: true,
+    title: siteConfig.name,
+    statusBarStyle: "default",
+  },
   openGraph: {
     type: "website",
     locale: "en_NP",
@@ -65,7 +71,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <JsonLd data={organizationJsonLd()} />
+          <JsonLd data={rootJsonLd()} />
           <SiteHeader />
           <div className="flex-1">{children}</div>
           <SiteFooter />
