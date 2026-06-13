@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const faviconVersion = "8";
+const faviconVersion = "9";
 
 /** Static favicon set in /public — kept small for sub-100ms loads on every route. */
 export const siteIcons: NonNullable<Metadata["icons"]> = {
@@ -14,7 +14,6 @@ export const siteIcons: NonNullable<Metadata["icons"]> = {
     { url: `/favicon-16x16.png?v=${faviconVersion}`, sizes: "16x16", type: "image/png" },
   ],
   apple: [{ url: `/apple-touch-icon.png?v=${faviconVersion}`, sizes: "180x180", type: "image/png" }],
-  shortcut: `/favicon.ico?v=${faviconVersion}`,
 };
 
 export const siteConfig = {

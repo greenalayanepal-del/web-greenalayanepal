@@ -64,6 +64,9 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${roboto.variable} h-full scroll-smooth antialiased`}
     >
+      <head>
+        <JsonLd data={rootJsonLd()} />
+      </head>
       <body className="flex min-h-full flex-col bg-background font-body text-foreground">
         <ThemeProvider
           attribute="class"
@@ -71,7 +74,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <JsonLd data={rootJsonLd()} />
           <SiteHeader />
           <div className="flex-1">{children}</div>
           <SiteFooter />

@@ -13,6 +13,8 @@ type PageMetaInput = {
   description: string;
   path?: string;
   noIndex?: boolean;
+  /** Use site name only — for homepage SERP title matching branded site name. */
+  siteNameTitle?: boolean;
 };
 
 export function pageMetadata({
@@ -20,12 +22,13 @@ export function pageMetadata({
   description,
   path = "",
   noIndex = false,
+  siteNameTitle = false,
 }: PageMetaInput): Metadata {
   const url = `${siteConfig.url}${path}`;
   const ogImage = siteConfig.ogImage.startsWith("http")
     ? siteConfig.ogImage
     : `${siteConfig.url}${siteConfig.ogImage}`;
-  const fullTitle = documentTitle(title);
+  const fullTitle = siteNameTitle ? siteConfig.name : documentTitle(title);
 
   return {
     title: {
