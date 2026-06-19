@@ -157,12 +157,12 @@ function GlassInfoCard({
   return (
     <div
       ref={cardRef}
-      className={`h-full rounded-2xl px-8 py-[17px] text-center transition hover:-translate-y-1 ${glassCardSurface} ${glassCardSurfaceHover} ${glassCardShadow} ${glassCardShadowHover}`}
+      className={`h-full rounded-2xl px-5 py-4 text-center transition hover:-translate-y-1 sm:px-8 sm:py-[17px] ${glassCardSurface} ${glassCardSurfaceHover} ${glassCardShadow} ${glassCardShadowHover}`}
     >
       <h4 className="font-display text-xl font-bold uppercase tracking-[0.2em] text-[#2e7d32] sm:text-2xl">
         {title}
       </h4>
-      <p className="mt-5 text-base leading-relaxed text-white">{children}</p>
+      <p className="mt-3 text-base leading-relaxed text-white sm:mt-5">{children}</p>
     </div>
   );
 }
@@ -231,7 +231,7 @@ export function AboutSection() {
     <section ref={sectionRef} id="about" className="dark relative scroll-mt-24 overflow-hidden">
       <AboutBackground imageScale={bgScale} />
 
-      <div className="relative px-5 pt-24 pb-[calc(6rem-30px)] lg:pt-28 lg:pb-[calc(7rem-30px)]">
+      <div className="relative px-5 pt-16 pb-12 md:pt-24 md:pb-[calc(6rem-30px)] lg:pt-28 lg:pb-[calc(7rem-30px)]">
       <div ref={containerRef} className="relative mx-auto max-w-6xl">
         {(connectors.mission || connectors.vision) && (
           <div className="pointer-events-none absolute inset-0 z-[5] hidden overflow-visible md:block">
@@ -260,39 +260,41 @@ export function AboutSection() {
           </div>
         )}
 
-        <div className="translate-y-[30px]">
-          <div className="relative z-10 mx-auto max-w-[548px] text-center">
-            <div className="-mt-[70px] translate-x-[20px] translate-y-[10px]">
-              <div
-                ref={sourceRef}
-                className={`rounded-3xl px-8 py-[2px] sm:px-10 sm:py-[10px] ${glassCardSurface} ${glassCardShadow}`}
-              >
-                <h3 className="font-display text-xl font-bold uppercase tracking-[0.2em] text-[#2e7d32] sm:text-2xl">
-                  {siteConfig.name}
-                </h3>
-                <p className="mt-5 text-base leading-relaxed text-white">
-                  We work at the intersection of nature and technology, empowering communities
-                  to conserve and restore ecosystems while fostering sustainable green innovative
-                  enterprises in balance with nature.
-                </p>
+        <div className="md:translate-y-[30px]">
+          <div className="relative z-10 flex flex-col gap-4 md:gap-0">
+            <div className="relative z-10 mx-auto w-full max-w-[548px] text-center">
+              <div className="md:-mt-[70px] md:translate-x-[20px] md:translate-y-[10px]">
+                <div
+                  ref={sourceRef}
+                  className={`rounded-2xl px-5 py-4 sm:rounded-3xl sm:px-10 sm:py-[10px] ${glassCardSurface} ${glassCardShadow}`}
+                >
+                  <h3 className="font-display text-xl font-bold uppercase tracking-[0.2em] text-[#2e7d32] sm:text-2xl">
+                    {siteConfig.name}
+                  </h3>
+                  <p className="mt-3 text-base leading-relaxed text-white sm:mt-5">
+                    We work at the intersection of nature and technology, empowering communities
+                    to conserve and restore ecosystems while fostering sustainable green innovative
+                    enterprises in balance with nature.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="relative z-10 mt-[calc(3rem+80px)] grid items-stretch gap-8 md:grid-cols-2 md:gap-[calc(2rem+270px)] lg:mt-[calc(4rem+80px)]">
-            <div className="h-full min-h-0">
-              <GlassInfoCard cardRef={missionRef} title="Our Mission">
-                To generate credible environmental knowledge, advance community-centered
-                conservation, and catalyze innovative eco-business solutions that protect
-                biodiversity, strengthen local livelihoods, and influence sustainable development
-                pathways in Nepal.
-              </GlassInfoCard>
-            </div>
-            <div className="h-full min-h-0">
-              <GlassInfoCard cardRef={visionRef} title="Our Vision">
-                A resilient Nepal where empowered communities conserve ecosystems and foster
-                sustainable green innovative enterprises in balance with nature and technology.
-              </GlassInfoCard>
+            <div className="relative z-10 grid items-stretch gap-4 md:mt-[calc(3rem+80px)] md:grid-cols-2 md:gap-[calc(2rem+270px)] lg:mt-[calc(4rem+80px)]">
+              <div className="h-full min-h-0">
+                <GlassInfoCard cardRef={missionRef} title="Our Mission">
+                  To generate credible environmental knowledge, advance community-centered
+                  conservation, and catalyze innovative eco-business solutions that protect
+                  biodiversity, strengthen local livelihoods, and influence sustainable development
+                  pathways in Nepal.
+                </GlassInfoCard>
+              </div>
+              <div className="h-full min-h-0">
+                <GlassInfoCard cardRef={visionRef} title="Our Vision">
+                  A resilient Nepal where empowered communities conserve ecosystems and foster
+                  sustainable green innovative enterprises in balance with nature and technology.
+                </GlassInfoCard>
+              </div>
             </div>
           </div>
         </div>

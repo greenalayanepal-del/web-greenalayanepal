@@ -33,16 +33,12 @@ const heroButtonClass =
   "inline-flex min-h-12 items-center justify-center rounded-full px-8 text-[calc(18px-2px)] font-semibold no-underline transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out active:scale-[0.98] motion-reduce:transition-none lg:text-[18px]";
 
 const HERO_ACCENT = "text-[#7dd87f]";
-const HERO_HEADLINE_LINE_1_MOBILE =
-  "max-md:text-[clamp(calc(1.05rem+7px),calc(3.6vw+7px),calc(1.65rem+7px))]";
-const HERO_HEADLINE_LINE_1_TABLET =
-  "md:max-lg:text-[clamp(calc(2.25rem-3px),calc(6.2vw-3px),calc(4.25rem-3px))]";
+const HERO_HEADLINE_MOBILE =
+  "max-md:whitespace-nowrap max-md:text-[21px]";
+const HERO_HEADLINE_TABLET =
+  "md:max-lg:whitespace-nowrap md:max-lg:text-[24px]";
 const HERO_HEADLINE_LINE_1_DESKTOP =
   "lg:text-[clamp(calc(2.25rem-10px),calc(6.2vw-10px),calc(4.25rem-10px))]";
-const HERO_HEADLINE_LINE_2_MOBILE =
-  "max-md:text-[clamp(calc(1.05rem+7px),calc(3.6vw+7px),calc(1.65rem+7px))]";
-const HERO_HEADLINE_LINE_2_TABLET =
-  "md:max-lg:text-[clamp(calc(2rem+7px),calc(6.2vw+7px),75px)]";
 const HERO_HEADLINE_LINE_2_DESKTOP = "lg:text-[clamp(2rem,6.2vw,68px)]";
 
 function HeroHeadline() {
@@ -56,9 +52,9 @@ function HeroHeadline() {
     >
       <span
         className={cn(
-          "block font-bold leading-[1.08] tracking-[-0.03em] text-white/88 max-md:whitespace-nowrap",
-          HERO_HEADLINE_LINE_1_MOBILE,
-          HERO_HEADLINE_LINE_1_TABLET,
+          "block font-bold leading-[1.08] tracking-[-0.03em] text-white/88",
+          HERO_HEADLINE_MOBILE,
+          HERO_HEADLINE_TABLET,
           HERO_HEADLINE_LINE_1_DESKTOP,
         )}
       >
@@ -66,9 +62,9 @@ function HeroHeadline() {
       </span>
       <span
         className={cn(
-          "mt-4 block font-bold leading-[1.08] tracking-[-0.03em] text-white max-md:whitespace-nowrap md:mt-5",
-          HERO_HEADLINE_LINE_2_MOBILE,
-          HERO_HEADLINE_LINE_2_TABLET,
+          "mt-4 block font-bold leading-[1.08] tracking-[-0.03em] text-white md:mt-5",
+          HERO_HEADLINE_MOBILE,
+          HERO_HEADLINE_TABLET,
           HERO_HEADLINE_LINE_2_DESKTOP,
         )}
       >
@@ -247,7 +243,7 @@ export function HeroContent({
 
           <Link
             href={scrollTarget}
-            className="inline-flex -translate-x-[19px] translate-y-[17px] text-white/45 no-underline transition-colors duration-200 hover:text-white/75"
+            className="inline-flex translate-y-[17px] text-white/45 no-underline transition-colors duration-200 hover:text-white/75"
             aria-label="Scroll to explore our work"
           >
             <ChevronDown

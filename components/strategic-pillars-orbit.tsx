@@ -72,9 +72,14 @@ export function StrategicPillarsOrbit() {
     if (!orbitEl) return;
 
     const updateRadius = () => {
-      const size = orbitEl.getBoundingClientRect().width;
+      const rect = orbitEl.getBoundingClientRect();
+      const size = Math.min(rect.width, rect.height);
       if (size <= 0) return;
-      setOrbitRadius(Math.max(72, Math.min(200, size * 0.38)));
+
+      // Leave room for icon + label so nodes are not clipped while orbiting.
+      const nodeExtent = 76;
+      const maxRadius = size / 2 - nodeExtent;
+      setOrbitRadius(Math.max(88, Math.min(maxRadius, size * 0.34)));
     };
 
     updateRadius();
@@ -150,14 +155,14 @@ export function StrategicPillarsOrbit() {
     const radian = (angle * Math.PI) / 180;
     const x = radius * Math.cos(radian);
     const y = radius * Math.sin(radian);
-    const zIndex = Math.round(100 + 50 * Math.cos(radian));
+    const zIndex = Math.max(30, Math.round(100 + 50 * Math.cos(radian)));
     return { x, y, zIndex };
   };
 
   return (
     <section
       id="pillars"
-      className="relative scroll-mt-24 overflow-hidden bg-gradient-to-b from-[#0a0f0a] via-[#0f1610] to-[#0a0f0a] text-white lg:min-h-[720px]"
+      className="relative scroll-mt-24 overflow-x-clip bg-gradient-to-b from-[#0a0f0a] via-[#0f1610] to-[#0a0f0a] text-white lg:min-h-[720px]"
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
@@ -177,8 +182,8 @@ export function StrategicPillarsOrbit() {
         <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(76,175,80,0.06)_0%,transparent_50%,rgba(0,0,0,0.2)_100%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 lg:grid-cols-2 lg:gap-12 lg:py-20">
-        <header className="translate-y-5 text-center lg:text-left">
+      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:gap-14 lg:grid-cols-2 lg:gap-16 lg:py-20">
+        <header className="text-center lg:text-left">
           <h2 className="font-display text-4xl font-bold tracking-tight text-[#2196f3] uppercase [-webkit-text-stroke:2px_#000] [paint-order:stroke_fill] md:text-5xl">
             Strategic Pillars
           </h2>
@@ -189,19 +194,28 @@ export function StrategicPillarsOrbit() {
         </header>
 
         <div
-          className="relative flex h-[min(520px,70vw)] w-full translate-y-[35px] items-center justify-center sm:h-[min(580px,65vw)] lg:h-[min(640px,calc(100vh-200px))]"
+          className="relative flex min-h-[380px] h-[min(560px,92vw)] w-full items-center justify-center sm:min-h-[420px] sm:h-[min(600px,88vw)] lg:h-[min(640px,calc(100vh-200px))]"
           ref={containerRef}
         >
           <div
-            className="relative flex aspect-square h-full w-full max-w-[min(520px,90vw)] items-center justify-center lg:max-w-none"
+            className="relative aspect-square h-full w-full max-h-full max-w-full overflow-visible"
             ref={orbitRef}
             style={{ perspective: "1000px" } as CSSProperties}
           >
-            <div className="absolute aspect-square h-full w-full rounded-full border border-[#2e7d32]/15" />
-            <div className="absolute aspect-square h-[80%] w-[80%] rounded-full border border-[#4caf50]/20" />
-            <div className="absolute aspect-square h-[62%] w-[62%] rounded-full border border-dashed border-[#4caf50]/25" />
+            <div
+              className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#2e7d32]/15"
+              style={{ width: orbitRadius * 2, height: orbitRadius * 2 }}
+            />
+            <div
+              className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#4caf50]/20"
+              style={{ width: orbitRadius * 1.6, height: orbitRadius * 1.6 }}
+            />
+            <div
+              className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#4caf50]/25"
+              style={{ width: orbitRadius * 1.24, height: orbitRadius * 1.24 }}
+            />
 
-            <div className="absolute z-10 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#2e7d32] via-[#4caf50] to-[#1b5e20] shadow-lg shadow-[#2e7d32]/40">
+            <div className="absolute left-1/2 top-1/2 z-10 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-[#2e7d32] via-[#4caf50] to-[#1b5e20] shadow-lg shadow-[#2e7d32]/40">
               <div className="absolute h-20 w-20 animate-ping rounded-full border border-[#4caf50]/40 opacity-70" />
               <div
                 className="absolute h-24 w-24 animate-ping rounded-full border border-[#2e7d32]/30 opacity-50"
@@ -223,11 +237,11 @@ export function StrategicPillarsOrbit() {
                 <div
                   key={item.id}
                   data-pillar-node
-                  className={`absolute cursor-pointer p-1 ${
+                  className={`absolute left-1/2 top-1/2 cursor-pointer ${
                     autoRotate ? "" : "transition-transform duration-700 ease-out"
                   }`}
                   style={{
-                    transform: `translate(${position.x}px, ${position.y}px)`,
+                    transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px))`,
                     zIndex: isExpanded ? 200 : position.zIndex,
                   }}
                   onClick={(e) => {
@@ -236,7 +250,7 @@ export function StrategicPillarsOrbit() {
                   }}
                 >
                   <div
-                    className={`relative flex flex-col items-center ${isExpanded ? "gap-5" : "gap-3"}`}
+                    className={`relative flex flex-col items-center ${isExpanded ? "gap-4" : "gap-2.5 sm:gap-3"}`}
                   >
                     <div className="relative">
                       <div
@@ -263,8 +277,8 @@ export function StrategicPillarsOrbit() {
                     </div>
 
                     <div
-                      className={`text-center text-xs font-semibold tracking-wider uppercase transition-all duration-300 max-sm:max-w-[4.5rem] max-sm:text-[10px] max-sm:leading-tight max-sm:whitespace-normal sm:whitespace-nowrap ${
-                        isExpanded ? "scale-125 text-[#81c784]" : "text-[#c8e6c9]"
+                      className={`text-center text-[10px] font-semibold tracking-wider uppercase transition-all duration-300 sm:text-xs ${
+                        isExpanded ? "scale-110 text-[#81c784] sm:scale-125" : "text-[#c8e6c9]"
                       }`}
                     >
                       {item.title}

@@ -45,7 +45,7 @@ function FooterImageCarousel() {
   const nextIndex = (index + 1) % count;
 
   return (
-    <div className="ml-[15px] flex w-full items-center justify-center gap-3 sm:gap-4">
+    <div className="flex w-full max-w-full items-center justify-center gap-3 sm:gap-4">
       <button
         type="button"
         onClick={prev}
@@ -116,7 +116,7 @@ export function FooterStayAhead() {
             <h2 className="text-balance font-display text-[clamp(1.35rem,6vw,2.4375rem)] font-bold tracking-tight">
               Stay ahead with {siteConfig.name}
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-white lg:mx-0">
+            <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-white sm:mt-3.5 lg:mx-0 lg:mt-4">
               Join researchers, communities, and organizations
               <br className="sm:hidden" />
               {" "}who trust {siteConfig.name}
@@ -125,7 +125,7 @@ export function FooterStayAhead() {
               Nepal.
             </p>
 
-            <div className="mt-8 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center lg:justify-start">
+            <div className="mt-4 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:mt-5 lg:mt-8 lg:justify-start">
               {involvementTabs.map((tab) => (
                 <Button
                   key={tab.label}

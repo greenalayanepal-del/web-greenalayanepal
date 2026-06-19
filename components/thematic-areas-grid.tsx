@@ -8,7 +8,7 @@ const secondRowColStart = ["lg:col-start-2", "lg:col-start-4", "lg:col-start-6"]
 
 export function ThematicAreasGrid() {
   return (
-    <div className="grid gap-[45px] sm:grid-cols-2 lg:grid-cols-8 lg:gap-[49px]">
+    <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-8 lg:gap-[49px]">
       {thematicAreasWithStyle.map((area, index) => (
         <GlowCard
           key={area.title}
@@ -17,18 +17,18 @@ export function ThematicAreasGrid() {
           glassTone="black"
           backdropOpacity={0.25}
           className={cn(
-            "mx-auto min-h-[190px] w-full lg:col-span-2",
+            "mx-auto w-full min-h-[108px] p-2.5 sm:min-h-[118px] sm:p-3 lg:col-span-2 lg:min-h-[190px] lg:p-4",
             index >= 4 && secondRowColStart[index - 4],
           )}
         >
-          <article className="relative z-10 flex h-full flex-col justify-end gap-[30px]">
+          <article className="relative z-10 flex h-full flex-col justify-end gap-2 sm:gap-2.5 lg:gap-[30px]">
             <p
               aria-hidden
-              className="font-display text-4xl font-bold leading-none text-white sm:text-5xl"
+              className="font-display text-2xl font-bold leading-none text-white sm:text-3xl lg:text-4xl xl:text-5xl"
             >
               {area.number}
             </p>
-            <h3 className="font-display text-lg font-bold leading-snug text-white">
+            <h3 className="font-display text-[11px] font-bold leading-snug text-white sm:text-xs lg:text-lg">
               {area.title}
             </h3>
           </article>
