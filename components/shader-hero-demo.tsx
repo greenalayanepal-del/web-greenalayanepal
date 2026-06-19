@@ -4,7 +4,8 @@ import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { SectionFadeBridges } from "@/components/section-fade-bridges";
 import {
   computeParallaxTransform,
   PARALLAX_INITIAL_TRANSFORM,
@@ -81,7 +82,7 @@ function HeroOverlays() {
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            "linear-gradient(180deg, rgba(10,15,10,0.22) 0%, rgba(10,15,10,0.38) 38%, rgba(0,0,0,0.98) 100%)",
+            "linear-gradient(180deg, rgba(10,15,10,0.22) 0%, rgba(10,15,10,0.38) 38%, rgba(10,15,10,0.85) 100%)",
         }}
       />
       <div
@@ -144,14 +145,19 @@ export function ShaderBackground({
   children: React.ReactNode;
   className?: string;
 }) {
+  const sectionRef = useRef<HTMLElement>(null);
+
   return (
     <section
+      ref={sectionRef}
       className={cn("relative bg-[#0a0f0a]", className ?? "min-h-screen")}
     >
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-[#0a0f0a]">
         <HeroParallaxImage />
         <HeroOverlays />
       </div>
+
+      <SectionFadeBridges targetRef={sectionRef} showTop={false} showBottom />
 
       <div className={cn("relative z-10 flex flex-col", className ?? "min-h-screen")}>
         {children}

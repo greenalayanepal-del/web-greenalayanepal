@@ -9,6 +9,7 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
+import { SectionFadeBridges } from "@/components/section-fade-bridges";
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 type PillarIconKey = (typeof strategicPillars)[number]["icon"];
@@ -91,6 +92,7 @@ export function StrategicPillarsOrbit() {
       typeof window === "undefined" ||
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
+  const sectionRef = useRef<HTMLElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -196,9 +198,11 @@ export function StrategicPillarsOrbit() {
 
   return (
     <section
+      ref={sectionRef}
       id="pillars"
-      className="relative scroll-mt-24 overflow-x-clip bg-gradient-to-b from-[#0a0f0a] via-[#0f1610] to-[#0a0f0a] text-white lg:min-h-[720px]"
+      className="relative -mt-[8px] scroll-mt-24 overflow-x-clip bg-gradient-to-b from-[#0a0f0a] via-[#0f1610] to-[#0a0f0a] text-white lg:min-h-[720px]"
     >
+      <SectionFadeBridges targetRef={sectionRef} showTop showBottom />
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20"

@@ -1,6 +1,7 @@
 "use client";
 
 import { GradientTracing } from "@/components/gradient-tracing";
+import { SectionFadeBridges } from "@/components/section-fade-bridges";
 import { siteConfig } from "@/lib/site";
 import Image from "next/image";
 import {
@@ -233,8 +234,13 @@ export function AboutSection() {
     `M0,${CONNECTOR_STRIP_HEIGHT / 2} L${width},${CONNECTOR_STRIP_HEIGHT / 2}`;
 
   return (
-    <section ref={sectionRef} id="about" className="dark relative scroll-mt-24 overflow-hidden">
+    <section
+      ref={sectionRef}
+      id="about"
+      className="dark relative -mt-[8px] scroll-mt-24 overflow-hidden"
+    >
       <AboutBackground imageScale={bgScale} />
+      <SectionFadeBridges targetRef={sectionRef} showTop showBottom />
 
       <div className="relative px-5 pt-16 pb-12 md:pt-24 md:pb-[calc(6rem-30px)] lg:pt-28 lg:pb-[calc(7rem-30px)]">
       <div ref={containerRef} className="relative mx-auto max-w-6xl">

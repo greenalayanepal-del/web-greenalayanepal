@@ -3,7 +3,8 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { SectionFadeBridges } from "@/components/section-fade-bridges";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site";
 
@@ -117,11 +118,15 @@ function FooterImageCarousel() {
 }
 
 export function FooterStayAhead() {
+  const sectionRef = useRef<HTMLElement>(null);
+
   return (
     <section
+      ref={sectionRef}
       id="get-involved"
-      className="scroll-mt-24 bg-[#0a0f0a] text-white"
+      className="relative -mt-[8px] scroll-mt-24 bg-[#0a0f0a] text-white"
     >
+      <SectionFadeBridges targetRef={sectionRef} showTop showBottom={false} />
       <div className="mx-auto max-w-screen-xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="text-center lg:text-left">
