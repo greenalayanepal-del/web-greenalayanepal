@@ -45,6 +45,33 @@ const TIMELINE_DATA: TimelineItem[] = strategicPillars.map((pillar, index) => ({
   iconKey: pillar.icon,
 }));
 
+const NODE_COUNT = TIMELINE_DATA.length;
+
+/** Max orbit radius so every node + label stays inside the square at all rotation angles. */
+function computeMaxOrbitRadius(
+  width: number,
+  height: number,
+  nodeHalfWidth: number,
+  nodeHalfHeight: number,
+) {
+  let maxRadius = Infinity;
+
+  for (let index = 0; index < NODE_COUNT; index += 1) {
+    const angle = ((index / NODE_COUNT) * 360 * Math.PI) / 180;
+    const cos = Math.abs(Math.cos(angle));
+    const sin = Math.abs(Math.sin(angle));
+
+    if (cos > 0.01) {
+      maxRadius = Math.min(maxRadius, (width / 2 - nodeHalfWidth) / cos);
+    }
+    if (sin > 0.01) {
+      maxRadius = Math.min(maxRadius, (height / 2 - nodeHalfHeight) / sin);
+    }
+  }
+
+  return Number.isFinite(maxRadius) ? maxRadius : width / 2 - nodeHalfWidth;
+}
+
 function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
     <div
@@ -73,19 +100,22 @@ export function StrategicPillarsOrbit() {
 
     const updateRadius = () => {
       const rect = orbitEl.getBoundingClientRect();
-      const size = Math.min(rect.width, rect.height);
-      if (size <= 0) return;
+      if (rect.width <= 0 || rect.height <= 0) return;
 
       const isCompact = window.matchMedia("(max-width: 1023px)").matches;
-      // Reserve space for icon + label width so side nodes are not clipped.
-      const verticalExtent = isCompact ? 76 : 72;
-      const horizontalExtent = isCompact ? 48 : 40;
-      const maxRadius = Math.min(
-        rect.width / 2 - horizontalExtent,
-        rect.height / 2 - verticalExtent,
+      // Icon + label footprint from each node center (matches mobile/desktop classes below).
+      const nodeHalfWidth = isCompact ? 52 : 44;
+      const nodeHalfHeight = isCompact ? 50 : 44;
+      const maxRadius = computeMaxOrbitRadius(
+        rect.width,
+        rect.height,
+        nodeHalfWidth,
+        nodeHalfHeight,
       );
-      const scaleCap = isCompact ? 0.32 : 0.36;
-      setOrbitRadius(Math.max(80, Math.min(maxRadius, size * scaleCap)));
+      const minRadius = isCompact ? 96 : 88;
+      const radiusBoost = isCompact ? 90 : 0;
+
+      setOrbitRadius(Math.max(minRadius, maxRadius - (isCompact ? 2 : 4) + radiusBoost));
     };
 
     updateRadius();
@@ -200,7 +230,7 @@ export function StrategicPillarsOrbit() {
         </header>
 
         <div
-          className="relative mx-auto w-full max-w-[min(100%,22rem)] sm:max-w-[min(100%,24rem)] lg:max-w-none lg:h-[min(680px,calc(100vh-200px))] lg:min-h-[680px]"
+          className="relative mx-auto w-full max-w-[min(calc(100vw-2rem),26rem)] sm:max-w-[min(calc(100vw-2rem),28rem)] lg:max-w-none lg:h-[min(680px,calc(100vh-200px))] lg:min-h-[680px]"
           ref={containerRef}
         >
           <div
@@ -210,15 +240,15 @@ export function StrategicPillarsOrbit() {
           >
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#2e7d32]/15"
-              style={{ width: orbitRadius * 2, height: orbitRadius * 2 }}
+              style={{ width: orbitRadius * 3.1, height: orbitRadius * 3.1 }}
             />
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#4caf50]/20"
-              style={{ width: orbitRadius * 1.6, height: orbitRadius * 1.6 }}
+              style={{ width: orbitRadius * 2.3, height: orbitRadius * 2.3 }}
             />
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#4caf50]/25"
-              style={{ width: orbitRadius * 1.24, height: orbitRadius * 1.24 }}
+              style={{ width: orbitRadius * 1.8, height: orbitRadius * 1.8 }}
             />
 
             <div className="absolute left-1/2 top-1/2 z-10 flex h-[4.75rem] w-[4.75rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-[#2e7d32] via-[#4caf50] to-[#1b5e20] shadow-lg shadow-[#2e7d32]/40 lg:h-16 lg:w-16">
