@@ -76,10 +76,16 @@ export function StrategicPillarsOrbit() {
       const size = Math.min(rect.width, rect.height);
       if (size <= 0) return;
 
-      // Leave room for icon + label so nodes are not clipped while orbiting.
-      const nodeExtent = 76;
-      const maxRadius = size / 2 - nodeExtent;
-      setOrbitRadius(Math.max(88, Math.min(maxRadius, size * 0.34)));
+      const isCompact = window.matchMedia("(max-width: 1023px)").matches;
+      // Reserve space for icon + label width so side nodes are not clipped.
+      const verticalExtent = isCompact ? 76 : 72;
+      const horizontalExtent = isCompact ? 48 : 40;
+      const maxRadius = Math.min(
+        rect.width / 2 - horizontalExtent,
+        rect.height / 2 - verticalExtent,
+      );
+      const scaleCap = isCompact ? 0.32 : 0.36;
+      setOrbitRadius(Math.max(80, Math.min(maxRadius, size * scaleCap)));
     };
 
     updateRadius();
@@ -162,7 +168,7 @@ export function StrategicPillarsOrbit() {
   return (
     <section
       id="pillars"
-      className="relative scroll-mt-24 overflow-x-clip bg-gradient-to-b from-[#0a0f0a] via-[#0f1610] to-[#0a0f0a] text-white lg:min-h-[720px]"
+      className="relative scroll-mt-24 overflow-x-clip bg-gradient-to-b from-[#0a0f0a] via-[#0f1610] to-[#0a0f0a] text-white max-lg:overflow-x-visible lg:min-h-[720px]"
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
@@ -182,23 +188,23 @@ export function StrategicPillarsOrbit() {
         <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(76,175,80,0.06)_0%,transparent_50%,rgba(0,0,0,0.2)_100%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:gap-14 lg:grid-cols-2 lg:gap-16 lg:py-20">
-        <header className="text-center lg:text-left">
-          <h2 className="font-display text-4xl font-bold tracking-tight text-[#2196f3] uppercase [-webkit-text-stroke:2px_#000] [paint-order:stroke_fill] md:text-5xl">
+      <div className="relative z-10 mx-auto grid max-w-7xl items-center justify-items-center gap-12 px-4 py-16 sm:gap-14 lg:grid-cols-2 lg:justify-items-stretch lg:gap-16 lg:py-20">
+        <header className="w-full text-center lg:text-left">
+          <h2 className="font-display text-3xl font-bold tracking-tight text-[#2196f3] uppercase [-webkit-text-stroke:2px_#000] [paint-order:stroke_fill] sm:text-4xl md:text-5xl">
             Strategic Pillars
           </h2>
-          <p className="mx-auto mt-6 max-w-xl font-sans text-lg leading-relaxed text-white md:text-xl lg:mx-0">
+          <p className="mx-auto mt-5 max-w-xl font-sans text-base leading-relaxed text-white sm:mt-6 sm:text-lg md:text-xl lg:mx-0">
             Five interconnected pillars guide all our initiatives, ensuring holistic and sustainable
             environmental solutions for Nepal.
           </p>
         </header>
 
         <div
-          className="relative flex min-h-[380px] h-[min(560px,92vw)] w-full items-center justify-center sm:min-h-[420px] sm:h-[min(600px,88vw)] lg:h-[min(640px,calc(100vh-200px))]"
+          className="relative mx-auto w-full max-w-[min(100%,22rem)] sm:max-w-[min(100%,24rem)] lg:max-w-none lg:h-[min(680px,calc(100vh-200px))] lg:min-h-[680px]"
           ref={containerRef}
         >
           <div
-            className="relative aspect-square h-full w-full max-h-full max-w-full overflow-visible"
+            className="relative mx-auto aspect-square w-full overflow-visible lg:h-full lg:max-h-full"
             ref={orbitRef}
             style={{ perspective: "1000px" } as CSSProperties}
           >
@@ -215,13 +221,13 @@ export function StrategicPillarsOrbit() {
               style={{ width: orbitRadius * 1.24, height: orbitRadius * 1.24 }}
             />
 
-            <div className="absolute left-1/2 top-1/2 z-10 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-[#2e7d32] via-[#4caf50] to-[#1b5e20] shadow-lg shadow-[#2e7d32]/40">
-              <div className="absolute h-20 w-20 animate-ping rounded-full border border-[#4caf50]/40 opacity-70" />
+            <div className="absolute left-1/2 top-1/2 z-10 flex h-[4.75rem] w-[4.75rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-[#2e7d32] via-[#4caf50] to-[#1b5e20] shadow-lg shadow-[#2e7d32]/40 lg:h-16 lg:w-16">
+              <div className="absolute h-[5.5rem] w-[5.5rem] animate-ping rounded-full border border-[#4caf50]/40 opacity-70 lg:h-20 lg:w-20" />
               <div
-                className="absolute h-24 w-24 animate-ping rounded-full border border-[#2e7d32]/30 opacity-50"
+                className="absolute h-[6.25rem] w-[6.25rem] animate-ping rounded-full border border-[#2e7d32]/30 opacity-50 lg:h-24 lg:w-24"
                 style={{ animationDelay: "0.5s" }}
               />
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur-md">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 backdrop-blur-md lg:h-8 lg:w-8">
                 <div className="h-3 w-3 rounded-full bg-gradient-to-br from-[#2e7d32] to-[#1b5e20]" />
               </div>
             </div>
@@ -231,7 +237,8 @@ export function StrategicPillarsOrbit() {
               const isExpanded = expandedItems[item.id];
               const Icon = item.icon;
               const accent = pillarAccent[item.iconKey];
-              const auraSize = 56;
+              const auraSize = 64;
+              const nodeSize = 56;
 
               return (
                 <div
@@ -259,25 +266,25 @@ export function StrategicPillarsOrbit() {
                           background: `radial-gradient(circle, ${accent.from}40 0%, transparent 70%)`,
                           width: `${auraSize}px`,
                           height: `${auraSize}px`,
-                          left: `-${(auraSize - 40) / 2}px`,
-                          top: `-${(auraSize - 40) / 2}px`,
+                          left: `-${(auraSize - nodeSize) / 2}px`,
+                          top: `-${(auraSize - nodeSize) / 2}px`,
                         }}
                       />
 
                       <div
-                        className={`flex h-12 w-12 items-center justify-center rounded-full border-2 transition-all duration-300 ${
+                        className={`flex h-14 w-14 items-center justify-center rounded-full border-2 transition-all duration-300 lg:h-12 lg:w-12 ${
                           isExpanded
                             ? "scale-150 border-[#4caf50] bg-gradient-to-br from-[#2e7d32] to-[#1b5e20] text-white shadow-lg shadow-[#2e7d32]/40"
                             : "border-[#4caf50] bg-[#0f1410] text-[#c8e6c9] hover:scale-110 hover:border-[#81c784]"
                         }`}
                         style={!isExpanded ? { borderColor: accent.from } : undefined}
                       >
-                        <Icon size={18} />
+                        <Icon className="size-5 lg:size-[18px]" />
                       </div>
                     </div>
 
                     <div
-                      className={`text-center text-[10px] font-semibold tracking-wider uppercase transition-all duration-300 sm:text-xs ${
+                      className={`max-w-[6rem] text-center text-[11px] font-semibold leading-tight tracking-wide uppercase transition-all duration-300 sm:text-xs sm:tracking-wider lg:max-w-none ${
                         isExpanded ? "scale-110 text-[#81c784] sm:scale-125" : "text-[#c8e6c9]"
                       }`}
                     >

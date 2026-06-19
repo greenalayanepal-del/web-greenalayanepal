@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
 
 export type GlowCardColor = 'blue' | 'purple' | 'green' | 'red' | 'orange';
 
@@ -16,6 +16,8 @@ interface GlowCardProps {
   backdropOpacity?: number;
   /** Glass panel tint behind the glow. Default grey */
   glassTone?: 'grey' | 'black';
+  /** Use a static glass card below lg; glow effects from lg upward. */
+  staticBelowLg?: boolean;
 }
 
 const glowColorMap = {
@@ -73,19 +75,57 @@ function GlowCard({
   customSize = false,
   backdropOpacity = 0.12,
   glassTone = 'grey',
+  staticBelowLg = false,
 }: GlowCardProps) {
+  const [glowActive, setGlowActive] = useState(() =>
+    !staticBelowLg ||
+    (typeof window !== 'undefined' &&
+      window.matchMedia('(min-width: 1024px)').matches),
+  );
+
   useEffect(() => {
+    if (!staticBelowLg) return;
+
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    const updateGlow = () => setGlowActive(mediaQuery.matches);
+
+    updateGlow();
+    mediaQuery.addEventListener('change', updateGlow);
+    return () => mediaQuery.removeEventListener('change', updateGlow);
+  }, [staticBelowLg]);
+
+  useEffect(() => {
+    if (!glowActive) return;
     subscribeGlowPointer();
     return unsubscribeGlowPointer;
-  }, []);
+  }, [glowActive]);
 
   const { base, spread } = glowColorMap[glowColor];
+  const isStatic = staticBelowLg && !glowActive;
 
   const getSizeClasses = () => {
     if (customSize) {
       return '';
     }
     return sizeMap[size];
+  };
+
+  const getStaticStyles = (): CSSProperties => {
+    const glassLightness = glassTone === 'black' ? 0 : 60;
+    const styles: CSSProperties = {
+      backgroundColor: `hsl(0 0% ${glassLightness}% / ${backdropOpacity})`,
+      border: '1px solid hsl(0 0% 100% / 0.15)',
+      position: 'relative',
+    };
+
+    if (width !== undefined) {
+      styles.width = typeof width === 'number' ? `${width}px` : width;
+    }
+    if (height !== undefined) {
+      styles.height = typeof height === 'number' ? `${height}px` : height;
+    }
+
+    return styles;
   };
 
   const getInlineStyles = (): CSSProperties & Record<string, string | number> => {
@@ -129,21 +169,19 @@ function GlowCard({
 
   return (
     <div
-      data-glow
-      data-glow-root
-      style={getInlineStyles()}
+      {...(isStatic ? {} : { 'data-glow': true, 'data-glow-root': true })}
+      style={isStatic ? getStaticStyles() : getInlineStyles()}
       className={`
           ${getSizeClasses()}
           ${!customSize ? 'aspect-[3/4]' : ''}
           rounded-2xl
           relative
-          shadow-[0_1rem_2rem_-1rem_black]
+          ${isStatic ? 'touch-auto shadow-lg backdrop-blur-md' : 'shadow-[0_1rem_2rem_-1rem_black] backdrop-blur-[5px] touch-none'}
           p-4
-          backdrop-blur-[5px]
           ${className}
         `}
     >
-      <div data-glow aria-hidden />
+      {!isStatic ? <div data-glow aria-hidden /> : null}
       {children}
     </div>
   );

@@ -3,7 +3,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site";
 
@@ -38,6 +38,13 @@ function FooterImageCarousel() {
   const [index, setIndex] = useState(0);
   const count = carouselImages.length;
 
+  useEffect(() => {
+    carouselImages.forEach((src) => {
+      const img = new window.Image();
+      img.src = src;
+    });
+  }, []);
+
   const prev = () => setIndex((i) => (i - 1 + count) % count);
   const next = () => setIndex((i) => (i + 1) % count);
 
@@ -66,6 +73,8 @@ function FooterImageCarousel() {
             fill
             className="object-cover"
             sizes="120px"
+            quality={75}
+            loading="eager"
           />
         </div>
         <div
@@ -78,6 +87,8 @@ function FooterImageCarousel() {
             fill
             className="object-cover"
             sizes="120px"
+            quality={75}
+            loading="eager"
           />
         </div>
         <div className="relative z-10 mx-auto h-full w-[72%] overflow-hidden rounded-2xl shadow-2xl shadow-black/40 ring-1 ring-white/10">
@@ -87,6 +98,7 @@ function FooterImageCarousel() {
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 320px, 400px"
+            quality={75}
             priority
           />
         </div>
