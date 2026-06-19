@@ -13,7 +13,7 @@ function organizationLogoJsonLd() {
 }
 
 /** Organization entity — powers publisher logo in Article schema and Google site-name signals. */
-export function organizationJsonLd() {
+function organizationJsonLd() {
   return {
     "@type": "Organization",
     "@id": organizationId,
@@ -38,7 +38,7 @@ export function organizationJsonLd() {
 }
 
 /** WebSite entity — primary signal Google uses for branded site name in SERPs. */
-export function websiteJsonLd() {
+function websiteJsonLd() {
   return {
     "@type": "WebSite",
     "@id": websiteId,

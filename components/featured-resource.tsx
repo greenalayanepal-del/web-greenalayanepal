@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { PdfPreviewModal } from "@/components/pdf-preview-modal";
 
-export type FeaturedResourceProps = {
+type FeaturedResourceProps = {
   title: string;
   description: string;
   published: string;

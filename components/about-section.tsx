@@ -209,11 +209,16 @@ export function AboutSection() {
 
     update();
     const resizeObserver = new ResizeObserver(update);
-    [containerRef.current, sourceRef.current, missionRef.current, visionRef.current].forEach(
-      (element) => {
-        if (element) resizeObserver.observe(element);
-      },
-    );
+    const observedElements = [
+      containerRef.current,
+      sourceRef.current,
+      missionRef.current,
+      visionRef.current,
+    ].filter((element): element is HTMLDivElement => element !== null);
+
+    observedElements.forEach((element) => {
+      resizeObserver.observe(element);
+    });
     window.addEventListener("resize", update);
     window.addEventListener("scroll", update, { passive: true });
 

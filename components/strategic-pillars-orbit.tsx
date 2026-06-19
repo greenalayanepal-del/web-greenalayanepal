@@ -91,7 +91,6 @@ export function StrategicPillarsOrbit() {
       typeof window === "undefined" ||
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
-  const containerRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -113,7 +112,7 @@ export function StrategicPillarsOrbit() {
         nodeHalfHeight,
       );
       const minRadius = isCompact ? 96 : 88;
-      const radiusBoost = isCompact ? 90 : 0;
+      const radiusBoost = isCompact ? 20 : 0;
 
       setOrbitRadius(Math.max(minRadius, maxRadius - (isCompact ? 2 : 4) + radiusBoost));
     };
@@ -198,7 +197,7 @@ export function StrategicPillarsOrbit() {
   return (
     <section
       id="pillars"
-      className="relative scroll-mt-24 overflow-x-clip bg-gradient-to-b from-[#0a0f0a] via-[#0f1610] to-[#0a0f0a] text-white max-lg:overflow-x-visible lg:min-h-[720px]"
+      className="relative scroll-mt-24 overflow-x-clip bg-gradient-to-b from-[#0a0f0a] via-[#0f1610] to-[#0a0f0a] text-white lg:min-h-[720px]"
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
@@ -231,7 +230,6 @@ export function StrategicPillarsOrbit() {
 
         <div
           className="relative mx-auto w-full max-w-[min(calc(100vw-2rem),26rem)] sm:max-w-[min(calc(100vw-2rem),28rem)] lg:max-w-none lg:h-[min(680px,calc(100vh-200px))] lg:min-h-[680px]"
-          ref={containerRef}
         >
           <div
             className="relative mx-auto aspect-square w-full overflow-visible lg:h-full lg:max-h-full"
@@ -240,15 +238,15 @@ export function StrategicPillarsOrbit() {
           >
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#2e7d32]/15"
-              style={{ width: orbitRadius * 3.1, height: orbitRadius * 3.1 }}
+              style={{ width: orbitRadius * 2.4, height: orbitRadius * 2.4 }}
             />
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#4caf50]/20"
-              style={{ width: orbitRadius * 2.3, height: orbitRadius * 2.3 }}
+              style={{ width: orbitRadius * 1.6, height: orbitRadius * 1.6 }}
             />
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#4caf50]/25"
-              style={{ width: orbitRadius * 1.8, height: orbitRadius * 1.8 }}
+              style={{ width: orbitRadius * 1.3, height: orbitRadius * 1.3 }}
             />
 
             <div className="absolute left-1/2 top-1/2 z-10 flex h-[4.75rem] w-[4.75rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-[#2e7d32] via-[#4caf50] to-[#1b5e20] shadow-lg shadow-[#2e7d32]/40 lg:h-16 lg:w-16">
