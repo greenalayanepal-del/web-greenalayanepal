@@ -6,22 +6,22 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { SectionFadeBridges } from "@/components/section-fade-bridges";
 import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/lib/site";
+import { contactHref, contactIntents, siteConfig } from "@/lib/site";
 
 const involvementTabs = [
   {
-    label: "Become a Volunteer",
-    href: "/contact",
+    label: contactIntents.volunteer.label,
+    href: contactHref("volunteer"),
     variant: "cool" as const,
   },
   {
-    label: "Research Internship",
-    href: "/contact",
+    label: contactIntents.internship.label,
+    href: contactHref("internship"),
     variant: "outlineLight" as const,
   },
   {
-    label: "Partner With Us",
-    href: "/contact",
+    label: contactIntents.partner.label,
+    href: contactHref("partner"),
     variant: "outlineLight" as const,
   },
 ];
@@ -124,7 +124,7 @@ export function FooterStayAhead() {
     <section
       ref={sectionRef}
       id="get-involved"
-      className="relative -mt-[8px] scroll-mt-24 bg-[#0a0f0a] text-white"
+      className="relative -mt-[8px] scroll-mt-24 bg-[#0E110F] text-white"
     >
       <SectionFadeBridges targetRef={sectionRef} showTop showBottom={false} />
       <div className="mx-auto max-w-screen-xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">

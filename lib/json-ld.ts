@@ -1,4 +1,4 @@
-import { butterflyPublication, siteConfig, siteContact, siteLogo } from "@/lib/site";
+import { siteConfig, siteContact, siteLogo } from "@/lib/site";
 
 const organizationId = `${siteConfig.url}/#organization`;
 const websiteId = `${siteConfig.url}/#website`;
@@ -96,15 +96,20 @@ export function articleJsonLd(input: {
   };
 }
 
-export function publicationJsonLd() {
+export function publicationJsonLd(input: {
+  title: string;
+  description: string;
+  datePublished?: string | null;
+  numberOfPages?: number;
+}) {
   return {
     "@context": "https://schema.org",
     "@type": "Book",
-    name: butterflyPublication.title,
-    description: butterflyPublication.description,
-    url: `${siteConfig.url}/resources`,
-    datePublished: "2026-04-01",
-    numberOfPages: butterflyPublication.pageCount,
+    name: input.title,
+    description: input.description,
+    url: `${siteConfig.url}/publications`,
+    datePublished: input.datePublished ?? undefined,
+    numberOfPages: input.numberOfPages ?? undefined,
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,

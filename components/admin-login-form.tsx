@@ -41,7 +41,7 @@ export function AdminLoginForm() {
         </p>
       )}
       <div>
-        <label htmlFor="admin-email" className="block text-sm font-semibold text-emerald-900">
+        <label htmlFor="admin-email" className="block text-sm font-semibold text-secondary-foreground">
           Email
         </label>
         <input
@@ -51,11 +51,11 @@ export function AdminLoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="username"
-          className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+          className="mt-1 w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/20"
         />
       </div>
       <div>
-        <label htmlFor="admin-password" className="block text-sm font-semibold text-emerald-900">
+        <label htmlFor="admin-password" className="block text-sm font-semibold text-secondary-foreground">
           Password
         </label>
         <input
@@ -65,13 +65,13 @@ export function AdminLoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="current-password"
-          className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+          className="mt-1 w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/20"
         />
       </div>
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-lg bg-emerald-800 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-900 disabled:opacity-60"
+        className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-60"
       >
         {pending ? "Signing in…" : "Sign in"}
       </button>

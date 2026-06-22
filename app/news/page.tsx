@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ContentCard } from "@/components/content-card";
 import { DataError } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
 import { seedNewsPosts } from "@/lib/content/seed";
@@ -65,23 +66,22 @@ export default async function NewsPage() {
       ) : (
         <ul className="mt-8 space-y-6">
           {displayPosts.map((post) => (
-            <li
-              key={post.id}
-              className="rounded-lg border border-neutral-200 bg-white p-5"
-            >
-              <h2 className="text-xl font-semibold text-emerald-900">
+            <li key={post.id}>
+              <ContentCard>
+              <h2 className="text-xl font-semibold text-secondary-foreground">
                 <Link href={`/news/${post.slug}`} className="hover:underline">
                   {post.title}
                 </Link>
               </h2>
               {post.published_at ? (
-                <p className="mt-1 text-sm text-neutral-500">
+                <p className="mt-1 text-sm text-muted-foreground">
                   {formatDate(post.published_at)}
                 </p>
               ) : null}
               {post.excerpt ? (
-                <p className="mt-2 text-neutral-700">{post.excerpt}</p>
+                <p className="mt-2 text-foreground">{post.excerpt}</p>
               ) : null}
+              </ContentCard>
             </li>
           ))}
         </ul>

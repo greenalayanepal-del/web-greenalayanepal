@@ -28,7 +28,7 @@ values
     'Our photographic guide documenting 174 butterfly species in the Kathmandu Valley is now available as a free PDF.',
     'Greenalaya Nepal has published Butterfly Images of Kathmandu Valley, a visual reference documenting 174 butterfly species observed across seasons and habitats in the valley. The publication supports researchers, conservation practitioners, educators, and nature enthusiasts working on urban biodiversity in Nepal.
 
-Download the PDF from our Resources page or the Research section.',
+Download the PDF from our Publications page or the Research section.',
     '2026-04-21'
   ),
   (

@@ -92,7 +92,7 @@ Verify after deploy:
 
 - `/sitemap.xml` and `/robots.txt` load
 - Contact form saves to `contact_submissions`
-- Butterfly PDF opens from `/resources`
+- Butterfly PDF opens from `/publications`
 - Staff can reach `/admin` after login
 
 ## Project structure

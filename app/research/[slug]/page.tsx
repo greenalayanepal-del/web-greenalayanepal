@@ -106,14 +106,22 @@ export default async function ResearchDetailPage({ params }: PageProps) {
         )}
 
         {pdfUrl ? (
-          <a
-            href={pdfUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-block rounded-lg bg-emerald-700 px-4 py-2 text-white hover:bg-emerald-800"
-          >
-            Download PDF
-          </a>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a
+              href={pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-lg bg-emerald-700 px-4 py-2 text-white hover:bg-emerald-800"
+            >
+              Download PDF
+            </a>
+            <Link
+              href="/publications"
+              className="text-sm font-medium text-emerald-700 hover:underline"
+            >
+              View on Publications →
+            </Link>
+          </div>
         ) : null}
       </PageShell>
     </>

@@ -70,7 +70,7 @@ export const seedNewsPosts: NewsPost[] = [
     excerpt:
       "Our photographic guide documenting 174 butterfly species in the Kathmandu Valley is now available as a free PDF.",
     content:
-      "Greenalaya Nepal has published Butterfly Images of Kathmandu Valley, a visual reference documenting 174 butterfly species observed across seasons and habitats in the valley. The publication supports researchers, conservation practitioners, educators, and nature enthusiasts working on urban biodiversity in Nepal.\n\nDownload the PDF from our Resources page or the Research section.",
+      "Greenalaya Nepal has published Butterfly Images of Kathmandu Valley, a visual reference documenting 174 butterfly species observed across seasons and habitats in the valley. The publication supports researchers, conservation practitioners, educators, and nature enthusiasts working on urban biodiversity in Nepal.\n\nDownload the PDF from our Publications page or the Research section.",
     featured_image_url: null,
     published_at: "2026-04-21T00:00:00.000Z",
   },

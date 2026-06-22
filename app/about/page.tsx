@@ -16,7 +16,7 @@ export default function AboutPage() {
       title="About Greenalaya Nepal"
       description="Environmental research and development for conservation and community resilience."
     >
-      <div className="mt-8 space-y-6 text-neutral-700 leading-relaxed">
+      <div className="mt-8 space-y-6 text-foreground leading-relaxed">
         <p>
           Greenalaya Nepal is a national environmental NGO that leverages
           research, technological innovation, and green enterprise to deliver
@@ -29,7 +29,7 @@ export default function AboutPage() {
         </p>
 
         <div>
-          <h2 className="text-lg font-semibold text-emerald-900">Vision</h2>
+          <h2 className="text-lg font-semibold text-secondary-foreground">Vision</h2>
           <p className="mt-2">
             A resilient Nepal where empowered communities conserve ecosystems
             and foster sustainable green innovative enterprises in balance with
@@ -38,7 +38,7 @@ export default function AboutPage() {
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold text-emerald-900">Mission</h2>
+          <h2 className="text-lg font-semibold text-secondary-foreground">Mission</h2>
           <p className="mt-2">
             To generate credible environmental knowledge, advance
             community-centered conservation, and catalyze innovative eco-business
@@ -48,7 +48,7 @@ export default function AboutPage() {
         </div>
 
         <div id="strategic-pillars" className="scroll-mt-24">
-          <h2 className="text-lg font-semibold text-emerald-900">
+          <h2 className="text-lg font-semibold text-secondary-foreground">
             Strategic pillars
           </h2>
           <ul className="mt-2 list-disc space-y-1 pl-5">
@@ -61,7 +61,7 @@ export default function AboutPage() {
         </div>
 
         <div id="thematic-areas" className="scroll-mt-24">
-          <h2 className="text-lg font-semibold text-emerald-900">
+          <h2 className="text-lg font-semibold text-secondary-foreground">
             Thematic areas of focus
           </h2>
           <p className="mt-2">
@@ -71,7 +71,7 @@ export default function AboutPage() {
           <ol className="mt-4 list-decimal space-y-2 pl-5">
             {thematicAreas.map((area) => (
               <li key={area.title}>
-                <span className="font-medium text-emerald-900">{area.title}</span>
+                <span className="font-medium text-secondary-foreground">{area.title}</span>
                 {" — "}
                 {area.description}
               </li>
@@ -79,7 +79,7 @@ export default function AboutPage() {
           </ol>
           <Link
             href="/projects"
-            className="mt-4 inline-block text-sm font-medium text-emerald-800 hover:underline"
+            className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
           >
             Explore our work →
           </Link>

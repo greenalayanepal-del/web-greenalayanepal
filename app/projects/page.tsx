@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ContentCard } from "@/components/content-card";
 import { DataError } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
 import { seedProjects } from "@/lib/content/seed";
@@ -55,11 +56,9 @@ export default async function ProjectsPage() {
       ) : (
         <ul className="mt-8 space-y-6">
           {displayProjects.map((project) => (
-            <li
-              key={project.id}
-              className="rounded-lg border border-neutral-200 bg-white p-5"
-            >
-              <h2 className="text-xl font-semibold text-emerald-900">
+            <li key={project.id}>
+              <ContentCard>
+              <h2 className="text-xl font-semibold text-secondary-foreground">
                 <Link
                   href={`/projects/${project.slug}`}
                   className="hover:underline"
@@ -68,8 +67,9 @@ export default async function ProjectsPage() {
                 </Link>
               </h2>
               {project.description ? (
-                <p className="mt-2 text-neutral-700">{project.description}</p>
+                <p className="mt-2 text-foreground">{project.description}</p>
               ) : null}
+              </ContentCard>
             </li>
           ))}
         </ul>

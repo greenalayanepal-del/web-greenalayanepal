@@ -243,7 +243,7 @@ export function HeroContent({
                 "border border-white/35 bg-white/8 text-white backdrop-blur-sm hover:border-[#4caf50]/60 hover:bg-white/12",
               )}
             >
-              Join as Citizen Scientist
+              Get Involved
             </Link>
           </div>
 

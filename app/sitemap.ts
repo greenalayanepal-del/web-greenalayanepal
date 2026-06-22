@@ -7,7 +7,7 @@ const staticPaths = [
   "/about",
   "/projects",
   "/research",
-  "/resources",
+  "/publications",
   "/team",
   "/news",
   "/contact",
@@ -48,6 +48,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const row of research.data ?? []) {
     entries.push({
       url: `${base}/research/${row.slug}`,
+      lastModified: row.created_at ? new Date(row.created_at) : now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    });
+    entries.push({
+      url: `${base}/publications/${row.slug}`,
       lastModified: row.created_at ? new Date(row.created_at) : now,
       changeFrequency: "monthly",
       priority: 0.7,

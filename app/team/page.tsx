@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ContentCard } from "@/components/content-card";
 import { DataError } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
 import { seedTeamMembers } from "@/lib/content/seed";
@@ -55,25 +56,24 @@ export default async function TeamPage() {
       ) : (
         <ul className="mt-8 grid gap-6 sm:grid-cols-2">
           {displayMembers.map((member) => (
-            <li
-              key={member.id}
-              className="rounded-lg border border-neutral-200 bg-white p-5"
-            >
-              <h2 className="text-xl font-semibold text-emerald-900">
+            <li key={member.id}>
+              <ContentCard>
+              <h2 className="text-xl font-semibold text-secondary-foreground">
                 <Link href={`/team/${member.slug}`} className="hover:underline">
                   {member.name}
                 </Link>
               </h2>
               {member.position ? (
-                <p className="mt-1 text-sm font-medium text-emerald-800">
+                <p className="mt-1 text-sm font-medium text-primary">
                   {member.position}
                 </p>
               ) : null}
               {member.bio ? (
-                <p className="mt-2 line-clamp-3 text-neutral-700">
+                <p className="mt-2 line-clamp-3 text-foreground">
                   {member.bio}
                 </p>
               ) : null}
+              </ContentCard>
             </li>
           ))}
         </ul>

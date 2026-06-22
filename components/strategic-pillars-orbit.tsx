@@ -87,6 +87,7 @@ export function StrategicPillarsOrbit() {
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
   const [rotationAngle, setRotationAngle] = useState(0);
   const [orbitRadius, setOrbitRadius] = useState(200);
+  const [circleInset, setCircleInset] = useState({ outer: 0, middle: 0, inner: 0 });
   const [autoRotate, setAutoRotate] = useState(
     () =>
       typeof window === "undefined" ||
@@ -104,6 +105,7 @@ export function StrategicPillarsOrbit() {
       if (rect.width <= 0 || rect.height <= 0) return;
 
       const isCompact = window.matchMedia("(max-width: 1023px)").matches;
+      const isLaptop = window.matchMedia("(min-width: 1024px)").matches;
       // Icon + label footprint from each node center (matches mobile/desktop classes below).
       const nodeHalfWidth = isCompact ? 52 : 44;
       const nodeHalfHeight = isCompact ? 50 : 44;
@@ -117,6 +119,11 @@ export function StrategicPillarsOrbit() {
       const radiusBoost = isCompact ? 20 : 0;
 
       setOrbitRadius(Math.max(minRadius, maxRadius - (isCompact ? 2 : 4) + radiusBoost));
+      setCircleInset(
+        isLaptop
+          ? { outer: 20, middle: 10, inner: 30 }
+          : { outer: 0, middle: 0, inner: 0 },
+      );
     };
 
     updateRadius();
@@ -242,15 +249,24 @@ export function StrategicPillarsOrbit() {
           >
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#2e7d32]/15"
-              style={{ width: orbitRadius * 2.4, height: orbitRadius * 2.4 }}
+              style={{
+                width: Math.max(0, orbitRadius * 2.4 - circleInset.outer),
+                height: Math.max(0, orbitRadius * 2.4 - circleInset.outer),
+              }}
             />
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#4caf50]/20"
-              style={{ width: orbitRadius * 1.6, height: orbitRadius * 1.6 }}
+              style={{
+                width: Math.max(0, orbitRadius * 1.6 - circleInset.middle),
+                height: Math.max(0, orbitRadius * 1.6 - circleInset.middle),
+              }}
             />
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#4caf50]/25"
-              style={{ width: orbitRadius * 1.3, height: orbitRadius * 1.3 }}
+              style={{
+                width: Math.max(0, orbitRadius * 1.3 - circleInset.inner),
+                height: Math.max(0, orbitRadius * 1.3 - circleInset.inner),
+              }}
             />
 
             <div className="absolute left-1/2 top-1/2 z-10 flex h-[4.75rem] w-[4.75rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-[#2e7d32] via-[#4caf50] to-[#1b5e20] shadow-lg shadow-[#2e7d32]/40 lg:h-16 lg:w-16">

@@ -1,10 +1,9 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useState, type CSSProperties, type RefObject } from "react";
+import { useSyncExternalStore, type CSSProperties, type RefObject } from "react";
 import {
   buildSteppedSeamGradient,
-  getReducedMotionPreference,
   SEAM_BAND_HEIGHT_PX,
 } from "@/lib/section-scroll-fade";
 
@@ -21,6 +20,20 @@ function seamBridgeStyle(position: "top" | "bottom", gradient: string): CSSPrope
     bottom: position === "bottom" ? 0 : undefined,
     backgroundImage: gradient,
   };
+}
+
+function subscribeToReducedMotion(onStoreChange: () => void) {
+  const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mediaQuery.addEventListener("change", onStoreChange);
+  return () => mediaQuery.removeEventListener("change", onStoreChange);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function getReducedMotionServerSnapshot() {
+  return false;
 }
 
 function StaticSeamBridge({ position }: { position: "top" | "bottom" }) {
@@ -75,15 +88,11 @@ export function SectionFadeBridges({
   showTop = true,
   showBottom = true,
 }: SectionFadeBridgesProps) {
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    setReducedMotion(getReducedMotionPreference());
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = () => setReducedMotion(mediaQuery.matches);
-    mediaQuery.addEventListener("change", onChange);
-    return () => mediaQuery.removeEventListener("change", onChange);
-  }, []);
+  const reducedMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot,
+  );
 
   return (
     <>

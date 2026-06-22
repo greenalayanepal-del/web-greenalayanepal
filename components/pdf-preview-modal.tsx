@@ -53,13 +53,13 @@ export function PdfPreviewModal({
       onClick={onClose}
     >
       <div
-        className="flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+        className="flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-card shadow-2xl"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex shrink-0 items-center justify-between border-b border-neutral-200 px-6 py-5">
+        <div className="flex shrink-0 items-center justify-between border-b border-border px-6 py-5">
           <h3
             id="pdf-preview-title"
-            className="font-display text-lg font-bold text-neutral-900"
+            className="font-display text-lg font-bold text-foreground"
           >
             {title} — Preview
           </h3>
@@ -67,7 +67,7 @@ export function PdfPreviewModal({
             type="button"
             onClick={onClose}
             aria-label="Close preview"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-700 transition hover:bg-neutral-200 hover:rotate-90"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground transition hover:bg-accent hover:rotate-90"
           >
             ×
           </button>
@@ -79,8 +79,8 @@ export function PdfPreviewModal({
             className="h-[70vh] min-h-[400px] w-full border-0"
           />
         </div>
-        <div className="flex shrink-0 flex-col items-center justify-between gap-3 border-t border-neutral-200 px-6 py-4 sm:flex-row">
-          <p className="text-sm text-neutral-600">
+        <div className="flex shrink-0 flex-col items-center justify-between gap-3 border-t border-border px-6 py-4 sm:flex-row">
+          <p className="text-sm text-muted-foreground">
             {pageCount
               ? `Previewing document (${pageCount} pages)`
               : "Previewing document"}

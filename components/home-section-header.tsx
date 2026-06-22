@@ -22,17 +22,19 @@ export function HomeSectionHeader({
   description,
   tone = "light",
   outlinedTitle = false,
+  className,
 }: {
   tag?: ReactNode;
   title: string;
   description?: string;
   tone?: "light" | "dark";
   outlinedTitle?: boolean;
+  className?: string;
 }) {
   const isDark = tone === "dark";
 
   return (
-    <div className="mx-auto mb-5 max-w-3xl text-center sm:mb-6 lg:mb-16">
+    <div className={`mx-auto mb-5 max-w-3xl text-center sm:mb-6 lg:mb-16 ${className ?? ""}`}>
       {tag ? <SectionTag>{tag}</SectionTag> : null}
       <h2
         className={

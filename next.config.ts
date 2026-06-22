@@ -9,6 +9,15 @@ const nextConfig: NextConfig = {
     root: projectRoot,
   },
   allowedDevOrigins: ["127.0.0.1", "localhost"],
+  async redirects() {
+    return [
+      {
+        source: "/resources",
+        destination: "/publications",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

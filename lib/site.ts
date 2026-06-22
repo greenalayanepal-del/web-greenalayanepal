@@ -90,12 +90,41 @@ export const siteContact = {
   phone: "+977-9864835254",
 } as const;
 
+export const contactIntents = {
+  volunteer: {
+    label: "Become a Volunteer",
+    subject: "Volunteer inquiry",
+    description: "Tell us how you would like to contribute your time and skills.",
+  },
+  internship: {
+    label: "Research Internship",
+    subject: "Research internship inquiry",
+    description: "Share your research interests and availability for an internship.",
+  },
+  partner: {
+    label: "Partner With Us",
+    subject: "Partnership inquiry",
+    description: "Describe your organization and how you would like to collaborate.",
+  },
+} as const;
+
+export type ContactIntentKey = keyof typeof contactIntents;
+
+export function getContactIntent(key: string | undefined | null) {
+  if (!key) return null;
+  return contactIntents[key as ContactIntentKey] ?? null;
+}
+
+export function contactHref(intent: ContactIntentKey) {
+  return `/contact?intent=${intent}`;
+}
+
 export const mainNavItems = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/research", label: "Research" },
-  { href: "/resources", label: "Resources" },
+  { href: "/publications", label: "Publications" },
   { href: "/team", label: "Team" },
   { href: "/news", label: "News" },
   { href: "/contact", label: "Contact" },
@@ -110,7 +139,7 @@ export const footerAboutLinks = [
 export const footerWorkLinks = [
   { text: "Projects", href: "/projects" },
   { text: "Research", href: "/research" },
-  { text: "Publications", href: "/research" },
+  { text: "Publications", href: "/publications" },
 ] as const;
 
 export const footerMediaLinks = [
@@ -171,11 +200,55 @@ export const butterflyPublication = {
     "A comprehensive photographic collection documenting 174 butterfly species across the Kathmandu Valley, captured across different seasons and habitats.",
   description:
     "A comprehensive photographic collection documenting the diverse butterfly species found across the Kathmandu Valley. This visual guide showcases 174 species captured across different seasons and habitats, serving as an important reference for researchers, conservationists, and nature enthusiasts.",
-  coverImage: "/images/butterfly-cover.png",
+  coverImage: "/images/butterfly-publication-cover.png",
   publishedDate: "April 2026",
   pageCount: 124,
-  speciesCount: 174,
 } as const;
+
+export type PublicationMetadata = {
+  language?: string;
+  published?: string;
+  publishers?: string;
+  isbn?: string;
+};
+
+/** Bibliographic details shown on publication detail pages. */
+export const publicationMetadata: Record<string, PublicationMetadata> = {
+  [butterflyPublication.slug]: {
+    language: "English",
+    published: "2026",
+    publishers: "Greenalaya Nepal and TinyLife Finder",
+    isbn: "9789905-0-0219-7",
+  },
+};
+
+export function getPublicationMetadata(
+  slug: string,
+  year: string,
+): PublicationMetadata | null {
+  const custom = publicationMetadata[slug];
+  if (!custom) return null;
+
+  return {
+    language: custom.language,
+    published: custom.published ?? year,
+    publishers: custom.publishers ?? siteConfig.name,
+    isbn: custom.isbn,
+  };
+}
+
+/** Cover art and optional location overlay per publication slug. */
+export const publicationAssets: Record<
+  string,
+  { coverImage: string; locationLabel?: string }
+> = {
+  [butterflyPublication.slug]: {
+    coverImage: butterflyPublication.coverImage,
+    locationLabel: "Kathmandu Valley",
+  },
+};
+
+export const defaultPublicationCover = butterflyPublication.coverImage;
 
 /** Maps legacy GitHub-hosted PDF links to the deployed site asset. */
 export function resolvePublicationPdfUrl(url: string | null | undefined): string | null {

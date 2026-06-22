@@ -15,6 +15,11 @@ import {
 } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
+const footerColumnTitleClass =
+  "mb-8 text-[20px] font-medium leading-tight text-black dark:text-white";
+
+const footerColumnListClass = "space-y-[11px] text-[16px] leading-snug";
+
 const footerColumnLinkClass =
   "text-black leading-none transition hover:opacity-70 dark:text-white";
 
@@ -180,7 +185,7 @@ export function SiteFooter() {
     : "px-4 pt-16 pb-6 sm:px-6 lg:px-8 lg:pt-24";
 
   return (
-    <footer className="w-full place-self-end bg-secondary dark:bg-[#0a0f0a]">
+    <footer className="w-full place-self-end bg-secondary dark:bg-[#0E110F]">
       <div className={`mx-auto max-w-screen-xl ${mainPadding}`}>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="-mt-[15px]">
@@ -211,21 +216,17 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="hidden grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
+          <div className="hidden grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid lg:grid-cols-4 lg:items-start lg:gap-x-8 lg:gap-y-0">
             <div className="text-center sm:text-left">
-              <p className="text-[20px] font-medium text-black dark:text-white">
-                About
-              </p>
-              <ul className="mt-8 space-y-[11px] text-[16px] leading-none">
+              <p className={footerColumnTitleClass}>About</p>
+              <ul className={footerColumnListClass}>
                 <FooterAboutLinks />
               </ul>
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-[20px] font-medium text-black dark:text-white">
-                Our Work
-              </p>
-              <ul className="mt-8 space-y-[11px] text-[16px]">
+              <p className={footerColumnTitleClass}>Our Work</p>
+              <ul className={footerColumnListClass}>
                 {footerWorkLinks.map(({ text, href }) => (
                   <li key={text}>
                     <Link href={href} className={footerColumnLinkClass}>
@@ -237,10 +238,8 @@ export function SiteFooter() {
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-[20px] font-medium text-black dark:text-white">
-                Media
-              </p>
-              <ul className="mt-8 space-y-[11px] text-[16px]">
+              <p className={footerColumnTitleClass}>Media</p>
+              <ul className={footerColumnListClass}>
                 {footerMediaLinks.map(({ text, href }) => (
                   <li key={text}>
                     <Link href={href} className={footerColumnLinkClass}>
@@ -252,17 +251,17 @@ export function SiteFooter() {
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-[20px] font-medium text-black dark:text-white">
-                Contact
-              </p>
-              <FooterContactList className="mt-8 space-y-[11px] text-[16px]" />
+              <p className={footerColumnTitleClass}>Contact</p>
+              <FooterContactList className={footerColumnListClass} />
             </div>
           </div>
         </div>
 
         <MobileFooterNav />
+      </div>
 
-        <div className="mt-[38px] border-t border-black/10 pt-[4px] dark:border-white/10">
+      <div className="border-t border-black/10 dark:border-white/10 dark:bg-[#050706]">
+        <div className="mx-auto max-w-screen-xl px-4 pb-6 pt-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-4 text-center lg:grid-cols-3 lg:gap-8 lg:text-left">
             <p className={`text-[16px] lg:col-span-1 ${footerBodyTextClass}`}>
               &copy; {year} {siteConfig.name}

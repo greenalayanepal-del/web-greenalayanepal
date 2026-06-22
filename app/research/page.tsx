@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ContentCard } from "@/components/content-card";
 import { DataError } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
 import { seedResearch } from "@/lib/content/seed";
@@ -58,16 +59,21 @@ export default async function ResearchPage() {
       title="Research"
       description="Publications, reports, and studies from Greenalaya Nepal."
     >
+      <p className="mt-6 text-sm text-muted-foreground">
+        Downloadable PDFs and reference materials are available on our{" "}
+        <Link href="/publications" className="font-semibold text-primary hover:underline">
+          Publications
+        </Link>
+        page.
+      </p>
       {error ? (
         <DataError message={error} />
       ) : (
         <ul className="mt-8 space-y-6">
           {displayItems.map((item) => (
-            <li
-              key={item.id}
-              className="rounded-lg border border-neutral-200 bg-white p-5"
-            >
-              <h2 className="text-xl font-semibold text-emerald-900">
+            <li key={item.id}>
+              <ContentCard>
+              <h2 className="text-xl font-semibold text-secondary-foreground">
                 <Link
                   href={`/research/${item.slug}`}
                   className="hover:underline"
@@ -76,13 +82,14 @@ export default async function ResearchPage() {
                 </Link>
               </h2>
               {item.published_date ? (
-                <p className="mt-1 text-sm text-neutral-500">
+                <p className="mt-1 text-sm text-muted-foreground">
                   {formatDate(item.published_date)}
                 </p>
               ) : null}
               {item.abstract ? (
-                <p className="mt-2 text-neutral-700">{item.abstract}</p>
+                <p className="mt-2 text-foreground">{item.abstract}</p>
               ) : null}
+              </ContentCard>
             </li>
           ))}
         </ul>
