@@ -4,19 +4,19 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1b1b1b;
+  --foreground: #000000;
   --card: #ffffff;
-  --card-foreground: #1b1b1b;
+  --card-foreground: #000000;
   --popover: #ffffff;
-  --popover-foreground: #1b1b1b;
+  --popover-foreground: #000000;
   --primary: #2e7d32;
   --primary-foreground: #ffffff;
   --secondary: #f0f7f0;
-  --secondary-foreground: #1b5e20;
+  --secondary-foreground: #000000;
   --muted: #f5f5f5;
-  --muted-foreground: #737373;
+  --muted-foreground: #000000;
   --accent: #e8f5e9;
-  --accent-foreground: #1b5e20;
+  --accent-foreground: #000000;
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
   --border: #e5e5e5;

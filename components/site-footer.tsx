@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, Mail, MapPin, Phone } from "lucide-react";
+import { ChevronDown, Mail, MapPin, MessageSquare, Phone } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useId, useState, type ReactNode } from "react";
@@ -26,6 +26,11 @@ const footerColumnLinkClass =
 const footerBodyTextClass = "text-black dark:text-white";
 
 const contactInfo = [
+  {
+    icon: MessageSquare,
+    text: "Contact us",
+    href: "/contact",
+  },
   {
     icon: Mail,
     text: siteContact.email,
@@ -58,16 +63,28 @@ function FooterContactList({
       {contactInfo.map((item) => {
         const Icon = item.icon;
         if ("href" in item && item.href) {
+          const content = (
+            <>
+              <Icon className="size-4 shrink-0 text-primary" />
+              <span
+                className={`transition hover:opacity-70 ${footerBodyTextClass}`}
+              >
+                {item.text}
+              </span>
+            </>
+          );
+
           return (
             <li key={item.text}>
-              <a href={item.href} className={`flex items-center gap-1.5 ${itemAlign}`}>
-                <Icon className="size-4 shrink-0 text-primary" />
-                <span
-                  className={`transition hover:opacity-70 ${footerBodyTextClass}`}
-                >
-                  {item.text}
-                </span>
-              </a>
+              {item.href.startsWith("/") ? (
+                <Link href={item.href} className={`flex items-center gap-1.5 ${itemAlign}`}>
+                  {content}
+                </Link>
+              ) : (
+                <a href={item.href} className={`flex items-center gap-1.5 ${itemAlign}`}>
+                  {content}
+                </a>
+              )}
             </li>
           );
         }

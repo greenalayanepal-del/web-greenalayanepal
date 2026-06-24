@@ -6,10 +6,9 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { SiteLogo } from "@/components/site-logo";
-import { mainNavItems, siteConfig } from "@/lib/site";
+import { primaryNavItems, siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const primaryNavItems = mainNavItems.slice(0, 5);
 const MOBILE_MENU_ID = "mobile-primary-nav";
 
 function isNavItemActive(pathname: string, href: string) {

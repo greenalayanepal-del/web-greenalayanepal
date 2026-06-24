@@ -22,21 +22,16 @@ export function ThematicAreasGrid() {
             index >= 4 && secondRowColStart[index - 4],
           )}
         >
-          <article className="group relative z-10 flex h-full flex-col justify-end gap-2 sm:gap-2.5 lg:gap-3">
+          <article className="relative z-10 flex h-full flex-col justify-end gap-2 sm:gap-2.5 lg:gap-3">
             <p
               aria-hidden
               className="font-display text-2xl font-bold leading-none text-white sm:text-3xl lg:text-4xl xl:text-5xl"
             >
               {area.number}
             </p>
-            <div className="space-y-1.5 lg:space-y-2">
-              <h3 className="font-display text-[11px] font-bold leading-snug text-white sm:text-xs lg:text-lg">
-                {area.title}
-              </h3>
-              <p className="line-clamp-2 text-[10px] leading-snug text-white/75 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 sm:text-[11px] lg:text-sm lg:opacity-100">
-                {area.description}
-              </p>
-            </div>
+            <h3 className="font-display text-[11px] font-bold leading-snug text-white sm:text-xs lg:text-lg">
+              {area.title}
+            </h3>
           </article>
         </GlowCard>
       ))}

@@ -1,8 +1,12 @@
 "use client";
 
+import { Send } from "lucide-react";
 import { useActionState } from "react";
 import { submitContactForm } from "@/lib/actions/contact";
 import { contactFormInitialState } from "@/lib/actions/contact-types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 export function ContactForm({ defaultSubject }: { defaultSubject?: string }) {
   const [state, formAction, pending] = useActionState(
@@ -23,7 +27,7 @@ export function ContactForm({ defaultSubject }: { defaultSubject?: string }) {
   }
 
   return (
-    <form action={formAction} className="space-y-4">
+    <form action={formAction} className="space-y-6">
       <div className="hidden" aria-hidden="true">
         <label htmlFor="website">Website</label>
         <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
@@ -35,74 +39,71 @@ export function ContactForm({ defaultSubject }: { defaultSubject?: string }) {
         </p>
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label htmlFor="name" className="block text-sm font-semibold text-secondary-foreground">
+          <label htmlFor="name" className="mb-2 block text-sm font-semibold text-foreground">
             Name <span className="text-red-600">*</span>
           </label>
-          <input
+          <Input
             id="name"
             name="name"
             type="text"
             required
             maxLength={120}
             autoComplete="name"
-            className="mt-1 w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/20"
+            placeholder="Your name"
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-semibold text-secondary-foreground">
+          <label htmlFor="email" className="mb-2 block text-sm font-semibold text-foreground">
             Email <span className="text-red-600">*</span>
           </label>
-          <input
+          <Input
             id="email"
             name="email"
             type="email"
             required
             maxLength={254}
             autoComplete="email"
-            className="mt-1 w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/20"
+            placeholder="Your email"
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="subject" className="block text-sm font-semibold text-secondary-foreground">
+        <label htmlFor="subject" className="mb-2 block text-sm font-semibold text-foreground">
           Subject
         </label>
-        <input
+        <Input
           id="subject"
           name="subject"
           type="text"
           maxLength={200}
           defaultValue={defaultSubject ?? ""}
           key={defaultSubject ?? "default"}
-          className="mt-1 w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/20"
+          placeholder="What is this regarding?"
         />
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-semibold text-secondary-foreground">
+        <label htmlFor="message" className="mb-2 block text-sm font-semibold text-foreground">
           Message <span className="text-red-600">*</span>
         </label>
-        <textarea
+        <Textarea
           id="message"
           name="message"
           required
           minLength={10}
           maxLength={5000}
           rows={6}
-          className="mt-1 w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/20"
+          placeholder="Your message"
         />
       </div>
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-60"
-      >
+      <Button type="submit" disabled={pending} size="lg" className="w-full">
+        <Send className="h-4 w-4" aria-hidden />
         {pending ? "Sending…" : "Send message"}
-      </button>
+      </Button>
     </form>
   );
 }

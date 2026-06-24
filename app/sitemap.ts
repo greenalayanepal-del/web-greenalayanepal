@@ -5,11 +5,13 @@ import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 const staticPaths = [
   "",
   "/about",
+  "/advisors",
   "/projects",
   "/research",
   "/publications",
   "/team",
   "/news",
+  "/blog",
   "/contact",
 ];
 

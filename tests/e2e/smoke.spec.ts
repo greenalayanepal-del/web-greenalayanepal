@@ -3,11 +3,13 @@ import { expect, test, type Page } from "@playwright/test";
 const publicRoutes = [
   "/",
   "/about",
+  "/advisors",
   "/projects",
   "/research",
   "/publications",
   "/team",
   "/news",
+  "/blog",
   "/contact",
 ];
 
@@ -163,6 +165,35 @@ test("publications page uses theme background in dark mode", async ({ page }) =>
   expect(mainBackground).toBe("rgb(15, 20, 16)");
 });
 
+test("footer links route to dedicated pages", async ({ page }, testInfo) => {
+  test.skip(
+    testInfo.project.name === "mobile-chrome",
+    "Desktop footer columns are hidden on mobile; covered by mobile accordion test.",
+  );
+
+  await page.goto("/");
+
+  const footer = page.getByRole("contentinfo");
+  const footerLinks = [
+    { name: "About Greenalaya Nepal", path: "/about" },
+    { name: "Advisors & Partners", path: "/advisors" },
+    { name: "Team", path: "/team" },
+    { name: "Projects", path: "/projects" },
+    { name: "Research", path: "/research" },
+    { name: "Publications", path: "/publications" },
+    { name: "Blog", path: "/blog" },
+    { name: "News", path: "/news" },
+    { name: "Contact us", path: "/contact" },
+  ] as const;
+
+  for (const link of footerLinks) {
+    await expect(footer.getByRole("link", { name: link.name })).toHaveAttribute(
+      "href",
+      link.path,
+    );
+  }
+});
+
 test("stay ahead section is not on other pages", async ({ page }) => {
   await page.goto("/about");
   await expect(
@@ -186,8 +217,10 @@ test("header includes primary navigation links on desktop", async ({ page }, tes
   await expect(nav.getByRole("link", { name: "Home" })).toBeVisible();
   await expect(nav.getByRole("link", { name: "About" })).toBeVisible();
   await expect(nav.getByRole("link", { name: "Projects" })).toBeVisible();
-  await expect(nav.getByRole("link", { name: "Research" })).toBeVisible();
   await expect(nav.getByRole("link", { name: "Publications" })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "News" })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Blog" })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Research" })).toHaveCount(0);
   await expect(
     page.getByRole("banner").getByRole("link", { name: "Get Involved" })
   ).toBeVisible();
@@ -206,8 +239,10 @@ test("mobile menu exposes primary navigation links", async ({ page }, testInfo) 
   await expect(mobileNav.getByRole("link", { name: "Home" })).toBeVisible();
   await expect(mobileNav.getByRole("link", { name: "About" })).toBeVisible();
   await expect(mobileNav.getByRole("link", { name: "Projects" })).toBeVisible();
-  await expect(mobileNav.getByRole("link", { name: "Research" })).toBeVisible();
   await expect(mobileNav.getByRole("link", { name: "Publications" })).toBeVisible();
+  await expect(mobileNav.getByRole("link", { name: "News" })).toBeVisible();
+  await expect(mobileNav.getByRole("link", { name: "Blog" })).toBeVisible();
+  await expect(mobileNav.getByRole("link", { name: "Research" })).toHaveCount(0);
   await expect(
     page.getByRole("dialog").getByRole("link", { name: "Get Involved" })
   ).toBeVisible();

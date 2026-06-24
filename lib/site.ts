@@ -119,20 +119,24 @@ export function contactHref(intent: ContactIntentKey) {
   return `/contact?intent=${intent}`;
 }
 
-export const mainNavItems = [
+export const primaryNavItems = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
-  { href: "/research", label: "Research" },
   { href: "/publications", label: "Publications" },
-  { href: "/team", label: "Team" },
   { href: "/news", label: "News" },
+  { href: "/blog", label: "Blog" },
+] as const;
+
+export const mainNavItems = [
+  ...primaryNavItems,
+  { href: "/team", label: "Team" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
 export const footerAboutLinks = [
   { text: "About Greenalaya Nepal", href: "/about" },
-  { text: "Advisors & Partners", href: "/team" },
+  { text: "Advisors & Partners", href: "/advisors" },
   { text: "Team", href: "/team" },
 ] as const;
 
@@ -143,7 +147,7 @@ export const footerWorkLinks = [
 ] as const;
 
 export const footerMediaLinks = [
-  { text: "Blog", href: "/news" },
+  { text: "Blog", href: "/blog" },
   { text: "News", href: "/news" },
 ] as const;
 
