@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  AboutGlassCard,
+  glassCardShadow,
+  glassCardSurface,
+} from "@/components/about-glass-card";
 import { GradientTracing } from "@/components/gradient-tracing";
 import { SectionFadeBridges } from "@/components/section-fade-bridges";
 import { siteConfig } from "@/lib/site";
@@ -10,8 +15,6 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type ReactNode,
-  type Ref,
   type RefObject,
 } from "react";
 
@@ -64,14 +67,6 @@ type Connector = {
 };
 
 const CONNECTOR_STRIP_HEIGHT = 24;
-
-/** About is always dark-themed — frosted white glass. */
-const glassCardSurface =
-  "border border-white/15 bg-white/8 backdrop-blur-md";
-const glassCardSurfaceHover = "hover:bg-white/12";
-
-const glassCardShadow = "shadow-lg";
-const glassCardShadowHover = "hover:shadow-xl";
 
 function connectorStripStyle(connector: Connector): CSSProperties {
   return {
@@ -142,28 +137,6 @@ function AboutBackground({ imageScale }: { imageScale: number }) {
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f0a]/70 via-transparent to-[#0f1410]" />
 
       <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(76,175,80,0.06)_0%,transparent_50%,rgba(0,0,0,0.2)_100%)]" />
-    </div>
-  );
-}
-
-function GlassInfoCard({
-  title,
-  children,
-  cardRef,
-}: {
-  title: string;
-  children: ReactNode;
-  cardRef?: Ref<HTMLDivElement>;
-}) {
-  return (
-    <div
-      ref={cardRef}
-      className={`h-full rounded-2xl px-5 py-4 text-center transition hover:-translate-y-1 sm:px-8 sm:py-[17px] ${glassCardSurface} ${glassCardSurfaceHover} ${glassCardShadow} ${glassCardShadowHover}`}
-    >
-      <h4 className="font-display text-xl font-bold uppercase tracking-[0.2em] text-[#2e7d32] sm:text-2xl">
-        {title}
-      </h4>
-      <p className="mt-3 text-base leading-relaxed text-white sm:mt-5">{children}</p>
     </div>
   );
 }
@@ -293,18 +266,18 @@ export function AboutSection() {
 
             <div className="relative z-10 grid items-stretch gap-4 md:mt-[calc(3rem+80px)] md:grid-cols-2 md:gap-[calc(2rem+270px)] lg:mt-[calc(4rem+80px)]">
               <div className="h-full min-h-0">
-                <GlassInfoCard cardRef={missionRef} title="Our Mission">
+                <AboutGlassCard cardRef={missionRef} title="Our Mission">
                   To generate credible environmental knowledge, advance community-centered
                   conservation, and catalyze innovative eco-business solutions that protect
                   biodiversity, strengthen local livelihoods, and influence sustainable development
                   pathways in Nepal.
-                </GlassInfoCard>
+                </AboutGlassCard>
               </div>
               <div className="h-full min-h-0">
-                <GlassInfoCard cardRef={visionRef} title="Our Vision">
+                <AboutGlassCard cardRef={visionRef} title="Our Vision">
                   A resilient Nepal where empowered communities conserve ecosystems and foster
                   sustainable green innovative enterprises in balance with nature and technology.
-                </GlassInfoCard>
+                </AboutGlassCard>
               </div>
             </div>
           </div>

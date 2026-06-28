@@ -51,6 +51,29 @@ export const siteLogo = {
   structuredData: `${siteConfig.url}/icon-512.png`,
 } as const;
 
+export const aboutPageContent = {
+  tag: "About Us",
+  title: "About Greenalaya Nepal",
+  subtitle:
+    "Environmental research and development for conservation and community resilience.",
+  leadMission:
+    "To generate credible environmental knowledge, advance community-centered conservation, and catalyze innovative eco-business solutions that protect biodiversity, strengthen local livelihoods, and influence sustainable development pathways in Nepal.",
+  intro: [
+    "Greenalaya Nepal is a national environmental NGO that leverages research, technological innovation, and green enterprise to deliver data-driven solutions for resilient ecosystems through collaboration.",
+    "We work at the intersection of nature and technology, empowering communities to conserve and restore ecosystems while fostering sustainable green innovative enterprises in balance with nature.",
+  ],
+  story:
+    "Greenalaya Nepal was founded to bridge rigorous environmental science with practical action on the ground. From biodiversity documentation in the Kathmandu Valley to community-centered conservation programs, our work responds to Nepal's most pressing ecological challenges with evidence, innovation, and partnership.",
+  vision:
+    "A resilient Nepal where empowered communities conserve ecosystems and foster sustainable green innovative enterprises in balance with nature and technology.",
+  pillarsHeading: "What guides us",
+  pillarsDescription:
+    "Five strategic pillars shape how we design research, technology, and community programs across Nepal.",
+  thematicHeading: "Thematic areas of focus",
+  thematicDescription:
+    "Seven key thematic areas drive our work across Nepal, from emerging research questions to policy and community stewardship.",
+} as const;
+
 export const strategicPillars = [
   {
     title: "People",
