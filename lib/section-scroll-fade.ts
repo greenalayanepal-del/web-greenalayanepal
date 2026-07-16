@@ -1,4 +1,3 @@
-export const SECTION_BLACK = "#0a0f0a";
 export const SECTION_BLACK_RGB = "10, 15, 10";
 export const SEAM_BAND_HEIGHT_PX = 8;
 

@@ -1,3 +1,4 @@
+import type { Collaborator } from "@/lib/types/collaborator";
 import type { NewsPost } from "@/lib/types/news";
 import type { Project } from "@/lib/types/project";
 import type { Research } from "@/lib/types/research";
@@ -7,18 +8,93 @@ import { butterflyPublication } from "@/lib/site";
 /** Shown when Supabase has no rows yet. Mirrors supabase/phase4.sql. */
 export const seedTeamMembers: TeamMember[] = [
   {
+    id: "seed-mahendra-singh-limbu",
+    name: "Mahendra Singh Limbu",
+    slug: "mahendra-singh-limbu",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+  {
+    id: "seed-ruman-shrestha",
+    name: "Ruman Shrestha",
+    slug: "ruman-shrestha",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+  {
+    id: "seed-prasanna-shrestha",
+    name: "Prasanna Shrestha",
+    slug: "prasanna-shrestha",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/prasanna-shrestha.jpg",
+  },
+  {
     id: "seed-siddartha-sapkota",
     name: "Siddartha Sapkota",
     slug: "siddartha-sapkota",
-    position: "Founding Board Member",
+    position: null,
     bio: "Supports Greenalaya Nepal's governance and strategic direction, linking conservation research with community-centered environmental action across Nepal.",
-    photo_url: null,
+    photo_url: "/images/team/siddartha-sapkota.jpg",
+  },
+  {
+    id: "seed-advisor-five",
+    name: "New Advisor",
+    slug: "new-advisor",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
   },
 ];
+
+const advisorSlugs = new Set([
+  "mahendra-singh-limbu",
+  "ruman-shrestha",
+  "prasanna-shrestha",
+]);
+
+/** Scientific advisors shown on About and /advisors — separate from the team roster. */
+export const seedAdvisors: TeamMember[] = seedTeamMembers.filter((member) =>
+  advisorSlugs.has(member.slug),
+);
 
 export function getSeedTeamMember(slug: string): TeamMember | null {
   return seedTeamMembers.find((member) => member.slug === slug) ?? null;
 }
+
+/** Shown when Supabase supported_by table has no rows yet. */
+export const seedSupportedBy: Collaborator[] = [
+  {
+    id: "seed-idea-wild",
+    name: "IDEA WILD",
+    slug: "idea-wild",
+    position: "Conservation partner",
+    bio: null,
+    photo_url: "/images/collaborators/supported-idea-wild.png",
+  },
+  {
+    id: "seed-ncsc",
+    name: "Nature Conservation and Study Centre",
+    slug: "nature-conservation-study-centre",
+    position: "Conservation partner",
+    bio: null,
+    photo_url: "/images/collaborators/supported-ncsc.png",
+  },
+];
+
+/** Shown when Supabase collaborators table has no rows yet. */
+export const seedCollaborators: Collaborator[] = [
+  {
+    id: "seed-nast",
+    name: "Nepal Academy of Science and Technology",
+    slug: "nepal-academy-science-technology",
+    position: "Science & policy",
+    bio: null,
+    photo_url: "/images/collaborators/partner-logo.png",
+  },
+];
 
 export function getSeedNewsPost(slug: string): NewsPost | null {
   return seedNewsPosts.find((post) => post.slug === slug) ?? null;
@@ -34,10 +110,6 @@ export const seedResearch: Research[] = [
     published_date: "2026-04-01",
   },
 ];
-
-export function getSeedResearch(slug: string): Research | null {
-  return seedResearch.find((item) => item.slug === slug) ?? null;
-}
 
 export const seedProjects: Project[] = [
   {

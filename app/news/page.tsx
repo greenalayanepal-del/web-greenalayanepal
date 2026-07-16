@@ -23,7 +23,7 @@ async function getNews(): Promise<{
       "Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to .env.local. Falling back to seed news data."
     );
     return {
-      posts: [],
+      posts: seedNewsPosts,
       error: null,
     };
   }
@@ -68,19 +68,19 @@ export default async function NewsPage() {
           {displayPosts.map((post) => (
             <li key={post.id}>
               <ContentCard>
-              <h2 className="text-xl font-semibold text-secondary-foreground">
-                <Link href={`/news/${post.slug}`} className="hover:underline">
-                  {post.title}
-                </Link>
-              </h2>
-              {post.published_at ? (
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {formatDate(post.published_at)}
-                </p>
-              ) : null}
-              {post.excerpt ? (
-                <p className="mt-2 text-foreground">{post.excerpt}</p>
-              ) : null}
+                <h2 className="text-xl font-semibold text-secondary-foreground">
+                  <Link href={`/news/${post.slug}`} className="hover:underline">
+                    {post.title}
+                  </Link>
+                </h2>
+                {post.published_at ? (
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {formatDate(post.published_at)}
+                  </p>
+                ) : null}
+                {post.excerpt ? (
+                  <p className="mt-2 text-foreground">{post.excerpt}</p>
+                ) : null}
               </ContentCard>
             </li>
           ))}

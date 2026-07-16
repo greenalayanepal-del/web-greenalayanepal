@@ -61,18 +61,18 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       <p className="mt-6">
         <Link
           href="/projects"
-          className="text-sm text-emerald-700 hover:underline"
+          className="text-sm text-primary hover:underline"
         >
           ← All projects
         </Link>
       </p>
 
       {project.description ? (
-        <p className="mt-6 text-lg leading-relaxed text-neutral-700">
+        <p className="mt-6 text-lg leading-relaxed text-foreground">
           {project.description}
         </p>
       ) : (
-        <p className="mt-6 text-neutral-500">No description yet.</p>
+        <p className="mt-6 text-muted-foreground">No description yet.</p>
       )}
     </PageShell>
   );

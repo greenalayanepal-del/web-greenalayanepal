@@ -21,6 +21,16 @@ create table if not exists public.team_members (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.collaborators (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  slug text not null unique,
+  position text,
+  bio text,
+  photo_url text,
+  created_at timestamptz not null default now()
+);
+
 create table if not exists public.news (
   id uuid primary key default gen_random_uuid(),
   title text not null,
@@ -34,6 +44,7 @@ create table if not exists public.news (
 
 alter table public.research enable row level security;
 alter table public.team_members enable row level security;
+alter table public.collaborators enable row level security;
 alter table public.news enable row level security;
 
 create policy "Public read research"
@@ -42,6 +53,10 @@ create policy "Public read research"
 
 create policy "Public read team_members"
   on public.team_members for select
+  using (true);
+
+create policy "Public read collaborators"
+  on public.collaborators for select
   using (true);
 
 create policy "Public read news"

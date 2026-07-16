@@ -111,6 +111,32 @@ body {
   }
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee var(--duration, 40s) linear infinite;
+}
+
+@keyframes marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@utility animate-marquee-reverse {
+  animation: marquee-reverse var(--duration, 40s) linear infinite;
+}
+
 [data-glow]::before,
 [data-glow]::after {
   pointer-events: none;
@@ -170,5 +196,62 @@ body {
 [data-glow] > [data-glow]::before {
   inset: -10px;
   border-width: 10px;
+}
+
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 640px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.aurora-bg {
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora-shape-1,
+.aurora-shape-2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: hero-mesh-pulse 10s ease-in-out infinite;
+}
+
+.aurora-shape-1 {
+  top: 10%;
+  left: 15%;
+  width: 55%;
+  height: 45%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(76, 175, 80, 0.35) 0%,
+    transparent 70%
+  );
+}
+
+.aurora-shape-2 {
+  right: 10%;
+  bottom: 15%;
+  width: 50%;
+  height: 40%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(46, 125, 50, 0.3) 0%,
+    transparent 70%
+  );
+  animation-delay: 2s;
 }
 

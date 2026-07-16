@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { HomeSectionHeader } from "@/components/home-section-header";
 import { SectionFadeBridges } from "@/components/section-fade-bridges";
 import { ThematicAreasGrid } from "@/components/thematic-areas-grid";
-import { siteConfig } from "@/lib/site";
+import { aboutPageContent, siteConfig } from "@/lib/site";
 
 export function ThematicAreasSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -36,7 +36,8 @@ export function ThematicAreasSection() {
       </div>
       <div className="relative z-10 mx-auto max-w-6xl lg:-mt-10">
         <HomeSectionHeader
-          title="Thematic Areas"
+          title={aboutPageContent.thematicHeading}
+          description={aboutPageContent.thematicDescription}
           tone="dark"
           outlinedTitle
           className="lg:mb-[54px]"

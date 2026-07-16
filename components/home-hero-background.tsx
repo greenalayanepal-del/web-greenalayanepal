@@ -10,13 +10,8 @@ import {
   computeParallaxTransform,
   PARALLAX_INITIAL_TRANSFORM,
 } from "@/lib/scroll-parallax";
-import { siteConfig } from "@/lib/site";
+import { aboutPageContent, siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
-
-const COMMUNITY_HERO_BG = "/images/community-fist-bump-4k.jpg";
-
-const HERO_DESCRIPTION =
-  "Greenalaya Nepal leverages research, technological innovation, and green enterprise to deliver data-driven solutions for resilient ecosystems through collaboration.";
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
@@ -126,8 +121,8 @@ function HeroParallaxImage() {
 
   return (
     <Image
-      src={COMMUNITY_HERO_BG}
-      alt="Students joining hands in a fist bump gesture for unity and collaboration"
+      src={siteConfig.images.communityHero}
+      alt="Greenalaya Nepal team gathered outdoors for a group photo"
       fill
       priority
       quality={92}
@@ -138,7 +133,7 @@ function HeroParallaxImage() {
   );
 }
 
-export function ShaderBackground({
+export function HeroBackground({
   children,
   className,
 }: {
@@ -212,7 +207,7 @@ export function HeroContent({
           animate="visible"
           transition={{ duration: 0.75, ease: easeOut, delay: 0.5 }}
         >
-          {HERO_DESCRIPTION}
+          {aboutPageContent.heroDescription}
         </motion.p>
 
         <motion.div
@@ -262,4 +257,3 @@ export function HeroContent({
     </div>
   );
 }
-

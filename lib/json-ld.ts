@@ -99,6 +99,7 @@ export function articleJsonLd(input: {
 export function publicationJsonLd(input: {
   title: string;
   description: string;
+  path: string;
   datePublished?: string | null;
   numberOfPages?: number;
 }) {
@@ -107,7 +108,7 @@ export function publicationJsonLd(input: {
     "@type": "Book",
     name: input.title,
     description: input.description,
-    url: `${siteConfig.url}/publications`,
+    url: `${siteConfig.url}${input.path}`,
     datePublished: input.datePublished ?? undefined,
     numberOfPages: input.numberOfPages ?? undefined,
     publisher: {

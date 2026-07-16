@@ -1,5 +1,7 @@
 import Link from "next/link";
+
 import { PageShell } from "@/components/page-shell";
+import { getAdvisors } from "@/lib/content/advisors";
 import { pageMetadata } from "@/lib/seo";
 import { contactHref } from "@/lib/site";
 
@@ -10,7 +12,9 @@ export const metadata = pageMetadata({
   path: "/advisors",
 });
 
-export default function AdvisorsPage() {
+export default async function AdvisorsPage() {
+  const { members: advisors } = await getAdvisors();
+
   return (
     <PageShell
       title="Advisors & Partners"
@@ -29,9 +33,13 @@ export default function AdvisorsPage() {
           </h2>
           <p className="mt-2">
             Advisors help guide study design, field methods, and the interpretation
-            of biodiversity and environmental data. Profiles will be published here
-            as our advisory network grows.
+            of biodiversity and environmental data.
           </p>
+          <ul className="mt-3 list-disc space-y-1 pl-5">
+            {advisors.map((advisor) => (
+              <li key={advisor.id}>{advisor.name}</li>
+            ))}
+          </ul>
         </div>
 
         <div>
@@ -45,15 +53,12 @@ export default function AdvisorsPage() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div>
           <Link
             href={contactHref("partner")}
             className="inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-[#2e7d32] to-[#1b5e20] px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:shadow-lg"
           >
             Partner with us
-          </Link>
-          <Link href="/team" className="text-sm font-medium text-primary hover:underline">
-            Meet our team →
           </Link>
         </div>
       </div>

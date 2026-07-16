@@ -35,8 +35,9 @@ const steps = [
       {
         name: "Siddartha Sapkota",
         slug: "siddartha-sapkota",
-        position: "Founding Board Member",
+        position: null,
         bio: "Supports Greenalaya Nepal's governance and strategic direction, linking conservation research with community-centered environmental action across Nepal.",
+        photo_url: "/images/team/siddartha-sapkota.jpg",
       },
       { onConflict: "slug" }
     );

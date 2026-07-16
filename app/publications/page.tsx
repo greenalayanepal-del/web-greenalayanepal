@@ -30,6 +30,7 @@ export default async function PublicationsPage() {
           data={publicationJsonLd({
             title: primary.title,
             description: primary.abstract ?? butterflyPublication.description,
+            path: `/publications/${primary.slug}`,
             datePublished: primary.publishedDateIso,
             numberOfPages: butterflyPublication.pageCount,
           })}

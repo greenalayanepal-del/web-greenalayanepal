@@ -7,7 +7,7 @@ import {
 } from "@/components/about-glass-card";
 import { GradientTracing } from "@/components/gradient-tracing";
 import { SectionFadeBridges } from "@/components/section-fade-bridges";
-import { siteConfig } from "@/lib/site";
+import { aboutPageContent, siteConfig } from "@/lib/site";
 import Image from "next/image";
 import {
   useEffect,
@@ -256,9 +256,7 @@ export function AboutSection() {
                     {siteConfig.name}
                   </h3>
                   <p className="mt-3 text-base leading-relaxed text-white sm:mt-5">
-                    We work at the intersection of nature and technology, empowering communities
-                    to conserve and restore ecosystems while fostering sustainable green innovative
-                    enterprises in balance with nature.
+                    {aboutPageContent.intro[1]}
                   </p>
                 </div>
               </div>
@@ -267,16 +265,12 @@ export function AboutSection() {
             <div className="relative z-10 grid items-stretch gap-4 md:mt-[calc(3rem+80px)] md:grid-cols-2 md:gap-[calc(2rem+270px)] lg:mt-[calc(4rem+80px)]">
               <div className="h-full min-h-0">
                 <AboutGlassCard cardRef={missionRef} title="Our Mission">
-                  To generate credible environmental knowledge, advance community-centered
-                  conservation, and catalyze innovative eco-business solutions that protect
-                  biodiversity, strengthen local livelihoods, and influence sustainable development
-                  pathways in Nepal.
+                  {aboutPageContent.leadMission}
                 </AboutGlassCard>
               </div>
               <div className="h-full min-h-0">
                 <AboutGlassCard cardRef={visionRef} title="Our Vision">
-                  A resilient Nepal where empowered communities conserve ecosystems and foster
-                  sustainable green innovative enterprises in balance with nature and technology.
+                  {aboutPageContent.vision}
                 </AboutGlassCard>
               </div>
             </div>

@@ -44,7 +44,9 @@ export function PublicationsPageContent({
 
             {filtered.length === 0 ? (
               <p className="mt-8 text-center text-muted-foreground">
-                No publications match your search.
+                {publications.length === 0
+                  ? "No publications are available yet."
+                  : "No publications match your search."}
               </p>
             ) : (
               <ul className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-12">

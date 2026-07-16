@@ -89,27 +89,27 @@ export default async function NewsDetailPage({ params }: PageProps) {
         }
       >
       <p className="mt-6">
-        <Link href="/news" className="text-sm text-emerald-700 hover:underline">
+        <Link href="/news" className="text-sm text-primary hover:underline">
           ← All news
         </Link>
       </p>
 
       {post.published_at ? (
-        <p className="mt-2 text-sm text-neutral-500">
+        <p className="mt-2 text-sm text-muted-foreground">
           {formatDate(post.published_at)}
         </p>
       ) : null}
 
       {post.content ? (
-        <div className="mt-6 whitespace-pre-wrap text-lg leading-relaxed text-neutral-700">
+        <div className="mt-6 whitespace-pre-wrap text-lg leading-relaxed text-foreground">
           {post.content}
         </div>
       ) : post.excerpt ? (
-        <p className="mt-6 text-lg leading-relaxed text-neutral-700">
+        <p className="mt-6 text-lg leading-relaxed text-foreground">
           {post.excerpt}
         </p>
       ) : (
-        <p className="mt-6 text-neutral-500">Content coming soon.</p>
+        <p className="mt-6 text-muted-foreground">Content coming soon.</p>
       )}
       </PageShell>
     </>

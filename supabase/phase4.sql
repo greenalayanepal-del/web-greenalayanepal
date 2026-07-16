@@ -7,17 +7,19 @@ set pdf_url = 'https://greenalayanepal.org.np/publications/butterfly_images_of_k
 where slug = 'butterfly-images-kathmandu-valley';
 
 -- 2. Team
-insert into public.team_members (name, slug, position, bio)
+insert into public.team_members (name, slug, position, bio, photo_url)
 values (
   'Siddartha Sapkota',
   'siddartha-sapkota',
-  'Founding Board Member',
-  'Supports Greenalaya Nepal''s governance and strategic direction, linking conservation research with community-centered environmental action across Nepal.'
+  NULL,
+  'Supports Greenalaya Nepal''s governance and strategic direction, linking conservation research with community-centered environmental action across Nepal.',
+  '/images/team/siddartha-sapkota.jpg'
 )
 on conflict (slug) do update set
   name = excluded.name,
   position = excluded.position,
-  bio = excluded.bio;
+  bio = excluded.bio,
+  photo_url = excluded.photo_url;
 
 -- 3. News
 insert into public.news (title, slug, excerpt, content, published_at)

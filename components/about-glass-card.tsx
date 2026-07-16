@@ -52,6 +52,3 @@ export function AboutGlassCard({
     </div>
   );
 }
-
-/** @deprecated Use AboutGlassCard — kept as alias for homepage about section. */
-export const GlassInfoCard = AboutGlassCard;

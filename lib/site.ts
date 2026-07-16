@@ -31,8 +31,8 @@ export const siteConfig = {
   },
   images: {
     aboutBackground: "/images/about-rings.png",
+    communityHero: "/images/community-group.png",
     foundationBackground: "/images/foundation-background.png",
-    resourcesHeader: "/images/resources-header.png",
     thematicAreasBackground: "/images/thematic-areas-background.png",
     footerCarousel: [
       "/images/footer-carousel-1.png",
@@ -52,26 +52,32 @@ export const siteLogo = {
 } as const;
 
 export const aboutPageContent = {
-  tag: "About Us",
   title: "About Greenalaya Nepal",
-  subtitle:
-    "Environmental research and development for conservation and community resilience.",
+  heroDescription:
+    "Greenalaya Nepal leverages research, technological innovation, and green enterprise to deliver data-driven solutions for resilient ecosystems through collaboration.",
   leadMission:
     "To generate credible environmental knowledge, advance community-centered conservation, and catalyze innovative eco-business solutions that protect biodiversity, strengthen local livelihoods, and influence sustainable development pathways in Nepal.",
   intro: [
-    "Greenalaya Nepal is a national environmental NGO that leverages research, technological innovation, and green enterprise to deliver data-driven solutions for resilient ecosystems through collaboration.",
+    "Greenalaya Nepal is a national environmental company that leverages research, technological innovation, and green enterprise to deliver data-driven solutions for resilient ecosystems through collaboration.",
     "We work at the intersection of nature and technology, empowering communities to conserve and restore ecosystems while fostering sustainable green innovative enterprises in balance with nature.",
   ],
-  story:
-    "Greenalaya Nepal was founded to bridge rigorous environmental science with practical action on the ground. From biodiversity documentation in the Kathmandu Valley to community-centered conservation programs, our work responds to Nepal's most pressing ecological challenges with evidence, innovation, and partnership.",
   vision:
     "A resilient Nepal where empowered communities conserve ecosystems and foster sustainable green innovative enterprises in balance with nature and technology.",
-  pillarsHeading: "What guides us",
+  pillarsHeading: "Strategic Pillars",
   pillarsDescription:
     "Five strategic pillars shape how we design research, technology, and community programs across Nepal.",
-  thematicHeading: "Thematic areas of focus",
+  thematicHeading: "Thematic Areas",
   thematicDescription:
     "Seven key thematic areas drive our work across Nepal, from emerging research questions to policy and community stewardship.",
+} as const;
+
+export const aboutWhatWeDo = {
+  heading: "What we do?",
+  paragraphs: [
+    ...aboutPageContent.intro,
+    "We partner with researchers, communities, and institutions to protect biodiversity, strengthen livelihoods, and advance sustainable development pathways.",
+  ],
+  image: siteConfig.images.communityHero,
 } as const;
 
 export const strategicPillars = [
@@ -149,12 +155,6 @@ export const primaryNavItems = [
   { href: "/publications", label: "Publications" },
   { href: "/news", label: "News" },
   { href: "/blog", label: "Blog" },
-] as const;
-
-export const mainNavItems = [
-  ...primaryNavItems,
-  { href: "/team", label: "Team" },
-  { href: "/contact", label: "Contact" },
 ] as const;
 
 export const footerAboutLinks = [

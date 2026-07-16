@@ -1,6 +1,6 @@
 "use client";
 
-import { siteConfig, strategicPillars } from "@/lib/site";
+import { aboutPageContent, siteConfig, strategicPillars } from "@/lib/site";
 import {
   FlaskConical,
   Leaf,
@@ -48,6 +48,22 @@ const TIMELINE_DATA: TimelineItem[] = strategicPillars.map((pillar, index) => ({
 
 const NODE_COUNT = TIMELINE_DATA.length;
 
+function roundPx(value: number): number {
+  return Math.round(value * 1000) / 1000;
+}
+
+/** Stable transform string so SSR and client hydration match. */
+function pillarNodeTransform(x: number, y: number): string {
+  const rx = roundPx(x);
+  const ry = roundPx(y);
+  const formatAxis = (value: number) =>
+    value < 0
+      ? `- ${Math.abs(value).toFixed(3)}px`
+      : `+ ${value.toFixed(3)}px`;
+
+  return `translate(calc(-50% ${formatAxis(rx)}), calc(-50% ${formatAxis(ry)}))`;
+}
+
 /** Max orbit radius so every node + label stays inside the square at all rotation angles. */
 function computeMaxOrbitRadius(
   width: number,
@@ -88,17 +104,15 @@ export function StrategicPillarsOrbit() {
   const [rotationAngle, setRotationAngle] = useState(0);
   const [orbitRadius, setOrbitRadius] = useState(200);
   const [circleInset, setCircleInset] = useState({ outer: 0, middle: 0, inner: 0 });
-  const [autoRotate, setAutoRotate] = useState(
-    () =>
-      typeof window === "undefined" ||
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
+  const [autoRotate, setAutoRotate] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const orbitEl = orbitRef.current;
     if (!orbitEl) return;
+
+    setAutoRotate(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     const updateRadius = () => {
       const rect = orbitEl.getBoundingClientRect();
@@ -197,8 +211,8 @@ export function StrategicPillarsOrbit() {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
     const radius = orbitRadius;
     const radian = (angle * Math.PI) / 180;
-    const x = radius * Math.cos(radian);
-    const y = radius * Math.sin(radian);
+    const x = roundPx(radius * Math.cos(radian));
+    const y = roundPx(radius * Math.sin(radian));
     const zIndex = Math.max(30, Math.round(100 + 50 * Math.cos(radian)));
     return { x, y, zIndex };
   };
@@ -231,11 +245,10 @@ export function StrategicPillarsOrbit() {
       <div className="relative z-10 mx-auto grid max-w-7xl items-center justify-items-center gap-12 px-4 py-16 sm:gap-14 lg:grid-cols-2 lg:justify-items-stretch lg:gap-16 lg:py-20">
         <header className="w-full text-center lg:text-left">
           <h2 className="font-display text-3xl font-bold tracking-tight text-[#2196f3] uppercase [-webkit-text-stroke:2px_#000] [paint-order:stroke_fill] sm:text-4xl md:text-5xl">
-            Strategic Pillars
+            {aboutPageContent.pillarsHeading}
           </h2>
           <p className="mx-auto mt-5 max-w-xl font-sans text-base leading-relaxed text-white sm:mt-6 sm:text-lg md:text-xl lg:mx-0">
-            Five interconnected pillars guide all our initiatives, ensuring holistic and sustainable
-            environmental solutions for Nepal.
+            {aboutPageContent.pillarsDescription}
           </p>
         </header>
 
@@ -296,7 +309,7 @@ export function StrategicPillarsOrbit() {
                     autoRotate ? "" : "transition-transform duration-700 ease-out"
                   }`}
                   style={{
-                    transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px))`,
+                    transform: pillarNodeTransform(position.x, position.y),
                     zIndex: isExpanded ? 200 : position.zIndex,
                   }}
                   onClick={(e) => {

@@ -22,6 +22,15 @@ for (const path of publicRoutes) {
   });
 }
 
+test("team page renders modern showcase", async ({ page }) => {
+  await page.goto("/team");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Our Team" }),
+  ).toBeVisible();
+  await expect(page.getByText("Mahendra Singh Limbu")).toBeVisible();
+  await expect(page.getByText("Siddartha Sapkota")).toBeVisible();
+});
+
 test("contact form renders required fields", async ({ page }) => {
   await page.goto("/contact");
   await expect(page.getByLabel("Name")).toBeVisible();
@@ -146,6 +155,11 @@ test("research page links to publications", async ({ page }) => {
   ).toHaveAttribute("href", "/publications");
 });
 
+test("/research/:slug redirects to /publications/:slug", async ({ page }) => {
+  await page.goto("/research/butterfly-images-kathmandu-valley");
+  await expect(page).toHaveURL(/\/publications\/butterfly-images-kathmandu-valley$/);
+});
+
 test("/resources redirects to /publications", async ({ page }) => {
   await page.goto("/resources");
   await expect(page).toHaveURL(/\/publications$/);
@@ -153,9 +167,7 @@ test("/resources redirects to /publications", async ({ page }) => {
 
 test("publications page uses theme background in dark mode", async ({ page }) => {
   await page.goto("/publications");
-  await page.evaluate(() => {
-    document.documentElement.classList.add("dark");
-  });
+  await page.getByRole("button", { name: "Switch to dark mode" }).click();
 
   const mainBackground = await page
     .locator("main.bg-background")
@@ -183,7 +195,6 @@ test("footer links route to dedicated pages", async ({ page }, testInfo) => {
     { name: "Publications", path: "/publications" },
     { name: "Blog", path: "/blog" },
     { name: "News", path: "/news" },
-    { name: "Contact us", path: "/contact" },
   ] as const;
 
   for (const link of footerLinks) {

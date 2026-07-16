@@ -23,7 +23,7 @@ async function getProjects(): Promise<{
       "Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to .env.local. Falling back to seed projects data."
     );
     return {
-      projects: [],
+      projects: seedProjects,
       error: null,
     };
   }
@@ -58,17 +58,17 @@ export default async function ProjectsPage() {
           {displayProjects.map((project) => (
             <li key={project.id}>
               <ContentCard>
-              <h2 className="text-xl font-semibold text-secondary-foreground">
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="hover:underline"
-                >
-                  {project.title}
-                </Link>
-              </h2>
-              {project.description ? (
-                <p className="mt-2 text-foreground">{project.description}</p>
-              ) : null}
+                <h2 className="text-xl font-semibold text-secondary-foreground">
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="hover:underline"
+                  >
+                    {project.title}
+                  </Link>
+                </h2>
+                {project.description ? (
+                  <p className="mt-2 text-foreground">{project.description}</p>
+                ) : null}
               </ContentCard>
             </li>
           ))}

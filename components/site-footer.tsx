@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, Mail, MapPin, MessageSquare, Phone } from "lucide-react";
+import { ChevronDown, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useId, useState, type ReactNode } from "react";
@@ -26,11 +26,6 @@ const footerColumnLinkClass =
 const footerBodyTextClass = "text-black dark:text-white";
 
 const contactInfo = [
-  {
-    icon: MessageSquare,
-    text: "Contact us",
-    href: "/contact",
-  },
   {
     icon: Mail,
     text: siteContact.email,
