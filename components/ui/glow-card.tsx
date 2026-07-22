@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 
 export type GlowCardColor = 'blue' | 'purple' | 'green' | 'red' | 'orange';
 
@@ -34,16 +34,18 @@ const sizeMap = {
   lg: 'w-80 h-96',
 };
 
-let glowPointerSubscribers = 0;
+const glowElements = new Set<HTMLElement>();
+let glowRafId: number | null = null;
+let pendingPointerEvent: PointerEvent | null = null;
 
-function syncGlowPointer(e: PointerEvent) {
+function applyGlowPointer(e: PointerEvent) {
   const { clientX: x, clientY: y } = e;
   const xp = (x / window.innerWidth).toFixed(2);
   const yp = (y / window.innerHeight).toFixed(2);
   const xStr = x.toFixed(2);
   const yStr = y.toFixed(2);
 
-  document.querySelectorAll<HTMLElement>('[data-glow-root]').forEach((el) => {
+  glowElements.forEach((el) => {
     el.style.setProperty('--x', xStr);
     el.style.setProperty('--xp', xp);
     el.style.setProperty('--y', yStr);
@@ -51,17 +53,31 @@ function syncGlowPointer(e: PointerEvent) {
   });
 }
 
-function subscribeGlowPointer() {
-  if (glowPointerSubscribers === 0) {
-    document.addEventListener('pointermove', syncGlowPointer);
-  }
-  glowPointerSubscribers += 1;
+function syncGlowPointer(e: PointerEvent) {
+  pendingPointerEvent = e;
+  if (glowRafId !== null) return;
+
+  glowRafId = requestAnimationFrame(() => {
+    glowRafId = null;
+    if (pendingPointerEvent) applyGlowPointer(pendingPointerEvent);
+  });
 }
 
-function unsubscribeGlowPointer() {
-  glowPointerSubscribers -= 1;
-  if (glowPointerSubscribers === 0) {
+function subscribeGlowPointer(el: HTMLElement) {
+  if (glowElements.size === 0) {
+    document.addEventListener('pointermove', syncGlowPointer);
+  }
+  glowElements.add(el);
+}
+
+function unsubscribeGlowPointer(el: HTMLElement) {
+  glowElements.delete(el);
+  if (glowElements.size === 0) {
     document.removeEventListener('pointermove', syncGlowPointer);
+    if (glowRafId !== null) {
+      cancelAnimationFrame(glowRafId);
+      glowRafId = null;
+    }
   }
 }
 
@@ -77,11 +93,12 @@ function GlowCard({
   glassTone = 'grey',
   staticBelowLg = false,
 }: GlowCardProps) {
-  const [glowActive, setGlowActive] = useState(() =>
-    !staticBelowLg ||
-    (typeof window !== 'undefined' &&
-      window.matchMedia('(min-width: 1024px)').matches),
-  );
+  const rootRef = useRef<HTMLDivElement>(null);
+  // SSR-safe initial value: the real viewport-based value (matchMedia) is only
+  // knowable on the client, so it's applied in the effect below after mount —
+  // reading it here would make the server and first client render diverge and
+  // trigger a hydration mismatch whenever staticBelowLg is true.
+  const [glowActive, setGlowActive] = useState(() => !staticBelowLg);
 
   useEffect(() => {
     if (!staticBelowLg) return;
@@ -96,8 +113,11 @@ function GlowCard({
 
   useEffect(() => {
     if (!glowActive) return;
-    subscribeGlowPointer();
-    return unsubscribeGlowPointer;
+    const el = rootRef.current;
+    if (!el) return;
+
+    subscribeGlowPointer(el);
+    return () => unsubscribeGlowPointer(el);
   }, [glowActive]);
 
   const { base, spread } = glowColorMap[glowColor];
@@ -169,7 +189,8 @@ function GlowCard({
 
   return (
     <div
-      {...(isStatic ? {} : { 'data-glow': true, 'data-glow-root': true })}
+      ref={rootRef}
+      {...(isStatic ? {} : { 'data-glow': true })}
       style={isStatic ? getStaticStyles() : getInlineStyles()}
       className={`
           ${getSizeClasses()}

@@ -105,8 +105,21 @@ export function StrategicPillarsOrbit() {
   const [orbitRadius, setOrbitRadius] = useState(200);
   const [circleInset, setCircleInset] = useState({ outer: 0, middle: 0, inner: 0 });
   const [autoRotate, setAutoRotate] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1 },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const orbitEl = orbitRef.current;
@@ -198,14 +211,15 @@ export function StrategicPillarsOrbit() {
   };
 
   useEffect(() => {
-    if (!autoRotate) return;
+    if (!autoRotate || !isVisible) return;
 
     const rotationTimer = setInterval(() => {
+      if (document.hidden) return;
       setRotationAngle((prev) => Number(((prev + 0.3) % 360).toFixed(3)));
     }, 50);
 
     return () => clearInterval(rotationTimer);
-  }, [autoRotate]);
+  }, [autoRotate, isVisible]);
 
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;

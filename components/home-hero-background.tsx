@@ -11,7 +11,7 @@ import {
   PARALLAX_INITIAL_TRANSFORM,
 } from "@/lib/scroll-parallax";
 import { aboutPageContent, siteConfig } from "@/lib/site";
-import { cn } from "@/lib/utils";
+import { cn, rafThrottle } from "@/lib/utils";
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
@@ -102,10 +102,10 @@ function HeroParallaxImage() {
   const [transform, setTransform] = useState(PARALLAX_INITIAL_TRANSFORM);
 
   useEffect(() => {
-    const update = () => {
+    const update = rafThrottle(() => {
       const viewportScale = window.visualViewport?.scale ?? 1;
       setTransform(computeParallaxTransform(window.scrollY, viewportScale));
-    };
+    });
 
     update();
     window.addEventListener("scroll", update, { passive: true });

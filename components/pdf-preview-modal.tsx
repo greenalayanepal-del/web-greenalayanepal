@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 type PdfPreviewModalProps = {
   title: string;
@@ -18,6 +18,9 @@ export function PdfPreviewModal({
   onClose,
 }: PdfPreviewModalProps) {
   const iframeSrc = isOpen ? pdfUrl : "";
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<Element | null>(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -31,6 +34,25 @@ export function PdfPreviewModal({
     (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         onClose();
+        return;
+      }
+
+      if (event.key !== "Tab" || !panelRef.current) return;
+
+      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     },
     [onClose],
@@ -38,8 +60,17 @@ export function PdfPreviewModal({
 
   useEffect(() => {
     if (!isOpen) return;
+
+    triggerRef.current = document.activeElement;
     document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    closeButtonRef.current?.focus();
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      if (triggerRef.current instanceof HTMLElement) {
+        triggerRef.current.focus();
+      }
+    };
   }, [handleKeyDown, isOpen]);
 
   if (!isOpen) return null;
@@ -53,6 +84,7 @@ export function PdfPreviewModal({
       onClick={onClose}
     >
       <div
+        ref={panelRef}
         className="flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-card shadow-2xl"
         onClick={(event) => event.stopPropagation()}
       >
@@ -64,6 +96,7 @@ export function PdfPreviewModal({
             {title} — Preview
           </h3>
           <button
+            ref={closeButtonRef}
             type="button"
             onClick={onClose}
             aria-label="Close preview"
@@ -76,6 +109,8 @@ export function PdfPreviewModal({
           <iframe
             src={iframeSrc}
             title={`${title} PDF preview`}
+            sandbox="allow-same-origin allow-scripts allow-popups"
+            referrerPolicy="no-referrer"
             className="h-[70vh] min-h-[400px] w-full border-0"
           />
         </div>

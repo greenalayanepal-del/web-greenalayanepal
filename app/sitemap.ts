@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/site";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 
+export const revalidate = 3600;
+
 const staticPaths = [
   "",
   "/about",
@@ -37,6 +39,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     supabase.from("team_members").select("slug, created_at"),
     supabase.from("news").select("slug, published_at, created_at"),
   ]);
+
+  for (const [label, result] of [
+    ["projects", projects],
+    ["research", research],
+    ["team_members", team],
+    ["news", news],
+  ] as const) {
+    if (result.error) {
+      console.error(`sitemap: failed to load ${label} from Supabase`, result.error.message);
+    }
+  }
 
   for (const row of projects.data ?? []) {
     entries.push({

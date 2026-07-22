@@ -19,6 +19,8 @@ export const metadata = pageMetadata({
   path: "/publications",
 });
 
+export const revalidate = 300;
+
 export default async function PublicationsPage() {
   const { all, error } = await getPublicationsPageData();
   const primary = all[0];

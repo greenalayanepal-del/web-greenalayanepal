@@ -6,9 +6,16 @@ import { PageShell } from "@/components/page-shell";
 import { getTeamMemberBySlug } from "@/lib/content/team";
 import { pageMetadata } from "@/lib/seo";
 
+export const revalidate = 300;
+
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
+
+/** Matches next.config.ts remotePatterns (Supabase storage); other external hosts aren't optimizable. */
+function isOptimizableRemotePhoto(url: string): boolean {
+  return /^https:\/\/[^/]+\.supabase\.co\/storage\/v1\/object\/public\//.test(url);
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -55,7 +62,10 @@ export default async function TeamMemberPage({ params }: PageProps) {
           width={192}
           height={192}
           className="mt-6 h-48 w-48 rounded-lg object-cover"
-          unoptimized={member.photo_url.startsWith("http")}
+          unoptimized={
+            member.photo_url.startsWith("http") &&
+            !isOptimizableRemotePhoto(member.photo_url)
+          }
         />
       ) : null}
 

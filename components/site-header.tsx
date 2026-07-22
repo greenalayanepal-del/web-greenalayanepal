@@ -7,7 +7,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { SiteLogo } from "@/components/site-logo";
 import { primaryNavItems, siteConfig } from "@/lib/site";
-import { cn } from "@/lib/utils";
+import { cn, rafThrottle } from "@/lib/utils";
 
 const MOBILE_MENU_ID = "mobile-primary-nav";
 
@@ -41,8 +41,9 @@ export function SiteHeader() {
   const titleId = useId();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    onScroll();
+    const checkScrolled = () => setScrolled(window.scrollY > 50);
+    const onScroll = rafThrottle(checkScrolled);
+    checkScrolled();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

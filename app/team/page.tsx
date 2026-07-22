@@ -13,6 +13,8 @@ export const metadata = pageMetadata({
   path: "/team",
 });
 
+export const revalidate = 300;
+
 export default async function TeamPage() {
   const { members, error } = await getTeamMembers();
 

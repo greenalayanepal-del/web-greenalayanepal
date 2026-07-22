@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { ContentCard } from "@/components/content-card";
-import { DataError } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
+import { fetchListWithFallback } from "@/lib/content/fetch-list-with-fallback";
 import { researchHasPublication } from "@/lib/content/resources";
 import { seedResearch } from "@/lib/content/seed";
 import { pageMetadata } from "@/lib/seo";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import type { Research } from "@/lib/types/research";
 
 export const metadata = pageMetadata({
@@ -15,40 +14,17 @@ export const metadata = pageMetadata({
   path: "/research",
 });
 
-async function getResearch(): Promise<{
-  items: Research[];
-  error: string | null;
-}> {
-  if (!isSupabaseConfigured()) {
-    console.warn(
-      "Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to .env.local. Falling back to seed research data."
-    );
-    return {
-      items: seedResearch,
-      error: null,
-    };
-  }
+export const revalidate = 300;
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("research")
-    .select("id, title, slug, abstract, pdf_url, published_date")
-    .order("published_date", { ascending: false });
-
-  if (error) {
-    console.warn(
-      "Could not load research from Supabase. Falling back to seed data.",
-      error.message,
-    );
-    return { items: seedResearch, error: null };
-  }
-
-  const items = data ?? [];
-  if (items.length === 0) {
-    return { items: seedResearch, error: null };
-  }
-
-  return { items, error: null };
+async function getResearch(): Promise<Research[]> {
+  return fetchListWithFallback<Research>({
+    table: "research",
+    columns: "id, title, slug, abstract, pdf_url, published_date",
+    orderColumn: "published_date",
+    ascending: false,
+    seed: seedResearch,
+    label: "research",
+  });
 }
 
 function formatDate(value: string | null) {
@@ -61,7 +37,7 @@ function formatDate(value: string | null) {
 }
 
 export default async function ResearchPage() {
-  const { items, error } = await getResearch();
+  const items = await getResearch();
   const displayItems = items.filter(researchHasPublication);
 
   return (
@@ -76,9 +52,7 @@ export default async function ResearchPage() {
         </Link>
         page.
       </p>
-      {error ? (
-        <DataError message={error} />
-      ) : displayItems.length === 0 ? (
+      {displayItems.length === 0 ? (
         <p className="mt-8 text-muted-foreground">No research publications are available yet.</p>
       ) : (
         <ul className="mt-8 space-y-6">

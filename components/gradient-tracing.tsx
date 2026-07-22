@@ -36,6 +36,7 @@ export const GradientTracing: FC<GradientTracingProps> = ({
         />
         <defs>
           <motion.linearGradient
+            initial={{ x1: 0, x2: 0 }}
             animate={{
               x1: [0, width * 2],
               x2: [0, width],

@@ -13,8 +13,13 @@ export async function getLocalPdfSizeLabel(
 ): Promise<string | null> {
   if (!pdfUrl.startsWith("/")) return null;
 
+  const publicDir = path.join(process.cwd(), "public");
+  const filePath = path.join(publicDir, pdfUrl);
+
+  // Reject any path that escapes /public (e.g. a "../../" segment in pdfUrl).
+  if (!filePath.startsWith(publicDir + path.sep)) return null;
+
   try {
-    const filePath = path.join(process.cwd(), "public", pdfUrl);
     const stats = await stat(filePath);
     return `PDF ${formatFileSize(stats.size)}`;
   } catch {

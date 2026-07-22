@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { AdminSignOutButton } from "@/components/admin-sign-out-button";
 import { ContentCard } from "@/components/content-card";
 import { PageShell } from "@/components/page-shell";
 import { storageBucket } from "@/lib/storage";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import type { ContactSubmission } from "@/lib/types/contact";
 
 export const metadata = {
@@ -48,25 +47,11 @@ async function getSubmissions(): Promise<{
 }
 
 export default async function AdminPage() {
-  if (!isSupabaseConfigured()) {
-    return (
-      <PageShell title="Staff dashboard" description="Supabase is not configured.">
-        <p className="mt-8 text-sm text-muted-foreground">
-          Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to
-          enable the admin area.
-        </p>
-      </PageShell>
-    );
-  }
-
+  // Auth and Supabase-configuration checks are enforced in the layout above.
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/admin/login");
-  }
 
   const { items, error } = await getSubmissions();
   const studio = supabaseStudioUrl();
@@ -74,7 +59,7 @@ export default async function AdminPage() {
   return (
     <PageShell
       title="Staff dashboard"
-      description={`Signed in as ${user.email}`}
+      description={`Signed in as ${user?.email}`}
     >
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
         <AdminSignOutButton />

@@ -14,6 +14,8 @@ const playfair = Playfair_Display({
   weight: ["400", "700"],
 });
 
+export const revalidate = 300;
+
 type PageProps = {
   params: Promise<{ slug: string }>;
 };

@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { ContentCard } from "@/components/content-card";
-import { DataError } from "@/components/data-status";
 import { PageShell } from "@/components/page-shell";
+import { fetchListWithFallback } from "@/lib/content/fetch-list-with-fallback";
 import { seedProjects } from "@/lib/content/seed";
 import { pageMetadata } from "@/lib/seo";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import type { Project } from "@/lib/types/project";
 
 export const metadata = pageMetadata({
@@ -14,66 +13,45 @@ export const metadata = pageMetadata({
   path: "/projects",
 });
 
-async function getProjects(): Promise<{
-  projects: Project[];
-  error: string | null;
-}> {
-  if (!isSupabaseConfigured()) {
-    console.warn(
-      "Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to .env.local. Falling back to seed projects data."
-    );
-    return {
-      projects: seedProjects,
-      error: null,
-    };
-  }
+export const revalidate = 300;
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("projects")
-    .select("id, title, slug, description, image_url")
-    .order("title");
-
-  if (error) {
-    return { projects: [], error: error.message };
-  }
-
-  return { projects: data ?? [], error: null };
+async function getProjects(): Promise<Project[]> {
+  return fetchListWithFallback<Project>({
+    table: "projects",
+    columns: "id, title, slug, description, image_url",
+    orderColumn: "title",
+    seed: seedProjects,
+    label: "projects",
+  });
 }
 
 export default async function ProjectsPage() {
-  const { projects, error } = await getProjects();
-  const displayProjects =
-    !error && projects.length === 0 ? seedProjects : projects;
+  const projects = await getProjects();
 
   return (
     <PageShell
       title="Our Work"
       description="Thematic focus areas guiding Greenalaya Nepal's conservation, research, and innovation programs."
     >
-      {error ? (
-        <DataError message={error} />
-      ) : (
-        <ul className="mt-8 space-y-6">
-          {displayProjects.map((project) => (
-            <li key={project.id}>
-              <ContentCard>
-                <h2 className="text-xl font-semibold text-secondary-foreground">
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="hover:underline"
-                  >
-                    {project.title}
-                  </Link>
-                </h2>
-                {project.description ? (
-                  <p className="mt-2 text-foreground">{project.description}</p>
-                ) : null}
-              </ContentCard>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className="mt-8 space-y-6">
+        {projects.map((project) => (
+          <li key={project.id}>
+            <ContentCard>
+              <h2 className="text-xl font-semibold text-secondary-foreground">
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="hover:underline"
+                >
+                  {project.title}
+                </Link>
+              </h2>
+              {project.description ? (
+                <p className="mt-2 text-foreground">{project.description}</p>
+              ) : null}
+            </ContentCard>
+          </li>
+        ))}
+      </ul>
     </PageShell>
   );
 }

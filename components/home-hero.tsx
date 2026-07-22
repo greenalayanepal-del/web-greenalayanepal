@@ -1,5 +1,3 @@
-"use client";
-
 import { HeroBackground, HeroContent } from "@/components/home-hero-background";
 
 export function HomeHero() {

@@ -1,5 +1,3 @@
-"use client";
-
 import { GlowCard } from "@/components/ui/glow-card";
 import { thematicAreasWithStyle } from "@/lib/site";
 import { cn } from "@/lib/utils";

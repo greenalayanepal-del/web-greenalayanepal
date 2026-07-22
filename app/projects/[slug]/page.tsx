@@ -6,6 +6,8 @@ import { getSeedProject } from "@/lib/content/seed";
 import { pageMetadata } from "@/lib/seo";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 
+export const revalidate = 300;
+
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
