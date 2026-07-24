@@ -8,6 +8,110 @@ import { butterflyPublication } from "@/lib/site";
 /** Shown when Supabase has no rows yet. Mirrors supabase/phase4.sql. */
 export const seedTeamMembers: TeamMember[] = [
   {
+    id: "seed-nabin-sapkota",
+    name: "Nabin Sapkota",
+    slug: "nabin-sapkota",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+    linkedin_url: "https://www.linkedin.com/in/nabin1sapkota/",
+  },
+  {
+    id: "seed-binit-timalsina",
+    name: "Binit Timalsina",
+    slug: "binit-timalsina",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+  {
+    id: "seed-siddhartha-sapkota",
+    name: "Siddhartha Sapkota",
+    slug: "siddhartha-sapkota",
+    position: null,
+    bio: "Supports Greenalaya Nepal's governance and strategic direction, linking conservation research with community-centered environmental action across Nepal.",
+    photo_url: "/images/team/siddartha-sapkota.jpg",
+  },
+  {
+    id: "seed-binay-dhakal",
+    name: "Binay Dhakal",
+    slug: "binay-dhakal",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+  {
+    id: "seed-nirjal-sapkota",
+    name: "Nirjal Sapkota",
+    slug: "nirjal-sapkota",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+  {
+    id: "seed-shreejana-bajracharya",
+    name: "Shreejana Bajracharya",
+    slug: "shreejana-bajracharya",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+  {
+    id: "seed-rajib-sedhain",
+    name: "Rajib Sedhain",
+    slug: "rajib-sedhain",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+  {
+    id: "seed-sarita-pokhrel",
+    name: "Sarita Pokhrel",
+    slug: "sarita-pokhrel",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+  {
+    id: "seed-aashish-shrestha",
+    name: "Aashish Shrestha",
+    slug: "aashish-shrestha",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+  {
+    id: "seed-negma-shakya",
+    name: "Negma Shakya",
+    slug: "negma-shakya",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+  {
+    id: "seed-madhav-upadhya",
+    name: "Madhav Upadhya",
+    slug: "madhav-upadhya",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+  {
+    id: "seed-pritam-thapa",
+    name: "Pritam Thapa",
+    slug: "pritam-thapa",
+    position: null,
+    bio: null,
+    photo_url: "/images/team/team-group.png",
+  },
+];
+
+/**
+ * Scientific advisors shown on About and /advisors — a separate roster from
+ * the team page, kept independent so the two lists never overlap.
+ */
+export const seedAdvisors: TeamMember[] = [
+  {
     id: "seed-mahendra-singh-limbu",
     name: "Mahendra Singh Limbu",
     slug: "mahendra-singh-limbu",
@@ -31,34 +135,7 @@ export const seedTeamMembers: TeamMember[] = [
     bio: null,
     photo_url: "/images/team/prasanna-shrestha.jpg",
   },
-  {
-    id: "seed-siddartha-sapkota",
-    name: "Siddartha Sapkota",
-    slug: "siddartha-sapkota",
-    position: null,
-    bio: "Supports Greenalaya Nepal's governance and strategic direction, linking conservation research with community-centered environmental action across Nepal.",
-    photo_url: "/images/team/siddartha-sapkota.jpg",
-  },
-  {
-    id: "seed-advisor-five",
-    name: "New Advisor",
-    slug: "new-advisor",
-    position: null,
-    bio: null,
-    photo_url: "/images/team/team-group.png",
-  },
 ];
-
-const advisorSlugs = new Set([
-  "mahendra-singh-limbu",
-  "ruman-shrestha",
-  "prasanna-shrestha",
-]);
-
-/** Scientific advisors shown on About and /advisors — separate from the team roster. */
-export const seedAdvisors: TeamMember[] = seedTeamMembers.filter((member) =>
-  advisorSlugs.has(member.slug),
-);
 
 export function getSeedTeamMember(slug: string): TeamMember | null {
   return seedTeamMembers.find((member) => member.slug === slug) ?? null;

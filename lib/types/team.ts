@@ -5,7 +5,5 @@ export type TeamMember = {
   position: string | null;
   bio: string | null;
   photo_url: string | null;
-  github_url?: string | null;
   linkedin_url?: string | null;
-  twitter_url?: string | null;
 };

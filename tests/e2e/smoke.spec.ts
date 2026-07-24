@@ -27,8 +27,8 @@ test("team page renders modern showcase", async ({ page }) => {
   await expect(
     page.getByRole("heading", { level: 1, name: "Our Team" }),
   ).toBeVisible();
-  await expect(page.getByText("Mahendra Singh Limbu")).toBeVisible();
-  await expect(page.getByText("Siddartha Sapkota")).toBeVisible();
+  await expect(page.getByText("Nabin Sapkota")).toBeVisible();
+  await expect(page.getByText("Siddhartha Sapkota")).toBeVisible();
 });
 
 test("contact form renders required fields", async ({ page }) => {

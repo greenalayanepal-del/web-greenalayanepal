@@ -4,21 +4,8 @@ import Image from "next/image";
 import { memo, useCallback, useEffect, useState, type SVGProps } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-import type {
-  TeamShowcaseMember,
-  TeamSocialKey,
-} from "@/lib/content/team-showcase";
+import type { TeamShowcaseMember } from "@/lib/content/team-showcase";
 import { cn } from "@/lib/utils";
-
-const SOCIAL_KEYS: TeamSocialKey[] = ["github", "linkedin", "twitter"];
-
-function IconGithub(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
-      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-    </svg>
-  );
-}
 
 function IconLinkedin(props: SVGProps<SVGSVGElement>) {
   return (
@@ -27,20 +14,6 @@ function IconLinkedin(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-
-function IconTwitter(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  );
-}
-
-const iconMap = {
-  github: IconGithub,
-  linkedin: IconLinkedin,
-  twitter: IconTwitter,
-} as const;
 
 const cardVariants = {
   offscreen: { y: 50, opacity: 0 },
@@ -70,44 +43,37 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
-function SocialIcon({
-  socialKey,
+function LinkedinIcon({
   href,
   memberName,
-  index,
 }: {
-  socialKey: TeamSocialKey;
-  href?: string;
+  href?: string | null;
   memberName: string;
-  index: number;
 }) {
-  const Icon = iconMap[socialKey];
   const className = cn(
     "text-muted-foreground transition-all duration-300 opacity-0 group-hover:opacity-100",
     href
       ? "hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring rounded-full"
       : "opacity-0 group-hover:opacity-40 pointer-events-none",
   );
-  const style = { transitionDelay: `${index * 100}ms` };
 
   if (href) {
     return (
       <a
         href={href}
-        aria-label={`${memberName}'s ${socialKey}`}
+        aria-label={`${memberName}'s LinkedIn`}
         className={className}
-        style={style}
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Icon className="size-5" />
+        <IconLinkedin className="size-5" />
       </a>
     );
   }
 
   return (
-    <span aria-hidden className={className} style={style}>
-      <Icon className="size-5" />
+    <span aria-hidden className={className}>
+      <IconLinkedin className="size-5" />
     </span>
   );
 }
@@ -183,18 +149,12 @@ const TeamMemberCard = memo(function TeamMemberCard({
         <h3 className="text-balance text-xl font-semibold leading-snug text-card-foreground">
           {member.name}
         </h3>
-        <p className="mt-1 text-primary">{member.title}</p>
+        {member.title ? (
+          <p className="mt-1 text-primary">{member.title}</p>
+        ) : null}
 
         <div className="mt-auto flex w-full items-center justify-center gap-4 pt-4">
-          {SOCIAL_KEYS.map((key, i) => (
-            <SocialIcon
-              key={key}
-              href={member.socials[key]}
-              index={i}
-              memberName={member.name}
-              socialKey={key}
-            />
-          ))}
+          <LinkedinIcon href={member.linkedinUrl} memberName={member.name} />
         </div>
       </div>
     </motion.div>

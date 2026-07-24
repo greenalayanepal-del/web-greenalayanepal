@@ -35,7 +35,7 @@ export async function getTeamMembers(): Promise<{
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("team_members")
-    .select("id, name, slug, position, bio, photo_url")
+    .select("id, name, slug, position, bio, photo_url, linkedin_url")
     .order("name");
 
   if (error) {
@@ -66,7 +66,7 @@ export async function getTeamMemberBySlug(
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("team_members")
-    .select("id, name, slug, position, bio, photo_url")
+    .select("id, name, slug, position, bio, photo_url, linkedin_url")
     .eq("slug", slug)
     .maybeSingle();
 
