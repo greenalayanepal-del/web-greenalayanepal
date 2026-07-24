@@ -22,15 +22,4 @@ begin
       to anon, authenticated
       with check (true);
   end if;
-
-  if not exists (
-    select 1 from pg_policies
-    where schemaname = 'public' and tablename = 'newsletter_subscribers'
-      and policyname = 'Staff read newsletter_subscribers'
-  ) then
-    create policy "Staff read newsletter_subscribers"
-      on public.newsletter_subscribers for select
-      to authenticated
-      using (true);
-  end if;
 end $$;

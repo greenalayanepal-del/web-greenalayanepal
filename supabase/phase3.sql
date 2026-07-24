@@ -1,4 +1,4 @@
--- Phase 3: Contact form, storage, staff write access
+-- Phase 3: Contact form, storage
 -- Run in Supabase → SQL Editor (safe to re-run where noted)
 
 -- ---------------------------------------------------------------------------
@@ -52,59 +52,6 @@ begin
       to anon, authenticated
       with check (true);
   end if;
-
-  if not exists (
-    select 1 from pg_policies
-    where schemaname = 'public' and tablename = 'contact_submissions'
-      and policyname = 'Staff read contact_submissions'
-  ) then
-    create policy "Staff read contact_submissions"
-      on public.contact_submissions for select
-      to authenticated
-      using (true);
-  end if;
-end $$;
-
--- ---------------------------------------------------------------------------
--- Staff write policies (invite staff via Supabase Auth → Users)
--- ---------------------------------------------------------------------------
-do $$
-declare
-  t text;
-  tables text[] := array['research', 'team_members', 'news', 'projects'];
-begin
-  foreach t in array tables
-  loop
-    if not exists (
-      select 1 from pg_policies
-      where schemaname = 'public' and tablename = t and policyname = 'Staff insert ' || t
-    ) then
-      execute format(
-        'create policy "Staff insert %I" on public.%I for insert to authenticated with check (true)',
-        t, t
-      );
-    end if;
-
-    if not exists (
-      select 1 from pg_policies
-      where schemaname = 'public' and tablename = t and policyname = 'Staff update ' || t
-    ) then
-      execute format(
-        'create policy "Staff update %I" on public.%I for update to authenticated using (true) with check (true)',
-        t, t
-      );
-    end if;
-
-    if not exists (
-      select 1 from pg_policies
-      where schemaname = 'public' and tablename = t and policyname = 'Staff delete ' || t
-    ) then
-      execute format(
-        'create policy "Staff delete %I" on public.%I for delete to authenticated using (true)',
-        t, t
-      );
-    end if;
-  end loop;
 end $$;
 
 -- ---------------------------------------------------------------------------
@@ -141,40 +88,6 @@ begin
     create policy "Public read public-assets"
       on storage.objects for select
       to public
-      using (bucket_id = 'public-assets');
-  end if;
-
-  if not exists (
-    select 1 from pg_policies
-    where schemaname = 'storage' and tablename = 'objects'
-      and policyname = 'Staff upload public-assets'
-  ) then
-    create policy "Staff upload public-assets"
-      on storage.objects for insert
-      to authenticated
-      with check (bucket_id = 'public-assets');
-  end if;
-
-  if not exists (
-    select 1 from pg_policies
-    where schemaname = 'storage' and tablename = 'objects'
-      and policyname = 'Staff update public-assets'
-  ) then
-    create policy "Staff update public-assets"
-      on storage.objects for update
-      to authenticated
-      using (bucket_id = 'public-assets')
-      with check (bucket_id = 'public-assets');
-  end if;
-
-  if not exists (
-    select 1 from pg_policies
-    where schemaname = 'storage' and tablename = 'objects'
-      and policyname = 'Staff delete public-assets'
-  ) then
-    create policy "Staff delete public-assets"
-      on storage.objects for delete
-      to authenticated
       using (bucket_id = 'public-assets');
   end if;
 end $$;

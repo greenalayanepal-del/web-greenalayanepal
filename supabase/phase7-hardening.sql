@@ -1,99 +1,19 @@
 -- Phase 7: Security hardening
 -- Run in Supabase -> SQL Editor (safe to re-run)
 --
--- 1. Staff role check: "Staff *" policies previously granted full CRUD to
---    ANY authenticated user (`to authenticated using (true)`), relying only on
---    there being no public sign-up path in the app. This adds a real role
---    check so RLS itself enforces staff-only access, independent of app code
---    or Supabase Auth dashboard settings.
--- 2. Rate limiting: contact_submissions and newsletter_subscribers allow
---    public inserts (`to anon, authenticated with check (true)`) directly via
---    the anon key over PostgREST, bypassing any rate limiting implemented in
---    the Next.js server actions. These triggers enforce a per-IP limit at
---    the database layer, which is the only layer every insert must pass
---    through.
+-- Rate limiting: contact_submissions and newsletter_subscribers allow
+-- public inserts (`to anon, authenticated with check (true)`) directly via
+-- the anon key over PostgREST, bypassing any rate limiting implemented in
+-- the Next.js server actions. These triggers enforce a per-IP limit at
+-- the database layer, which is the only layer every insert must pass
+-- through.
+--
+-- Staff/admin access has been removed from this project (see
+-- supabase/phase8-remove-staff-access.sql if phase7's staff-role policies
+-- were applied previously and need to be dropped).
 
 -- ---------------------------------------------------------------------------
--- 1. Staff role check
--- ---------------------------------------------------------------------------
-
--- After running this file, mark existing staff accounts with:
---   node scripts/create-staff-user.mjs (re-run is safe; it now sets the role)
--- for every STAFF_EMAIL that should have access.
-create or replace function public.is_staff()
-returns boolean
-language sql
-stable
-security definer
-set search_path = public
-as $$
-  select exists (
-    select 1 from auth.users
-    where id = auth.uid()
-      and raw_app_meta_data ->> 'role' = 'staff'
-  );
-$$;
-
-do $$
-declare
-  t text;
-  tables text[] := array['research', 'team_members', 'news', 'projects'];
-begin
-  foreach t in array tables
-  loop
-    execute format('drop policy if exists "Staff insert %I" on public.%I', t, t);
-    execute format(
-      'create policy "Staff insert %I" on public.%I for insert to authenticated with check (public.is_staff())',
-      t, t
-    );
-
-    execute format('drop policy if exists "Staff update %I" on public.%I', t, t);
-    execute format(
-      'create policy "Staff update %I" on public.%I for update to authenticated using (public.is_staff()) with check (public.is_staff())',
-      t, t
-    );
-
-    execute format('drop policy if exists "Staff delete %I" on public.%I', t, t);
-    execute format(
-      'create policy "Staff delete %I" on public.%I for delete to authenticated using (public.is_staff())',
-      t, t
-    );
-  end loop;
-end $$;
-
-drop policy if exists "Staff read contact_submissions" on public.contact_submissions;
-create policy "Staff read contact_submissions"
-  on public.contact_submissions for select
-  to authenticated
-  using (public.is_staff());
-
-drop policy if exists "Staff read newsletter_subscribers" on public.newsletter_subscribers;
-create policy "Staff read newsletter_subscribers"
-  on public.newsletter_subscribers for select
-  to authenticated
-  using (public.is_staff());
-
-drop policy if exists "Staff upload public-assets" on storage.objects;
-create policy "Staff upload public-assets"
-  on storage.objects for insert
-  to authenticated
-  with check (bucket_id = 'public-assets' and public.is_staff());
-
-drop policy if exists "Staff update public-assets" on storage.objects;
-create policy "Staff update public-assets"
-  on storage.objects for update
-  to authenticated
-  using (bucket_id = 'public-assets' and public.is_staff())
-  with check (bucket_id = 'public-assets' and public.is_staff());
-
-drop policy if exists "Staff delete public-assets" on storage.objects;
-create policy "Staff delete public-assets"
-  on storage.objects for delete
-  to authenticated
-  using (bucket_id = 'public-assets' and public.is_staff());
-
--- ---------------------------------------------------------------------------
--- 2. Rate limiting on public inserts
+-- Rate limiting on public inserts
 -- ---------------------------------------------------------------------------
 create or replace function public.request_client_ip()
 returns text
