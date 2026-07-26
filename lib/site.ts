@@ -159,7 +159,7 @@ export const primaryNavItems = [
 
 export const footerAboutLinks = [
   { text: "About Greenalaya Nepal", href: "/about" },
-  { text: "Advisors & Partners", href: "/advisors" },
+  { text: "Advisors & Partners", href: "/about#advisors" },
   { text: "Team", href: "/team" },
 ] as const;
 

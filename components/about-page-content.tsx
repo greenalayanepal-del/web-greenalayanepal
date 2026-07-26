@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 import { AboutMeshBackground } from "@/components/about-mesh-background";
 import { AboutPageIntro } from "@/components/about-page-intro";
 import { AboutPeopleMarquee } from "@/components/about-people-marquee";
-import { aboutPageContent, aboutWhatWeDo } from "@/lib/site";
+import { aboutPageContent, aboutWhatWeDo, contactHref } from "@/lib/site";
 import type { Collaborator } from "@/lib/types/collaborator";
 import type { TeamMember } from "@/lib/types/team";
 
@@ -32,6 +34,7 @@ export function AboutPageContent({
           whatWeDo={aboutWhatWeDo}
         />
         <AboutPeopleMarquee
+          id="advisors"
           direction="left"
           error={advisorsError}
           maxItems={5}
@@ -59,6 +62,23 @@ export function AboutPageContent({
           title="Collaborators"
           variant="logo"
         />
+
+        <div className="mx-auto mt-16 max-w-3xl text-center lg:mt-24">
+          <h2 className="font-display text-3xl font-bold uppercase text-white lg:text-4xl">
+            Partner organizations
+          </h2>
+          <p className="mt-4 text-white/70">
+            We collaborate with universities, NGOs, and community groups on research,
+            restoration, and capacity-building initiatives. Partner highlights will
+            appear here soon.
+          </p>
+          <Link
+            href={contactHref("partner")}
+            className="mt-6 inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-[#2e7d32] to-[#1b5e20] px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:shadow-lg"
+          >
+            Partner with us
+          </Link>
+        </div>
       </div>
     </div>
   );

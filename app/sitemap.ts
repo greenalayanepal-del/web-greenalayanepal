@@ -7,7 +7,6 @@ export const revalidate = 3600;
 const staticPaths = [
   "",
   "/about",
-  "/advisors",
   "/projects",
   "/research",
   "/publications",

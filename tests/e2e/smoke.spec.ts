@@ -3,7 +3,6 @@ import { expect, test, type Page } from "@playwright/test";
 const publicRoutes = [
   "/",
   "/about",
-  "/advisors",
   "/projects",
   "/research",
   "/publications",
@@ -165,6 +164,11 @@ test("/resources redirects to /publications", async ({ page }) => {
   await expect(page).toHaveURL(/\/publications$/);
 });
 
+test("/advisors redirects to /about#advisors", async ({ page }) => {
+  await page.goto("/advisors");
+  await expect(page).toHaveURL(/\/about#advisors$/);
+});
+
 test("publications page uses theme background in dark mode", async ({ page }) => {
   await page.goto("/publications");
   await page.getByRole("button", { name: "Switch to dark mode" }).click();
@@ -188,7 +192,7 @@ test("footer links route to dedicated pages", async ({ page }, testInfo) => {
   const footer = page.getByRole("contentinfo");
   const footerLinks = [
     { name: "About Greenalaya Nepal", path: "/about" },
-    { name: "Advisors & Partners", path: "/advisors" },
+    { name: "Advisors & Partners", path: "/about#advisors" },
     { name: "Team", path: "/team" },
     { name: "Projects", path: "/projects" },
     { name: "Research", path: "/research" },

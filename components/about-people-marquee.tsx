@@ -25,6 +25,7 @@ const photoResolvers: Record<
 };
 
 type AboutPeopleMarqueeProps = {
+  id?: string;
   title: string;
   members: PersonMarqueeMember[];
   error?: string | null;
@@ -135,6 +136,7 @@ function PersonCard({
 }
 
 export function AboutPeopleMarquee({
+  id,
   title,
   members,
   error,
@@ -160,7 +162,7 @@ export function AboutPeopleMarquee({
   const resolvePhoto = photoResolvers[photoSource];
 
   return (
-    <section className={cn("relative mt-16 w-full lg:mt-24", className)}>
+    <section id={id} className={cn("relative mt-16 w-full scroll-mt-24 lg:mt-24", className)}>
       <div className="mx-auto mb-12 flex max-w-3xl flex-col items-center px-2 text-center lg:mb-16">
         <h2 className="font-display text-3xl font-bold uppercase text-white lg:text-4xl">
           {title}

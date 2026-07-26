@@ -36,6 +36,11 @@ const nextConfig: NextConfig = {
         destination: "/publications/:slug",
         permanent: true,
       },
+      {
+        source: "/advisors",
+        destination: "/about#advisors",
+        permanent: true,
+      },
     ];
   },
 };
